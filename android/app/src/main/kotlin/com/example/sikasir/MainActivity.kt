@@ -1,4 +1,4 @@
-package com.example.sikasir
+package com.ta.sikasir
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -89,11 +89,11 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
+            VALUE "CompanyName", "com.ta" "\0"
             VALUE "FileDescription", "sikasir" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "sikasir" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2022 com.example. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2022 com.ta. All rights reserved." "\0"
             VALUE "OriginalFilename", "sikasir.exe" "\0"
             VALUE "ProductName", "sikasir" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
