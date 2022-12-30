@@ -151,3 +151,4 @@ class wAppIcon extends StatelessWidget {
     );
   }
 }
+

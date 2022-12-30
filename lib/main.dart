@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           ? authC.isAuth.isTrue
               ? Routes.HOME
               : Routes.LOGIN
-          : Routes.INTRODUCTION,
+          : Routes.HOME, //Start from here
       getPages: AppPages.routes,
     );
 
