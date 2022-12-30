@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/addBarang/bindings/add_barang_binding.dart';
 import '../modules/addBarang/views/add_barang_view.dart';
+import '../modules/addPegawai/bindings/add_pegawai_binding.dart';
+import '../modules/addPegawai/views/add_pegawai_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/introduction/bindings/introduction_binding.dart';
@@ -29,13 +31,18 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LOGIN,
-      page: () =>  LoginView(),
+      page: () => LoginView(),
       binding: LoginBinding(),
     ),
     GetPage(
       name: _Paths.ADD_BARANG,
       page: () => const AddBarangView(),
       binding: AddBarangBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_PEGAWAI,
+      page: () => const AddPegawaiView(),
+      binding: AddPegawaiBinding(),
     ),
   ];
 }
