@@ -6,9 +6,6 @@ import 'package:get_storage/get_storage.dart';
 import 'app/controllers/auth_controller.dart';
 import 'app/routes/app_pages.dart';
 import 'firebase_options.dart';
-import 'utils/error_page.dart';
-import 'utils/loading_page.dart';
-import 'utils/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,8 +32,9 @@ class MyApp extends StatelessWidget {
           ? authC.isAuth.isTrue
               ? Routes.HOME
               : Routes.LOGIN
-          : Routes.HOME, //Start from here
+          : Routes.ADD_PEGAWAI, //Start from here
       getPages: AppPages.routes,
+
     );
 
     // return FutureBuilder(

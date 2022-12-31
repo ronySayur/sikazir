@@ -41,7 +41,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ADD_PEGAWAI,
-      page: () => const AddPegawaiView(),
+      page: () =>  AddPegawaiView(),
       binding: AddPegawaiBinding(),
     ),
   ];
