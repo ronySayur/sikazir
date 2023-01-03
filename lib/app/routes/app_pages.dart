@@ -1,15 +1,19 @@
 import 'package:get/get.dart';
 
 import '../modules/addBarang/bindings/add_barang_binding.dart';
-import '../modules/addBarang/views/add_barang_view.dart';
+import '../modules/addBarang/views/add_produk_view.dart';
 import '../modules/addPegawai/bindings/add_pegawai_binding.dart';
 import '../modules/addPegawai/views/add_pegawai_view.dart';
+import '../modules/add_supplier/bindings/add_supplier_binding.dart';
+import '../modules/add_supplier/views/add_supplier_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/introduction/bindings/introduction_binding.dart';
 import '../modules/introduction/views/introduction_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/new_password/bindings/new_password_binding.dart';
+import '../modules/new_password/views/new_password_view.dart';
 
 part 'app_routes.dart';
 
@@ -35,14 +39,24 @@ class AppPages {
       binding: LoginBinding(),
     ),
     GetPage(
-      name: _Paths.ADD_BARANG,
-      page: () => const AddBarangView(),
-      binding: AddBarangBinding(),
+      name: _Paths.ADD_PRODUK,
+      page: () => const AddProdukView(),
+      binding: AddProdukBinding(),
     ),
     GetPage(
       name: _Paths.ADD_PEGAWAI,
-      page: () =>  AddPegawaiView(),
+      page: () => AddPegawaiView(),
       binding: AddPegawaiBinding(),
+    ),
+    GetPage(
+      name: _Paths.NEW_PASSWORD,
+      page: () => const NewPasswordView(),
+      binding: NewPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_SUPPLIER,
+      page: () => const AddSupplierView(),
+      binding: AddSupplierBinding(),
     ),
   ];
 }

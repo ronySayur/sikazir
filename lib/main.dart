@@ -32,9 +32,8 @@ class MyApp extends StatelessWidget {
           ? authC.isAuth.isTrue
               ? Routes.HOME
               : Routes.LOGIN
-          : Routes.ADD_PEGAWAI, //Start from here
+          : Routes.ADD_PRODUK, //Start from here
       getPages: AppPages.routes,
-
     );
 
     // return FutureBuilder(

@@ -63,9 +63,6 @@ class LoginView extends GetView<LoginController> {
                     SizedBox(height: wDimension.height20 * 1.5),
                     TextField(
                       controller: controller.emailC,
-                      // onEditingComplete: () {
-                      //   authC.updateStatus(controller.statusC.text);
-                      // },
                       cursorColor: Colors.black,
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
@@ -89,9 +86,6 @@ class LoginView extends GetView<LoginController> {
                     SizedBox(height: wDimension.height10),
                     TextField(
                       controller: controller.passC,
-                      // onEditingComplete: () {
-                      //   authC.updateStatus(controller.statusC.text);
-                      // },
                       cursorColor: Colors.black,
                       textInputAction: TextInputAction.done,
                       maxLength: 5,
@@ -131,8 +125,6 @@ class LoginView extends GetView<LoginController> {
                           ),
                         ),
                         onPressed: () {},
-                        // onPressed: () {
-                        //   authC.updateStatus(controller.statusC.text);
                         child: wSmallText(
                             text: "Login",
                             weight: FontWeight.bold,

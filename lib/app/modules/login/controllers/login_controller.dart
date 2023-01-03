@@ -1,17 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../widgets/widgets.dart';
 import '../../../routes/app_pages.dart';
 
 class LoginController extends GetxController {
-  //Factorismo Home
   TextEditingController emailC = TextEditingController();
   TextEditingController passC = TextEditingController();
 
   FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   void login() async {
     if (emailC.text.isNotEmpty && passC.text.isNotEmpty) {
@@ -21,21 +19,39 @@ class LoginController extends GetxController {
           password: passC.text,
         );
 
-        // //Verifikasi email
-        // if (userCredential.user != null) {
-        //   if (userCredential.user!.emailVerified == true) {
-        //     Get.offAllNamed(Routes.HOME);
-        //   }
-        // } else {
-        //   Get.defaultDialog(
-        //       title: "Peringatan", middleText: "akun belum terverifikasi");
-        // }
+        //Verifikasi email
+        if (userCredential.user != null) {
+          if (userCredential.user!.emailVerified == true) {
+            if (passC.text == "password") {
+              Get.offAllNamed(Routes.NEW_PASSWORD);
+            } else {
+              Get.offAllNamed(Routes.HOME);
+            }
+          }
+        } else {
+          Get.defaultDialog(
+              title: "Peringatan",
+              middleText: "akun belum terverifikasi",
+              actions: [
+                OutlinedButton(
+                    onPressed: () => Get.back(),
+                    child: wSmallText(text: "Cancel")),
+                ElevatedButton(
+                    onPressed: () async {
+                      try {
+                        await userCredential.user!.sendEmailVerification();
+                        Get.snackbar("Berhasil", "Cek Email anda!");
+                      } catch (e) {
+                        Get.snackbar("Error", "$e");
+                      }
+                    },
+                    child: wSmallText(text: "Cancel")),
+              ]);
+        }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
           Get.snackbar("Terjadi Kesalahan!", "Email tidak terdaftar");
-          print('No user found for that email.');
         } else if (e.code == 'wrong-password') {
-          print('Wrong password provided for that user.');
           Get.snackbar("Terjadi Kesalahan!", "Password salah!");
         }
       } catch (e) {

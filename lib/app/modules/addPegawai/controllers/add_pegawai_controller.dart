@@ -3,10 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../routes/app_pages.dart';
+
 class AddPegawaiController extends GetxController {
   //Factorismo Home
   TextEditingController nameC = TextEditingController();
-  TextEditingController passC = TextEditingController();
   TextEditingController emailC = TextEditingController();
   TextEditingController jabatanC = TextEditingController();
   TextEditingController teleponC = TextEditingController();
@@ -16,9 +17,7 @@ class AddPegawaiController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<void> addPegawai() async {
-    if (passC.text.isNotEmpty &&
-        nameC.text.isNotEmpty &&
-        emailC.text.isNotEmpty) {
+    if (nameC.text.isNotEmpty && emailC.text.isNotEmpty) {
       try {
         final userCredential = await auth.createUserWithEmailAndPassword(
           email: emailC.text,
@@ -30,24 +29,28 @@ class AddPegawaiController extends GetxController {
           String uid = userCredential.user!.uid;
 
           firestore.collection("pegawai").doc(uid).set({
-            "nip": passC.text,
             "name": nameC.text,
+            "jabatan": jabatanC.text,
+            "telepon": teleponC.text,
+            "hak": hakC.text,
             "password": "password",
             "email": emailC.text,
             "uid": uid,
             "createdAt": DateTime.now().toIso8601String()
           });
+
+          await userCredential.user!.sendEmailVerification();
+
+          Get.offAllNamed(Routes.HOME);
         }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           Get.snackbar("Peringatan", "Password yang digunakan terlalu lemah");
-          print('The password provided is too weak.');
         } else if (e.code == 'email-already-in-use') {
           Get.snackbar("Peringatan", "Akun sudah ada");
-          print('The account already exists for that email.');
         }
       } catch (e) {
-        print(e);
+        Get.snackbar("Peringatan", "$e");
       }
     } else {
       Get.snackbar("Error", "Terjadi kesalahan");
