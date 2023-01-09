@@ -6,6 +6,8 @@ import '../modules/addPegawai/bindings/add_pegawai_binding.dart';
 import '../modules/addPegawai/views/add_pegawai_view.dart';
 import '../modules/add_supplier/bindings/add_supplier_binding.dart';
 import '../modules/add_supplier/views/add_supplier_view.dart';
+import '../modules/forgot_password/bindings/forgot_password_binding.dart';
+import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/introduction/bindings/introduction_binding.dart';
@@ -25,7 +27,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () => const HomeView(),
+      page: () => HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -55,8 +57,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ADD_SUPPLIER,
-      page: () => const AddSupplierView(),
+      page: () => AddSupplierView(),
       binding: AddSupplierBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGOT_PASSWORD,
+      page: () => const ForgotPasswordView(),
+      binding: ForgotPasswordBinding(),
     ),
   ];
 }

@@ -44,45 +44,45 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBlnAeaTtSFOsXO3i3VaQ-8lb2wu-Tr0LU',
-    appId: '1:199936839516:web:e57427575ad63e9827fb99',
-    messagingSenderId: '199936839516',
-    projectId: 'chat-app-rony',
-    authDomain: 'chat-app-rony.firebaseapp.com',
-    databaseURL: 'https://chat-app-rony-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'chat-app-rony.appspot.com',
+    apiKey: 'AIzaSyBo06EcKc4XkvMkTwsFlo7m0A0sxjybtfc',
+    appId: '1:544523707198:web:d5c5121c01c952d67f426f',
+    messagingSenderId: '544523707198',
+    projectId: 'sikasir-rony',
+    authDomain: 'sikasir-rony.firebaseapp.com',
+    databaseURL: 'https://sikasir-rony-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'sikasir-rony.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC1QpLXw_pRTa-PellpjSR9BRyTp6o3Z1A',
-    appId: '1:199936839516:android:12b49b634dfee0ec27fb99',
-    messagingSenderId: '199936839516',
-    projectId: 'chat-app-rony',
-    databaseURL: 'https://chat-app-rony-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'chat-app-rony.appspot.com',
+    apiKey: 'AIzaSyBENf0qJ4kbi4BtEVfwm1TAfU-r4QCxucY',
+    appId: '1:544523707198:android:755b1ba7eb88f93d7f426f',
+    messagingSenderId: '544523707198',
+    projectId: 'sikasir-rony',
+    databaseURL: 'https://sikasir-rony-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'sikasir-rony.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCn4MtMWijtb-_nj6B8L5t6olh66RQnOZ0',
-    appId: '1:199936839516:ios:ee328c66bfa9bf7827fb99',
-    messagingSenderId: '199936839516',
-    projectId: 'chat-app-rony',
-    databaseURL: 'https://chat-app-rony-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'chat-app-rony.appspot.com',
-    androidClientId: '199936839516-b5kr76sensej7g77cm7d265kjaff577j.apps.googleusercontent.com',
-    iosClientId: '199936839516-o78ahgmfdmnnsmb3t8fnkh9nntf9mjci.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCFT1MZrJNVmsCv7FmMBujSkwVsRwLxGrQ',
+    appId: '1:544523707198:ios:fad933c7e5c0ed8c7f426f',
+    messagingSenderId: '544523707198',
+    projectId: 'sikasir-rony',
+    databaseURL: 'https://sikasir-rony-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'sikasir-rony.appspot.com',
+    androidClientId: '544523707198-bhd6gs9bg6snvhkb1oc8fh39q97v7pqe.apps.googleusercontent.com',
+    iosClientId: '544523707198-ghkmaiod6uctp8o8sqnqjte2joh9lkif.apps.googleusercontent.com',
     iosBundleId: 'com.ta.sikasir',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCn4MtMWijtb-_nj6B8L5t6olh66RQnOZ0',
-    appId: '1:199936839516:ios:ee328c66bfa9bf7827fb99',
-    messagingSenderId: '199936839516',
-    projectId: 'chat-app-rony',
-    databaseURL: 'https://chat-app-rony-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'chat-app-rony.appspot.com',
-    androidClientId: '199936839516-b5kr76sensej7g77cm7d265kjaff577j.apps.googleusercontent.com',
-    iosClientId: '199936839516-o78ahgmfdmnnsmb3t8fnkh9nntf9mjci.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCFT1MZrJNVmsCv7FmMBujSkwVsRwLxGrQ',
+    appId: '1:544523707198:ios:fad933c7e5c0ed8c7f426f',
+    messagingSenderId: '544523707198',
+    projectId: 'sikasir-rony',
+    databaseURL: 'https://sikasir-rony-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'sikasir-rony.appspot.com',
+    androidClientId: '544523707198-bhd6gs9bg6snvhkb1oc8fh39q97v7pqe.apps.googleusercontent.com',
+    iosClientId: '544523707198-ghkmaiod6uctp8o8sqnqjte2joh9lkif.apps.googleusercontent.com',
     iosBundleId: 'com.ta.sikasir',
   );
 }

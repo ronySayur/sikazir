@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:get/get.dart';
@@ -9,7 +11,7 @@ import '../controllers/add_pegawai_controller.dart';
 final List<String> items = [
   'Supervisor',
   'Kasir',
-  'Item4',
+  'Admin Gudang',
 ];
 String? selectedValue;
 
@@ -57,6 +59,8 @@ List<double> _getCustomItemsHeights() {
 }
 
 class AddPegawaiView extends GetView<AddPegawaiController> {
+  // final Map<String, dynamic> user = Get.arguments;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,127 +96,133 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
         body: ListView(children: [
           Container(
             padding: EdgeInsets.all(wDimension.screenWidth * 0.01),
-            child: Expanded(
-              child: Row(
-                children: [
-                  Stack(
-                    children: [
-                      AvatarGlow(
-                        endRadius: wDimension.radius15 * 5,
-                        glowColor: Colors.blue,
-                        duration: const Duration(seconds: 3),
-                        child: Container(
-                          margin: EdgeInsets.all(wDimension.height20),
-                          width: wDimension.screenWidth * 0.5,
-                          height: wDimension.screenHeight * 0.5,
-                          child: ClipRRect(
+            child: Row(
+              children: [
+                Stack(
+                  children: [
+                    GetBuilder<AddPegawaiController>(
+                      init: AddPegawaiController(),
+                      initState: (_) {},
+                      builder: (c) {
+                        return AvatarGlow(
+                          endRadius: wDimension.radius15 * 5,
+                          glowColor: Colors.blue,
+                          duration: const Duration(seconds: 3),
+                          child: Container(
+                            margin: EdgeInsets.all(wDimension.height20),
+                            width: wDimension.screenWidth * 0.5,
+                            height: wDimension.screenHeight * 0.5,
+                            child: ClipRRect(
                               borderRadius: BorderRadius.circular(
                                   wDimension.radius30 * 5),
-                              child:
-                                  // authC.user.value.photoUrl == "noimage" ?
-                                  Image.asset("assets/logo/noimage.png",
-                                      fit: BoxFit.cover)
-
-                              // : Image.network(authC.user.value.photoUrl!,
-                              //     fit: BoxFit.cover)
-                              ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 25,
-                        right: 25,
-                        child: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.grey,
+                              child: c.image != null
+                                  ? Image.file(
+                                      File(c.image!.path),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.asset("assets/logo/noimage.png",
+                                      fit: BoxFit.cover),
                             ),
-                            child: wAppIcon(
-                              icon: Icons.photo_camera,
-                              size: wDimension.iconSize24,
-                            )),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        width: wDimension.screenWidth * 0.6,
-                        child: TextField(
-                          controller: controller.nameC,
-                          textInputAction: TextInputAction.next,
-                          cursorColor: Colors.black,
-                          decoration: InputDecoration(
-                            labelText: "Nama Pegawai",
-                            labelStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: wDimension.font16),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                    wDimension.radius30 * 10),
-                                borderSide:
-                                    const BorderSide(color: Colors.red)),
-                            border: OutlineInputBorder(
+                          ),
+                        );
+                      },
+                    ),
+
+                    //
+                    Positioned(
+                      bottom: 25,
+                      right: 25,
+                      child: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.grey,
+                          ),
+                          child: InkWell(
+                              onTap: () => controller.pickImage(),
+                              child: wAppIcon(
+                                icon: Icons.photo_camera,
+                                size: wDimension.iconSize24,
+                              ))),
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: wDimension.screenWidth * 0.6,
+                      child: TextField(
+                        controller: controller.nameC,
+                        textInputAction: TextInputAction.next,
+                        cursorColor: Colors.black,
+                        decoration: InputDecoration(
+                          labelText: "Nama Pegawai",
+                          labelStyle: TextStyle(
+                              color: Colors.black, fontSize: wDimension.font16),
+                          focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(
                                   wDimension.radius30 * 10),
-                            ),
-                            contentPadding: EdgeInsets.symmetric(
-                              horizontal: wDimension.width30,
-                              vertical: wDimension.height15,
-                            ),
+                              borderSide: const BorderSide(color: Colors.red)),
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(wDimension.radius30 * 10),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: wDimension.width30,
+                            vertical: wDimension.height15,
                           ),
                         ),
                       ),
-                      SizedBox(height: wDimension.height10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          wSmallText(
-                              text: "Hak akses",
-                              color: Colors.black,
-                              size: wDimension.font16),
-                          SizedBox(
-                            width: wDimension.width10,
+                    ),
+                    SizedBox(height: wDimension.height10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        wSmallText(
+                            text: "Hak akses",
+                            color: Colors.black,
+                            size: wDimension.font16),
+                        SizedBox(
+                          width: wDimension.width10,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(left: 8, right: 8),
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1),
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          Container(
-                            padding: const EdgeInsets.only(left: 8, right: 8),
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 1),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton2(
-                                searchController: controller.hakC,
-                                isExpanded: true,
-                                hint: Text(
-                                  'Pilih Hak akses',
-                                  style: TextStyle(
-                                    fontSize: wDimension.font16,
-                                    color: Theme.of(context).hintColor,
-                                  ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton2(
+                              // searchController: controller.hakC,
+                              isExpanded: true,
+                              hint: Text(
+                                'Pilih Hak akses',
+                                style: TextStyle(
+                                  fontSize: wDimension.font16,
+                                  color: Theme.of(context).hintColor,
                                 ),
-                                items: _addDividersAfterItems(items),
-                                customItemsHeights: _getCustomItemsHeights(),
-                                value: selectedValue,
-                                onChanged: (value) {
-                                  selectedValue = value as String;
-                                  Get.snackbar("Pesan", selectedValue!);
-                                },
-                                buttonHeight: wDimension.height45,
-                                buttonWidth: wDimension.width20 * 7,
-                                dropdownMaxHeight: wDimension.height10 * 20,
-                                itemPadding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
                               ),
+                              items: _addDividersAfterItems(items),
+                              customItemsHeights: _getCustomItemsHeights(),
+                              value: selectedValue,
+                              onChanged: (value) {
+                                selectedValue = value as String;
+                                Get.snackbar("Pesan", selectedValue!);
+                              },
+                              buttonHeight: wDimension.height45,
+                              buttonWidth: wDimension.width20 * 7,
+                              dropdownMaxHeight: wDimension.height10 * 20,
+                              itemPadding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
 
@@ -291,7 +301,6 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: wDimension.width30,
                                 vertical: wDimension.height15))),
-                    const Divider(thickness: 2),
                     SizedBox(height: wDimension.height15)
                   ])),
 
@@ -299,17 +308,19 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
           Container(
               padding: EdgeInsets.symmetric(horizontal: wDimension.width10),
               width: wDimension.screenWidth,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      shape: const StadiumBorder(),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: wDimension.width30,
-                          vertical: wDimension.height15)),
-                  onPressed: () => controller.addPegawai(),
-                  child: wSmallText(
-                      text: "Simpan",
-                      weight: FontWeight.bold,
-                      color: Colors.white)))
+              child: Obx(() => ElevatedButton(
+                  onPressed: () async {
+                    if (controller.isLoading.isFalse) {
+                      await controller.addPegawai();
+                    }
+                  },
+                  child: controller.isLoading.isFalse
+                      ? wSmallText(
+                          text: "Tambah Pegawai",
+                          color: Colors.white,
+                          weight: FontWeight.bold,
+                        )
+                      : CircularProgressIndicator())))
         ]));
   }
 }

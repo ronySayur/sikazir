@@ -6,13 +6,13 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+  // const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: const Text('Beranda'),
+        title: const Text('Dashboard'),
         centerTitle: false,
       ),
       body: SlidingUpPanel(
@@ -50,23 +50,7 @@ class HomeView extends GetView<HomeController> {
             ],
           ),
         ),
-        body: Center(
-          child: GridView.count(
-            crossAxisCount: 3,
-            children: List.generate(7, (index) {
-              return ListTile(
-                contentPadding: EdgeInsets.all(10),
-                onTap: () {},
-                leading: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.black26,
-                    child: Center(
-                        child: Image.asset("assets/logo/noimage.png",
-                            fit: BoxFit.cover))),
-              );
-            }),
-          ),
-        ),
+        body: Center()
       ),
     );
   }

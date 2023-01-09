@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sikasir/widgets/widgets.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
@@ -88,7 +89,7 @@ class LoginView extends GetView<LoginController> {
                       controller: controller.passC,
                       cursorColor: Colors.black,
                       textInputAction: TextInputAction.done,
-                      maxLength: 5,
+                      maxLength: 6,
                       obscureText: true,
                       enableSuggestions: false,
                       autocorrect: false,
@@ -113,24 +114,27 @@ class LoginView extends GetView<LoginController> {
                       ),
                     ),
                     SizedBox(height: wDimension.height15),
-                    SizedBox(
+                    Container(
                       width: wDimension.screenWidth,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red[900],
-                          shape: const StadiumBorder(),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: wDimension.width30,
-                            vertical: wDimension.width15,
-                          ),
-                        ),
-                        onPressed: () {},
-                        child: wSmallText(
-                            text: "Login",
-                            weight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(wDimension.radius30)),
+                      child: Obx(() => ElevatedButton(
+                          onPressed: () async {
+                            if (controller.isLoading.isFalse) {
+                              await controller.login();
+                            }
+                          },
+                          child: controller.isLoading.isFalse
+                              ? wSmallText(
+                                  text: "Login",
+                                  color: Colors.white,
+                                  weight: FontWeight.bold)
+                              : wBigText(text: "Loading"))),
                     ),
+                    TextButton(
+                        onPressed: () => Get.toNamed(Routes.FORGOT_PASSWORD),
+                        child: wSmallText(text: "Lupa password?"))
                   ],
                 ),
               ),
