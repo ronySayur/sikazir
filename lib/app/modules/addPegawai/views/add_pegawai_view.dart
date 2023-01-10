@@ -281,6 +281,7 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
                                 vertical: wDimension.height15))),
                     SizedBox(height: wDimension.height10),
                     TextField(
+                        keyboardType: TextInputType.number,
                         controller: controller.teleponC,
                         textInputAction: TextInputAction.next,
                         cursorColor: Colors.black,

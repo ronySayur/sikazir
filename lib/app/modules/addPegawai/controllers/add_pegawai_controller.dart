@@ -24,6 +24,8 @@ class AddPegawaiController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseStorage storage = FirebaseStorage.instance;
+
+  
   final ImagePicker picker = ImagePicker();
   XFile? image;
 
@@ -72,7 +74,20 @@ class AddPegawaiController extends GetxController {
                 "jabatan": jabatanC.text,
                 "telepon": teleponC.text,
                 "hak": hakC.text,
-                "profile": "urlImage",
+                "profile": urlImage,
+                "password": "111111",
+                "email": emailC.text,
+                "uid": uid,
+                "role": "pegawai",
+                "createdAt": DateTime.now().toIso8601String()
+              });
+            }else{
+              
+              firestore.collection("pegawai").doc(uid).set({
+                "name": nameC.text,
+                "jabatan": jabatanC.text,
+                "telepon": teleponC.text,
+                "hak": hakC.text,
                 "password": "password",
                 "email": emailC.text,
                 "uid": uid,

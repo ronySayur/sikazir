@@ -18,7 +18,6 @@ class AuthController extends GetxController {
 //Skip Introduction
   Future<bool> skipIntro() async {
     final box = GetStorage();
-
     if (box.read('skipIntro') != null || box.read('skipIntro') == true) {
       return true;
     }

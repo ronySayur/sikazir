@@ -18,14 +18,14 @@ class NewPasswordView extends GetView<NewPasswordController> {
               controller: controller.newPassC,
               cursorColor: Colors.black,
               textInputAction: TextInputAction.done,
-              maxLength: 5,
+              maxLength: 6,
               obscureText: true,
               enableSuggestions: false,
               autocorrect: false,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                        labelText: "Pin",
-                        counterText: "",
+                labelText: "Pin",
+                counterText: "",
                 labelStyle:
                     TextStyle(color: Colors.black, fontSize: wDimension.font16),
                 focusedBorder: OutlineInputBorder(

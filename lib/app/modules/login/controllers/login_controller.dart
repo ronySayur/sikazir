@@ -25,7 +25,7 @@ class LoginController extends GetxController {
         //Verifikasi email
         if (userCredential.user != null) {
           if (userCredential.user!.emailVerified == true) {
-            if (passC.text == "password") {
+            if (passC.text == "111111") {
               Get.snackbar("Peringatan", "Ubah password anda");
               Get.offAllNamed(Routes.NEW_PASSWORD);
             } else {

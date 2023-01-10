@@ -16,6 +16,12 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/new_password/bindings/new_password_binding.dart';
 import '../modules/new_password/views/new_password_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
+import '../modules/update_password/bindings/update_password_binding.dart';
+import '../modules/update_password/views/update_password_view.dart';
+import '../modules/update_profile/bindings/update_profile_binding.dart';
+import '../modules/update_profile/views/update_profile_view.dart';
 
 part 'app_routes.dart';
 
@@ -26,44 +32,59 @@ class AppPages {
 
   static final routes = [
     GetPage(
-      name: _Paths.HOME,
-      page: () => HomeView(),
-      binding: HomeBinding(),
+        name: _Paths.HOME,
+        page: () => HomeView(),
+        binding: HomeBinding(),
+        transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.INTRODUCTION,
+        page: () => const IntroductionView(),
+        binding: IntroductionBinding(),
+        transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.LOGIN,
+        page: () => LoginView(),
+        binding: LoginBinding(),
+        transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.ADD_PRODUK,
+        page: () => const AddProdukView(),
+        binding: AddProdukBinding(),
+        transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.ADD_PEGAWAI,
+        page: () => AddPegawaiView(),
+        binding: AddPegawaiBinding(),
+        transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.NEW_PASSWORD,
+        page: () => const NewPasswordView(),
+        binding: NewPasswordBinding(),
+        transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.ADD_SUPPLIER,
+        page: () => AddSupplierView(),
+        binding: AddSupplierBinding(),
+        transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.FORGOT_PASSWORD,
+        page: () => const ForgotPasswordView(),
+        binding: ForgotPasswordBinding(),
+        transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.PROFILE,
+        page: () => const ProfileView(),
+        binding: ProfileBinding(),
+        transition: Transition.fadeIn),
+    GetPage(
+      name: _Paths.UPDATE_PROFILE,
+      page: () => const UpdateProfileView(),
+      binding: UpdateProfileBinding(),
     ),
     GetPage(
-      name: _Paths.INTRODUCTION,
-      page: () => const IntroductionView(),
-      binding: IntroductionBinding(),
-    ),
-    GetPage(
-      name: _Paths.LOGIN,
-      page: () => LoginView(),
-      binding: LoginBinding(),
-    ),
-    GetPage(
-      name: _Paths.ADD_PRODUK,
-      page: () => const AddProdukView(),
-      binding: AddProdukBinding(),
-    ),
-    GetPage(
-      name: _Paths.ADD_PEGAWAI,
-      page: () => AddPegawaiView(),
-      binding: AddPegawaiBinding(),
-    ),
-    GetPage(
-      name: _Paths.NEW_PASSWORD,
-      page: () => const NewPasswordView(),
-      binding: NewPasswordBinding(),
-    ),
-    GetPage(
-      name: _Paths.ADD_SUPPLIER,
-      page: () => AddSupplierView(),
-      binding: AddSupplierBinding(),
-    ),
-    GetPage(
-      name: _Paths.FORGOT_PASSWORD,
-      page: () => const ForgotPasswordView(),
-      binding: ForgotPasswordBinding(),
+      name: _Paths.UPDATE_PASSWORD,
+      page: () => const UpdatePasswordView(),
+      binding: UpdatePasswordBinding(),
     ),
   ];
 }
