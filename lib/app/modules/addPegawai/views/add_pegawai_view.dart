@@ -1,70 +1,19 @@
+import 'dart:core';
 import 'dart:io';
 
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../widgets/widgets.dart';
 import '../controllers/add_pegawai_controller.dart';
 
-final List<String> items = [
-  'Supervisor',
-  'Kasir',
-  'Admin Gudang',
-];
-String? selectedValue;
-
-List<DropdownMenuItem<String>> _addDividersAfterItems(List<String> items) {
-  List<DropdownMenuItem<String>> _menuItems = [];
-  for (var item in items) {
-    _menuItems.addAll(
-      [
-        DropdownMenuItem<String>(
-          value: item,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              item,
-              style: const TextStyle(
-                fontSize: 14,
-              ),
-            ),
-          ),
-        ),
-        //If it's last item, we will not add Divider after it.
-        if (item != items.last)
-          const DropdownMenuItem<String>(
-            enabled: false,
-            child: Divider(),
-          ),
-      ],
-    );
-  }
-  return _menuItems;
-}
-
-List<double> _getCustomItemsHeights() {
-  List<double> _itemsHeights = [];
-  for (var i = 0; i < (items.length * 2) - 1; i++) {
-    if (i.isEven) {
-      _itemsHeights.add(40);
-    }
-    //Dividers indexes will be the odd indexes
-    if (i.isOdd) {
-      _itemsHeights.add(4);
-    }
-  }
-  return _itemsHeights;
-}
-
 class AddPegawaiView extends GetView<AddPegawaiController> {
-  // final Map<String, dynamic> user = Get.arguments;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.red,
           title: const Text('Tambah Pegawai'),
           centerTitle: false,
           actions: [
@@ -192,31 +141,22 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
                             border: Border.all(width: 1),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton2(
-                              // searchController: controller.hakC,
-                              isExpanded: true,
-                              hint: Text(
-                                'Pilih Hak akses',
-                                style: TextStyle(
-                                  fontSize: wDimension.font16,
-                                  color: Theme.of(context).hintColor,
-                                ),
-                              ),
-                              items: _addDividersAfterItems(items),
-                              customItemsHeights: _getCustomItemsHeights(),
-                              value: selectedValue,
-                              onChanged: (value) {
-                                selectedValue = value as String;
-                                Get.snackbar("Pesan", selectedValue!);
-                              },
-                              buttonHeight: wDimension.height45,
-                              buttonWidth: wDimension.width20 * 7,
-                              dropdownMaxHeight: wDimension.height10 * 20,
-                              itemPadding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                            ),
-                          ),
+                          child: Obx(() => DropdownButton(
+                                onChanged: (newValue) {
+                                  controller.setSelected(newValue!);
+                                },
+                                value: controller.jabatanC.value == ""
+                                    ? null
+                                    : controller.jabatanC.value,
+                                items: controller.items.map((selectedType) {
+                                  return DropdownMenuItem(
+                                    value: selectedType,
+                                    child: Text(
+                                      selectedType,
+                                    ),
+                                  );
+                                }).toList(),
+                              )),
                         ),
                       ],
                     ),
@@ -259,27 +199,29 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
                       ),
                     ),
                     SizedBox(height: wDimension.height10),
-                    TextField(
-                        controller: controller.jabatanC,
-                        textInputAction: TextInputAction.next,
-                        cursorColor: Colors.black,
-                        decoration: InputDecoration(
-                            labelText: "Jabatan",
-                            labelStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: wDimension.font16),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                    wDimension.radius30 * 10),
-                                borderSide:
-                                    const BorderSide(color: Colors.red)),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                    wDimension.radius30 * 10)),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: wDimension.width30,
-                                vertical: wDimension.height15))),
-                    SizedBox(height: wDimension.height10),
+
+                    // TextField(
+                    //     controller: controller.jabatanC,
+                    //     textInputAction: TextInputAction.next,
+                    //     cursorColor: Colors.black,
+                    //     decoration: InputDecoration(
+                    //         labelText: "Jabatan",
+                    //         labelStyle: TextStyle(
+                    //             color: Colors.black,
+                    //             fontSize: wDimension.font16),
+                    //         focusedBorder: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(
+                    //                 wDimension.radius30 * 10),
+                    //             borderSide:
+                    //                 const BorderSide(color: Colors.red)),
+                    //         border: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(
+                    //                 wDimension.radius30 * 10)),
+                    //         contentPadding: EdgeInsets.symmetric(
+                    //             horizontal: wDimension.width30,
+                    //             vertical: wDimension.height15))),
+                    // SizedBox(height: wDimension.height10),
+
                     TextField(
                         keyboardType: TextInputType.number,
                         controller: controller.teleponC,

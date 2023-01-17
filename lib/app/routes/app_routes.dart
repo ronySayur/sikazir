@@ -14,6 +14,14 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const UPDATE_PROFILE = _Paths.UPDATE_PROFILE;
   static const UPDATE_PASSWORD = _Paths.UPDATE_PASSWORD;
+  static const KERANJANG = _Paths.KERANJANG;
+  static const TRANSAKSI_PENJUALAN = _Paths.TRANSAKSI_PENJUALAN;
+  static const HOME_PEGAWAI = _Paths.HOME_PEGAWAI;
+  static const ALL_PEGAWAI = _Paths.ALL_PEGAWAI;
+  static const DETAIL_PEGAWAI = _Paths.DETAIL_PEGAWAI;
+  static const LAPORAN = _Paths.LAPORAN;
+  static const HOME_PRODUK = _Paths.HOME_PRODUK;
+  static const DETAIL_PRODUK = _Paths.DETAIL_PRODUK;
 }
 
 abstract class _Paths {
@@ -29,4 +37,12 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const UPDATE_PROFILE = '/update-profile';
   static const UPDATE_PASSWORD = '/update-password';
+  static const KERANJANG = '/keranjang';
+  static const TRANSAKSI_PENJUALAN = '/transaksi-penjualan';
+  static const HOME_PEGAWAI = '/home-pegawai';
+  static const ALL_PEGAWAI = '/all-pegawai';
+  static const DETAIL_PEGAWAI = '/detail-pegawai';
+  static const LAPORAN = '/laporan';
+  static const HOME_PRODUK = '/home-produk';
+  static const DETAIL_PRODUK = '/detail-produk';
 }

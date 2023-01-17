@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sikasir/app/modules/components/dataCard.dart';
-import 'package:sikasir/app/modules/components/constants.dart';
+import 'package:sikasir/app/modules/home/components/dataCard.dart';
 import 'package:sikasir/widgets/widgets.dart';
 
 class FileInfoCard extends StatelessWidget {

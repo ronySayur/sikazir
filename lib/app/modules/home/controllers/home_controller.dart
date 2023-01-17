@@ -8,21 +8,6 @@ import '../../../routes/app_pages.dart';
 class HomeController extends GetxController {
    RxBool isLoading = false.obs;
 
-  FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  //Ambil data pegawai sekarang yang login
-  Stream<DocumentSnapshot<Map<String, dynamic>>> streamUser() async* {
-    String uid = auth.currentUser!.uid;
-
-    yield* firestore.collection("pegawai").doc(uid).snapshots();
-  }
-
-  Future<void> signOut() async {
-    await auth.signOut();
-    Get.toNamed(Routes.LOGIN);
-    Get.snackbar("Berhasil", "Anda berhasil Logout");
-  }
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
 

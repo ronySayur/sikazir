@@ -14,6 +14,7 @@ class AddSupplierView extends GetView<AddSupplierController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+                backgroundColor: Colors.red,
           title: const Text('Tambah Supplier'),
           centerTitle: false,
           actions: [

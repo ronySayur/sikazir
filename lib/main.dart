@@ -5,9 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:sikasir/utils/error_page.dart';
-import 'package:sikasir/utils/loading_page.dart';
-import 'package:sikasir/utils/splash_screen.dart';
 
 import 'app/controllers/auth_controller.dart';
 import 'app/routes/app_pages.dart';
@@ -33,6 +30,10 @@ class MyApp extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const MaterialApp(
+              home: Scaffold(body: Center(child: CircularProgressIndicator())));
+        }
         //Get data
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,

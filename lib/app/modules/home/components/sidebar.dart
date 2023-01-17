@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
-class SideMenu extends StatelessWidget {
-  const SideMenu({
+import '../../../routes/app_pages.dart';
+
+class SideBar extends StatelessWidget {
+  const SideBar({
     Key? key,
   }) : super(key: key);
 
@@ -17,36 +20,36 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "Dashboard",
             svgSrc: "assets/icons/menu_dashbord.svg",
+            press: () => Get.toNamed(Routes.HOME),
+          ),
+          DrawerListTile(
+            title: "Transaksi",
+            svgSrc: "assets/icons/transactions.svg",
+            press: () => Get.toNamed(Routes.TRANSAKSI_PENJUALAN),
+          ),
+          DrawerListTile(
+            title: "Produk",
+            svgSrc: "assets/icons/product.svg",
             press: () {},
           ),
           DrawerListTile(
-            title: "Transaction",
-            svgSrc: "assets/icons/menu_tran.svg",
+            title: "Supplier",
+            svgSrc: "assets/icons/supplier.svg",
             press: () {},
           ),
           DrawerListTile(
-            title: "Task",
-            svgSrc: "assets/icons/menu_task.svg",
+            title: "Toko",
+            svgSrc: "assets/icons/toko.svg",
             press: () {},
           ),
           DrawerListTile(
-            title: "Documents",
-            svgSrc: "assets/icons/menu_doc.svg",
-            press: () {},
+            title: "Pegawai",
+            svgSrc: "assets/icons/employee.svg",
+            press: () => Get.toNamed(Routes.HOME_PEGAWAI),
           ),
           DrawerListTile(
-            title: "Store",
-            svgSrc: "assets/icons/menu_store.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Notification",
-            svgSrc: "assets/icons/menu_notification.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Profile",
-            svgSrc: "assets/icons/menu_profile.svg",
+            title: "Laporan",
+            svgSrc: "assets/icons/reports.svg",
             press: () {},
           ),
           DrawerListTile(

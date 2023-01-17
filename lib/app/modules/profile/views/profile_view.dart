@@ -13,6 +13,7 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+                backgroundColor: Colors.red,
         title: const Text('ProfileView'),
         centerTitle: true,
       ),
@@ -31,7 +32,7 @@ class ProfileView extends GetView<ProfileController> {
               //data user
               Map<String, dynamic> user = snapshot.data!.data()!;
               String defaultImage =
-                  "https://ui-avatars.com/api/?name=${user['name']}";
+                  "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";
               return ListView(
                 padding: EdgeInsets.all(wDimension.height10 / 10),
                 children: [
@@ -44,9 +45,9 @@ class ProfileView extends GetView<ProfileController> {
                           height: wDimension.height20 * 10,
                           child: ClipOval(
                             child: Image.network(
-                              user["profile"] != null
-                                  ? user["profile"] != ""
-                                      ? user["profile"]
+                              user["foto"] != null
+                                  ? user["foto"] != ""
+                                      ? user["foto"]
                                       : defaultImage
                                   : defaultImage,
                               fit: BoxFit.cover,
@@ -58,7 +59,7 @@ class ProfileView extends GetView<ProfileController> {
                   ),
                   SizedBox(height: wDimension.height20),
                   wSmallText(
-                    text: "${user['name']}",
+                    text: "${user['nama_pegawai']}",
                     align: TextAlign.center,
                     size: wDimension.font20,
                     weight: FontWeight.bold,

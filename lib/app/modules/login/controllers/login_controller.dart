@@ -22,11 +22,16 @@ class LoginController extends GetxController {
           password: passC.text,
         );
 
-        //Verifikasi email
+        //jika user tidak ada
         if (userCredential.user != null) {
+          //jika email sudah di verifikasi
           if (userCredential.user!.emailVerified == true) {
+            //jika pass masih 111111
             if (passC.text == "111111") {
-              Get.snackbar("Peringatan", "Ubah password anda");
+              Get.snackbar(
+                  backgroundColor: Colors.white,
+                  "Peringatan",
+                  "Ubah password anda");
               Get.offAllNamed(Routes.NEW_PASSWORD);
             } else {
               Get.offAllNamed(Routes.HOME);
@@ -42,16 +47,20 @@ class LoginController extends GetxController {
                         Get.back();
                         Get.back();
                       },
-                      child: wSmallText(text: "Cancel")),
+                      child: wSmallText(text: "Batal")),
                   ElevatedButton(
                       onPressed: () async {
                         try {
-                          Get.snackbar("Berhasil", "Cek Email anda!",
-                              backgroundColor: Colors.white);
+                          Get.snackbar(
+                            backgroundColor: Colors.white,
+                            "Berhasil",
+                            "Cek Email anda!",
+                          );
                           await userCredential.user!.sendEmailVerification();
                           Get.back();
                         } catch (e) {
-                          Get.snackbar("Error", "$e");
+                          Get.snackbar(
+                              backgroundColor: Colors.white, "Error", "$e");
                         }
                       },
                       child: wSmallText(
@@ -63,11 +72,17 @@ class LoginController extends GetxController {
         }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
-          Get.snackbar("Terjadi Kesalahan!", "Email tidak terdaftar");
+          Get.snackbar(
+              backgroundColor: Colors.white,
+              "Terjadi Kesalahan!",
+              "Email tidak terdaftar");
           print('No user found for that email.');
         } else if (e.code == 'wrong-password') {
           print('Wrong password provided for that user.');
-          Get.snackbar("Terjadi Kesalahan!", "Password salah!");
+          Get.snackbar(
+              backgroundColor: Colors.white,
+              "Terjadi Kesalahan!",
+              "Password salah!");
         }
       } catch (e) {
         print('$e');
@@ -75,7 +90,8 @@ class LoginController extends GetxController {
         isLoading.value = false;
       }
     } else {
-      Get.snackbar("Terjadi Kesalahan!", "Email dan password wajib diisi");
+      Get.snackbar("Terjadi Kesalahan!", "Email dan password wajib diisi",
+          backgroundColor: Colors.white);
     }
   }
 }

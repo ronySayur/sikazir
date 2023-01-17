@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../routes/app_pages.dart';
-import 'constants.dart';
+import '../../../routes/app_pages.dart';
 
 class CloudStorageInfo {
   final String? svgSrc, title, totalStorage;
@@ -25,60 +24,55 @@ List demoMyFiles = [
   CloudStorageInfo(
     press: () {},
     title: "Transaksi",
+    svgSrc: "assets/icons/transactions.svg",
     numOfFiles: 1328,
-    svgSrc: "assets/icons/menu_tran.svg",
     totalStorage: "1.9GB",
-    color: primaryColor,
+    color: Colors.red,
     percentage: 35,
   ),
   CloudStorageInfo(
-    press: () {},
+    press: () => Get.toNamed(Routes.HOME_PRODUK),
     title: "Produk",
+    svgSrc: "assets/icons/product.svg",
     numOfFiles: 1328,
-    svgSrc: "assets/icons/menu_store.svg",
     totalStorage: "2.9GB",
-    color: Color(0xFFFFA113),
+    color: Colors.amber,
     percentage: 35,
   ),
   CloudStorageInfo(
     press: () {},
     title: "Supplier",
+    svgSrc: "assets/icons/supplier.svg",
     numOfFiles: 1328,
-    svgSrc: "assets/icons/one_drive.svg",
     totalStorage: "1GB",
-    color: Color(0xFFA4CDFF),
+    color: Colors.grey,
     percentage: 10,
   ),
   CloudStorageInfo(
     press: () {},
     title: "Toko",
-    numOfFiles: 5328,
     svgSrc: "assets/icons/toko.svg",
+    numOfFiles: 5328,
     totalStorage: "7.3GB",
-    color: Color.fromARGB(255, 13, 23, 32),
+    color: Colors.green,
     percentage: 78,
   ),
-
-  //Add Pegawai
   CloudStorageInfo(
-    //TODO Hitung jumlah pegawai di db
-    press: () => Get.toNamed(Routes.ADD_PEGAWAI),
+    press: () => Get.toNamed(Routes.HOME_PEGAWAI),
     title: "Pegawai",
+    svgSrc: "assets/icons/employee.svg",
     numOfFiles: 8,
-    svgSrc: "assets/icons/drop_box.svg",
     totalStorage: "7.3GB",
-    color: Color(0xFF007EE5),
+    color: Colors.lightBlue,
     percentage: 78,
   ),
-
-  //Laporan
   CloudStorageInfo(
     press: () {},
     title: "Laporan",
+    svgSrc: "assets/icons/reports.svg",
     numOfFiles: 5328,
-    svgSrc: "assets/icons/drop_box.svg",
     totalStorage: "7.3GB",
-    color: Color(0xFF007EE5),
+    color: Colors.orange,
     percentage: 78,
   ),
 ];
