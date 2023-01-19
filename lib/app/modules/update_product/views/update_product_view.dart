@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:io';
 
 import 'package:avatar_glow/avatar_glow.dart';
@@ -8,20 +6,29 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:get/get.dart';
-import 'package:sikasir/app/controllers/auth_controller.dart';
+import 'package:sikasir/widgets/widgets.dart';
 
-import '../../../../widgets/widgets.dart';
-import '../controllers/add_produk_controller.dart';
+import '../../../controllers/auth_controller.dart';
+import '../../../models/product_model.dart';
+import '../controllers/update_product_controller.dart';
 
-class AddProdukView extends GetView<AddProdukController> {
-  AddProdukView({Key? key}) : super(key: key);
-
+class UpdateProductView extends GetView<UpdateProductController> {
+  UpdateProductView({Key? key}) : super(key: key);
   final authC = Get.find<AuthController>();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final ProdukModel dataProduk = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
+    controller.hargaJual.text = dataProduk.hargaJual!;
+    controller.hargaModal.text = dataProduk.hargaModal!;
+    controller.namaProduk.text = dataProduk.namaProduk!;
+    controller.merkC.text = dataProduk.merek!;
+    controller.kategoriC.text = dataProduk.kategori!;
+    controller.imageC.text = dataProduk.fotoProduk!;
+
     return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: authC.streamUser(),
         builder: (context, snapshot) {
@@ -34,12 +41,12 @@ class AddProdukView extends GetView<AddProdukController> {
 
             return Scaffold(
                 appBar: AppBar(
-                  title: const Text('Tambah Produk'),
+                  title: const Text('Edit Produk'),
                   backgroundColor: Colors.red,
                   centerTitle: false,
                   actions: [
                     TextButton(
-                        onPressed: () => controller.addProduct(user),
+                        onPressed: () => controller.updateProduct(user),
                         child: Container(
                           padding: const EdgeInsets.only(
                               bottom: 10, top: 10, left: 20, right: 20),
@@ -75,8 +82,8 @@ class AddProdukView extends GetView<AddProdukController> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Stack(children: [
-                                  GetBuilder<AddProdukController>(
-                                    init: AddProdukController(),
+                                  GetBuilder<UpdateProductController>(
+                                    init: UpdateProductController(),
                                     initState: (_) {},
                                     builder: (c) {
                                       return AvatarGlow(
@@ -303,7 +310,7 @@ class AddProdukView extends GetView<AddProdukController> {
                                         horizontal: wDimension.width30,
                                         vertical: wDimension.height15)),
                                 onPressed: () async {
-                                  controller.addProduct(user);
+                                  controller.updateProduct(user);
                                 },
                                 child: wSmallText(
                                     text: "Simpan",

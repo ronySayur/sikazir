@@ -6,6 +6,7 @@ environment:
   sdk: '>=2.18.6 <3.0.0'
 
 dependencies:
+  animations: ^2.0.7
   avatar_glow: 2.0.2
   card_swiper: ^2.0.4
   cloud_firestore: ^4.3.1

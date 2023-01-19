@@ -34,6 +34,8 @@ import '../modules/transaksi_penjualan/bindings/transaksi_penjualan_binding.dart
 import '../modules/transaksi_penjualan/views/transaksi_penjualan_view.dart';
 import '../modules/update_password/bindings/update_password_binding.dart';
 import '../modules/update_password/views/update_password_view.dart';
+import '../modules/update_product/bindings/update_product_binding.dart';
+import '../modules/update_product/views/update_product_view.dart';
 import '../modules/update_profile/bindings/update_profile_binding.dart';
 import '../modules/update_profile/views/update_profile_view.dart';
 
@@ -62,7 +64,7 @@ class AppPages {
         transition: Transition.fadeIn),
     GetPage(
         name: _Paths.ADD_PRODUK,
-        page: () =>  AddProdukView(),
+        page: () => AddProdukView(),
         binding: AddProdukBinding(),
         transition: Transition.fadeIn),
     GetPage(
@@ -126,14 +128,19 @@ class AppPages {
         binding: LaporanBinding(),
         transition: Transition.fadeIn),
     GetPage(
-      name: _Paths.HOME_PRODUK,
-      page: () => const HomeProdukView(),
-      binding: HomeProdukBinding(),
-    ),
+        name: _Paths.HOME_PRODUK,
+        page: () => HomeProdukView(),
+        binding: HomeProdukBinding(),
+        transition: Transition.fadeIn),
     GetPage(
-      name: _Paths.DETAIL_PRODUK,
-      page: () => const DetailProdukView(),
-      binding: DetailProdukBinding(),
-    ),
+        name: _Paths.DETAIL_PRODUK,
+        page: () => DetailProdukView(),
+        binding: DetailProdukBinding(),
+        transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.UPDATE_PRODUCT,
+        page: () => UpdateProductView(),
+        binding: UpdateProductBinding(),
+        transition: Transition.fadeIn),
   ];
 }

@@ -1,19 +1,16 @@
-// ignore_for_file: sized_box_for_whitespace
-
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sikasir/widgets/widgets.dart';
 
-class AddProdukController extends GetxController {
-  String? uid;
-  XFile? image;
+import '../../../../widgets/widgets.dart';
+
+class UpdateProductController extends GetxController {
+  RxBool isLoadingUpdate = false.obs;
   RxBool isLoading = false.obs;
+  RxBool isLoadingDelete = false.obs;
+  String? uid;
+  final ImagePicker picker = ImagePicker();
 
   final TextEditingController hargaJual = TextEditingController();
   final TextEditingController hargaModal = TextEditingController();
@@ -23,99 +20,58 @@ class AddProdukController extends GetxController {
   final TextEditingController stokC = TextEditingController();
   final TextEditingController tambahKategoriC = TextEditingController();
   final TextEditingController tambahmerkC = TextEditingController();
-  final ImagePicker picker = ImagePicker();
+  final TextEditingController imageC = TextEditingController();
+  XFile? image;
 
-  FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  FirebaseStorage storage = FirebaseStorage.instance;
 
   void pickImage() async {
     image = await picker.pickImage(source: ImageSource.gallery);
     update();
   }
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>> streamProduk() async* {
-    yield* firestore.collection("produk").doc().snapshots();
-  }
-
-  Future<void> addProduct(Map<String, dynamic> user) async {
-    if (isLoading.isFalse) {
-      if (hargaJual.text.isNotEmpty && namaProduk.text.isNotEmpty) {
-        //buat loading
-        isLoading(true);
-        //todo
-        var id_produk =
-            merkC.text.substring(0, 1) + "-" + namaProduk.text.substring(1, 3);
-
-        //hasil berupa map
-        Map<String, dynamic> hasil = await afterAddProduct({
-          "keyName": namaProduk.text.substring(0, 1).toUpperCase(),
-          "id_produk": id_produk,
-          "foto_produk": "noimage",
-          "nama_produk": namaProduk.text,
-          "harga_jual": hargaJual.text,
-          "harga_modal": hargaModal.text,
-          "kategori": kategoriC.text,
-          "merek": merkC.text,
-          "email_pegawai": user["email"],
-          "stok": int.tryParse(stokC.text) ?? 0,
-
-          // "email_vendor": emailVendor,
-          // "id_toko": idToko,
-        });
-
-        isLoading(false);
-
-        Get.back();
-
-        Get.snackbar(
-            hasil["error"] == true ? "Error" : "Success", hasil["message"]);
-      } else {
-        Get.snackbar("Error", "Semua data wajib diisi.");
-      }
-    }
-  }
-
-  Future<Map<String, dynamic>> afterAddProduct(
-      Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> updateProduct(Map<String, dynamic> data) async {
     try {
-      //tambah produk data
-      var produk = await firestore.collection("produk").add(data);
-
-      //ambil id produk dari data dan masukan ke uid
-      uid = produk.id;
-
-      //file = path image
-      File file = File(image!.path);
-      //ext = nama image dipisah . dari terakhir
-      String ext = image!.name.split(".").last;
-
-      //tambah produk pada firebase storage
-      await storage.ref('$uid/produk.$ext').putFile(file);
-
-      //url image ddari storage ditambah ext
-      String urlImage = await storage.ref('$uid/produk.$ext').getDownloadURL();
-
-      //habis data masuk di update menambahkan produk id
-      await firestore
-          .collection("produk")
-          .doc(uid)
-          .update({"id_produk": uid, "foto_produk": urlImage});
+      await firestore.collection("produk").doc(data["id_produk"]).update({
+        "name": data["name"],
+        "qty": data["qty"],
+        "foto_produk": "noimage",
+        "nama_produk": data["nama_produk"],
+        "harga_jual": data["harga_jual"],
+        "harga_modal": data["harga_modal"],
+        "kategori": data["kategori"],
+        "merek": data["merek"],
+        "email_pegawai": data["email_pegawai"]
+      });
 
       return {
         "error": false,
-        "message": "Berhasil menambah product.",
+        "message": "Produk berhasil diperbaharui.",
       };
     } catch (e) {
-      // Error general
       return {
         "error": true,
-        "message": "Tidak dapat menambah product.",
+        "message": "Produk gagal diperbaharui",
       };
     }
   }
 
-//menampilkan stream kategori
+  Future<Map<String, dynamic>> deleteProduct(String id) async {
+    try {
+      await firestore.collection("produk").doc(id).delete();
+      return {
+        "error": false,
+        "message": "Produk berhasil dihapus.",
+      };
+    } catch (e) {
+      return {
+        "error": true,
+        "message": "Produk gagal dihapus.",
+      };
+    }
+  }
+
+  //menampilkan stream kategori
   Stream<QuerySnapshot<Map<String, dynamic>>> streamKategori() async* {
     yield* firestore.collection("kategori").snapshots();
   }

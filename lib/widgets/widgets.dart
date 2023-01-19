@@ -4,12 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../app/modules/home_produk/views/design_course_app_theme.dart';
+
 const primaryColor = Color(0xFFD32F2F);
 const secondaryColor = Color.fromARGB(255, 248, 248, 248);
 const bgColor = Color(0xFF212332);
 
 const defaultPadding = 16.0;
-
 
 class wDimension {
   static double screenHeight = Get.context!.height;
@@ -68,7 +69,7 @@ class wBigText extends StatelessWidget {
     required this.text,
     this.size = 0,
     this.weight = FontWeight.normal,
-      this.align = TextAlign.start,
+    this.align = TextAlign.start,
     this.overflow = TextOverflow.ellipsis,
   });
 
@@ -160,4 +161,52 @@ class wAppIcon extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget wTimeBoxUI(String title, String deskripsi) {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Container(
+      decoration: BoxDecoration(
+        color: DesignCourseAppTheme.nearlyWhite,
+        borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+        boxShadow: [
+          BoxShadow(
+              color: DesignCourseAppTheme.grey.withOpacity(0.2),
+              offset: const Offset(1.1, 1.1),
+              blurRadius: 8.0),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(
+            left: 18.0, right: 18.0, top: 12.0, bottom: 12.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                letterSpacing: 0.27,
+                color: DesignCourseAppTheme.nearlyBlue,
+              ),
+            ),
+            Text(
+              deskripsi,
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: 14,
+                letterSpacing: 0.27,
+                color: DesignCourseAppTheme.grey,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

@@ -66,9 +66,7 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
                           width: wDimension.width20 * 4,
                           height: wDimension.height20 * 4,
                           child: Image.network(
-                            user["foto"] != null
-                                ? user["foto"]
-                                : defaultImage,
+                            user["foto"] != null ? user["foto"] : defaultImage,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -144,7 +142,10 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.active) {
+                          //datapegawai
                           var dataPegawai = snapshot.data!.docs;
+
+                          //swiper
                           return Swiper(
                             itemCount: dataPegawai.length,
                             itemWidth: wDimension.screenWidth,
@@ -153,11 +154,8 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
                             itemBuilder: (BuildContext context, int index) {
                               return InkWell(
                                 radius: wDimension.radius20,
-                                onTap: () 
-                                // {                                  print(dataPegawai[index].data());},
-                                => Get.toNamed(Routes.DETAIL_PEGAWAI,
-                                arguments:dataPegawai[index].data()
-                                ),
+                                onTap: () => Get.toNamed(Routes.DETAIL_PEGAWAI,
+                                    arguments: dataPegawai[index].data()),
                                 borderRadius:
                                     BorderRadius.circular(wDimension.radius20),
                                 child: Card(
@@ -194,7 +192,7 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
                                                 size: wDimension.font26,
                                                 weight: FontWeight.bold,
                                                 text:
-                                                    "${dataPegawai[index]["name"]}"),
+                                                    "${dataPegawai[index]["nama_pegawai"]}"),
                                             subtitle: wSmallText(
                                                 text:
                                                     "${dataPegawai[index]["jabatan"]}")),

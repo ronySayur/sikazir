@@ -22,6 +22,7 @@ abstract class Routes {
   static const LAPORAN = _Paths.LAPORAN;
   static const HOME_PRODUK = _Paths.HOME_PRODUK;
   static const DETAIL_PRODUK = _Paths.DETAIL_PRODUK;
+  static const UPDATE_PRODUCT = _Paths.UPDATE_PRODUCT;
 }
 
 abstract class _Paths {
@@ -45,4 +46,5 @@ abstract class _Paths {
   static const LAPORAN = '/laporan';
   static const HOME_PRODUK = '/home-produk';
   static const DETAIL_PRODUK = '/detail-produk';
+  static const UPDATE_PRODUCT = '/update-product';
 }

@@ -2,20 +2,19 @@
 //
 //     final produkModel = produkModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
-ProdukModel produkModelFromJson(String str) => ProdukModel.fromJson(json.decode(str));
+ProdukModel? produkModelFromJson(String str) => ProdukModel.fromJson(json.decode(str));
 
-String produkModelToJson(ProdukModel data) => json.encode(data.toJson());
+String produkModelToJson(ProdukModel? data) => json.encode(data!.toJson());
 
 class ProdukModel {
     ProdukModel({
         required this.idProduk,
+        required this.fotoProduk,
         required this.hargaJual,
         required this.hargaModal,
         required this.kategori,
-        required this.kodeProduk,
         required this.merek,
         required this.emailPegawai,
         required this.namaProduk,
@@ -24,24 +23,24 @@ class ProdukModel {
         required this.idToko,
     });
 
-    String idProduk;
-    String hargaJual;
-    String hargaModal;
-    String kategori;
-    String kodeProduk;
-    String merek;
-    String emailPegawai;
-    String namaProduk;
-    String stok;
-    String emailVendor;
-    String idToko;
+    String? idProduk;
+    String? fotoProduk;
+    String? hargaJual;
+    String? hargaModal;
+    String? kategori;
+    String? merek;
+    String? emailPegawai;
+    String? namaProduk;
+    int? stok;
+    String? emailVendor;
+    String? idToko;
 
     factory ProdukModel.fromJson(Map<String, dynamic> json) => ProdukModel(
         idProduk: json["id_produk"],
+        fotoProduk: json["foto_produk"],
         hargaJual: json["harga_jual"],
         hargaModal: json["harga_modal"],
         kategori: json["kategori"],
-        kodeProduk: json["kode_produk"],
         merek: json["merek"],
         emailPegawai: json["email_pegawai"],
         namaProduk: json["nama_produk"],
@@ -52,10 +51,10 @@ class ProdukModel {
 
     Map<String, dynamic> toJson() => {
         "id_produk": idProduk,
+        "foto_produk": fotoProduk,
         "harga_jual": hargaJual,
         "harga_modal": hargaModal,
         "kategori": kategori,
-        "kode_produk": kodeProduk,
         "merek": merek,
         "email_pegawai": emailPegawai,
         "nama_produk": namaProduk,
