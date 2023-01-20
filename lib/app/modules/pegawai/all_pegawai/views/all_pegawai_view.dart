@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sikasir/app/controllers/auth_controller.dart';
 
-import '../../../../widgets/widgets.dart';
-import '../../../routes/app_pages.dart';
+import 'package:sikasir/app/routes/app_pages.dart';
+import 'package:sikasir/widgets/widgets.dart';
 import '../controllers/all_pegawai_controller.dart';
 
 class AllPegawaiView extends GetView<AllPegawaiController> {

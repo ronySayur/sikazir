@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sikasir/app/models/product_model.dart';
 
-import '../../../../widgets/widgets.dart';
-import '../../../routes/app_pages.dart';
-import '../../home_produk/views/theme.dart';
+import '../../../../routes/app_pages.dart';
+import 'package:sikasir/widgets/widgets.dart';
+
+import '../../../../../widgets/theme.dart';
 import '../controllers/detail_produk_controller.dart';
 
 class DetailProdukView extends GetView<DetailProdukController> {

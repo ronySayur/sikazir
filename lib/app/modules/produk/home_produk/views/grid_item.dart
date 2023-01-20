@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sikasir/app/models/product_model.dart';
+import 'package:sikasir/app/routes/app_pages.dart';
 
-import '../../../models/product_model.dart';
-import '../../../routes/app_pages.dart';
-import 'theme.dart';
+import '../../../../../widgets/theme.dart';
 
 class SearchGridViewProduk extends StatelessWidget {
   const SearchGridViewProduk({

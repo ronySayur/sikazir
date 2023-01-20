@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sikasir/app/models/product_model.dart';
+import 'package:sikasir/app/routes/app_pages.dart';
 import 'package:sikasir/widgets/widgets.dart';
 
-import '../../../models/product_model.dart';
-import '../../../routes/app_pages.dart';
 import '../controllers/home_produk_controller.dart';
 import 'grid_item.dart';
 

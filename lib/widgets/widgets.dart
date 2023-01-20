@@ -1,12 +1,8 @@
-// ignore_for_file: camel_case_types
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 
-import '../app/modules/home_produk/views/theme.dart';
-import '../app/routes/app_pages.dart';
+import 'theme.dart';
 
 const primaryColor = Color(0xFFD32F2F);
 const secondaryColor = Color.fromARGB(255, 248, 248, 248);

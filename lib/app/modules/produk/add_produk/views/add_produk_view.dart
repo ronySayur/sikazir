@@ -10,8 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sikasir/app/controllers/auth_controller.dart';
-
-import '../../../../widgets/widgets.dart';
+import 'package:sikasir/widgets/widgets.dart';
 import '../controllers/add_produk_controller.dart';
 
 class AddProdukView extends GetView<AddProdukController> {

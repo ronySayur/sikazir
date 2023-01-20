@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sikasir/widgets/widgets.dart';
 
-import '../../../../widgets/widgets.dart';
 import '../controllers/add_pegawai_controller.dart';
 
 class AddPegawaiView extends GetView<AddPegawaiController> {

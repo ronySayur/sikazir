@@ -4,11 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sikasir/app/routes/app_pages.dart';
-
-import '../../../../widgets/widgets.dart';
+import 'package:sikasir/widgets/widgets.dart';
 
 class UpdateProductController extends GetxController {
   RxBool isLoadingUpdate = false.obs;

@@ -3,9 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sikasir/app/controllers/auth_controller.dart';
+import 'package:sikasir/app/routes/app_pages.dart';
 import 'package:sikasir/widgets/widgets.dart';
 
-import '../../../routes/app_pages.dart';
 import '../controllers/home_pegawai_controller.dart';
 
 class HomePegawaiView extends GetView<HomePegawaiController> {

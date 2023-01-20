@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sikasir/app/controllers/auth_controller.dart';
+import 'package:sikasir/app/models/product_model.dart';
 import 'package:sikasir/widgets/widgets.dart';
 
-import '../../../controllers/auth_controller.dart';
-import '../../../models/product_model.dart';
 import '../controllers/update_product_controller.dart';
 
 class UpdateProductView extends GetView<UpdateProductController> {

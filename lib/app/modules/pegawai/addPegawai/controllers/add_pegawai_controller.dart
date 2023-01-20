@@ -1,14 +1,14 @@
 // ignore_for_file: avoid_print
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
-
-import '../../../../widgets/widgets.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sikasir/widgets/widgets.dart';
 
 class AddPegawaiController extends GetxController {
   RxBool isLoading = false.obs;
@@ -77,7 +77,7 @@ class AddPegawaiController extends GetxController {
             "foto": urlImage,
             "password": "111111",
             "uid": uid,
-            //TODO 
+            //TODO
             "role": "pegawai",
             "createdAt": DateTime.now().toIso8601String()
           });
@@ -150,15 +150,14 @@ class AddPegawaiController extends GetxController {
               decoration: InputDecoration(
                 labelText: "Pin",
                 counterText: "",
-                labelStyle: TextStyle(
-                    color: Colors.black, fontSize: wDimension.font16),
+                labelStyle:
+                    TextStyle(color: Colors.black, fontSize: wDimension.font16),
                 focusedBorder: OutlineInputBorder(
                     borderRadius:
                         BorderRadius.circular(wDimension.radius30 * 10),
                     borderSide: const BorderSide(color: Colors.red)),
                 border: OutlineInputBorder(
-                  borderRadius:
-                      BorderRadius.circular(wDimension.radius30 * 10),
+                  borderRadius: BorderRadius.circular(wDimension.radius30 * 10),
                 ),
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: wDimension.width30,
@@ -179,15 +178,9 @@ class AddPegawaiController extends GetxController {
                     isLoading.value = false;
                   }
                 },
-                child: Text(isLoadingAddPegawai.isFalse
-                    ? "Add Pegawai"
-                    : "Loading..")))
+                child: Text(
+                    isLoadingAddPegawai.isFalse ? "Add Pegawai" : "Loading..")))
           ],
         ));
   }
-
-
-
-  
-  }
-
+}
