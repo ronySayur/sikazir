@@ -23,14 +23,13 @@ class AddProdukController extends GetxController {
   final TextEditingController stokC = TextEditingController();
   final TextEditingController tambahKategoriC = TextEditingController();
   final TextEditingController tambahmerkC = TextEditingController();
-  final ImagePicker picker = ImagePicker();
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseStorage storage = FirebaseStorage.instance;
 
   void pickImage() async {
-    image = await picker.pickImage(source: ImageSource.gallery);
+    image = await ImagePicker().pickImage(source: ImageSource.gallery);
     update();
   }
 
@@ -40,17 +39,21 @@ class AddProdukController extends GetxController {
 
   Future<void> addProduct(Map<String, dynamic> user) async {
     if (isLoading.isFalse) {
-      if (hargaJual.text.isNotEmpty && namaProduk.text.isNotEmpty) {
+      if (hargaJual.text.isNotEmpty &&
+          hargaModal.text.isNotEmpty &&
+          kategoriC.text.isNotEmpty &&
+          merkC.text.isNotEmpty &&
+          namaProduk.text.isNotEmpty) {
         //buat loading
         isLoading(true);
-        //todo
-        var id_produk =
+        
+        var idProduk =
             merkC.text.substring(0, 1) + "-" + namaProduk.text.substring(1, 3);
 
         //hasil berupa map
         Map<String, dynamic> hasil = await afterAddProduct({
           "keyName": namaProduk.text.substring(0, 1).toUpperCase(),
-          "id_produk": id_produk,
+          "id_produk": idProduk,
           "foto_produk": "noimage",
           "nama_produk": namaProduk.text,
           "harga_jual": hargaJual.text,
@@ -100,14 +103,13 @@ class AddProdukController extends GetxController {
       await firestore
           .collection("produk")
           .doc(uid)
-          .update({"id_produk": uid, "foto_produk": urlImage});
+          .set({"id_produk": uid, "foto_produk": urlImage});
 
       return {
         "error": false,
         "message": "Berhasil menambah product.",
       };
     } catch (e) {
-      // Error general
       return {
         "error": true,
         "message": "Tidak dapat menambah product.",

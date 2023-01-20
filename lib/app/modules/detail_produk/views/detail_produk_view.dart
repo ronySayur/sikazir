@@ -5,7 +5,7 @@ import 'package:sikasir/app/models/product_model.dart';
 
 import '../../../../widgets/widgets.dart';
 import '../../../routes/app_pages.dart';
-import '../../home_produk/views/design_course_app_theme.dart';
+import '../../home_produk/views/theme.dart';
 import '../controllers/detail_produk_controller.dart';
 
 class DetailProdukView extends GetView<DetailProdukController> {
@@ -17,7 +17,7 @@ class DetailProdukView extends GetView<DetailProdukController> {
         (MediaQuery.of(context).size.width / 1.2) +
         24.0;
     return Container(
-      color: DesignCourseAppTheme.nearlyWhite,
+      color: DesignAppTheme.nearlyWhite,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(
@@ -41,13 +41,13 @@ class DetailProdukView extends GetView<DetailProdukController> {
               right: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  color: DesignCourseAppTheme.nearlyWhite,
+                  color: DesignAppTheme.nearlyWhite,
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(32.0),
                       topRight: Radius.circular(32.0)),
                   boxShadow: [
                     BoxShadow(
-                        color: DesignCourseAppTheme.grey.withOpacity(0.2),
+                        color: DesignAppTheme.grey.withOpacity(0.2),
                         offset: const Offset(1.1, 1.1),
                         blurRadius: 10.0),
                   ],
@@ -79,7 +79,7 @@ class DetailProdukView extends GetView<DetailProdukController> {
                                     fontWeight: FontWeight.w900,
                                     fontSize: 22,
                                     letterSpacing: 0.27,
-                                    color: DesignCourseAppTheme.nearlyBlue,
+                                    color: DesignAppTheme.nearlyBlue,
                                   ),
                                 ),
                                 Text(
@@ -89,7 +89,7 @@ class DetailProdukView extends GetView<DetailProdukController> {
                                     fontWeight: FontWeight.w600,
                                     fontSize: 18,
                                     letterSpacing: 0.1,
-                                    color: DesignCourseAppTheme.darkerText,
+                                    color: DesignAppTheme.darkerText,
                                   ),
                                 ),
                               ],
@@ -144,7 +144,8 @@ class DetailProdukView extends GetView<DetailProdukController> {
                           Spacer(),
                           InkWell(
                             onTap: () {
-                              Get.toNamed(Routes.UPDATE_PRODUCT);
+                              Get.toNamed(Routes.UPDATE_PRODUCT,
+                                  arguments: dataProduk);
                             },
                             child: Obx(() => AnimatedOpacity(
                                   duration: const Duration(milliseconds: 500),
@@ -162,15 +163,14 @@ class DetailProdukView extends GetView<DetailProdukController> {
                                           child: Container(
                                             height: 48,
                                             decoration: BoxDecoration(
-                                              color: DesignCourseAppTheme
-                                                  .nearlyBlue,
+                                              color: DesignAppTheme.nearlyBlue,
                                               borderRadius:
                                                   const BorderRadius.all(
                                                 Radius.circular(16.0),
                                               ),
                                               boxShadow: [
                                                 BoxShadow(
-                                                    color: DesignCourseAppTheme
+                                                    color: DesignAppTheme
                                                         .nearlyBlue
                                                         .withOpacity(0.5),
                                                     offset:
@@ -186,7 +186,7 @@ class DetailProdukView extends GetView<DetailProdukController> {
                                                   fontWeight: FontWeight.w600,
                                                   fontSize: 18,
                                                   letterSpacing: 0.0,
-                                                  color: DesignCourseAppTheme
+                                                  color: DesignAppTheme
                                                       .nearlyWhite,
                                                 ),
                                               ),
@@ -217,10 +217,10 @@ class DetailProdukView extends GetView<DetailProdukController> {
                     parent: controller.animationController!,
                     curve: Curves.fastOutSlowIn),
                 child: InkWell(
-                  onTap: () =>
-                      Get.toNamed(Routes.UPDATE_PRODUCT, arguments: dataProduk),
+                  onTap: () => Get.offNamed(Routes.UPDATE_PRODUCT,
+                      arguments: dataProduk),
                   child: Card(
-                    color: DesignCourseAppTheme.nearlyBlue,
+                    color: DesignAppTheme.nearlyBlue,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50.0)),
                     elevation: 10.0,
@@ -230,7 +230,7 @@ class DetailProdukView extends GetView<DetailProdukController> {
                       child: Center(
                         child: Icon(
                           Icons.edit,
-                          color: DesignCourseAppTheme.nearlyWhite,
+                          color: DesignAppTheme.nearlyWhite,
                           size: 30,
                         ),
                       ),
@@ -258,7 +258,7 @@ class DetailProdukView extends GetView<DetailProdukController> {
                     child: Center(
                       child: Icon(
                         Icons.store,
-                        color: DesignCourseAppTheme.nearlyWhite,
+                        color: DesignAppTheme.nearlyWhite,
                         size: 30,
                       ),
                     ),
@@ -278,7 +278,7 @@ class DetailProdukView extends GetView<DetailProdukController> {
                         BorderRadius.circular(AppBar().preferredSize.height),
                     child: Icon(
                       Icons.arrow_back_ios,
-                      color: DesignCourseAppTheme.nearlyBlack,
+                      color: DesignAppTheme.nearlyBlack,
                     ),
                     onTap: () {
                       Get.back();

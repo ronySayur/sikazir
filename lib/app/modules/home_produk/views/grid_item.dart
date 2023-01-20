@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../main.dart';
 import '../../../models/product_model.dart';
 import '../../../routes/app_pages.dart';
-import 'design_course_app_theme.dart';
+import 'theme.dart';
 
 class SearchGridViewProduk extends StatelessWidget {
   const SearchGridViewProduk({
@@ -43,8 +42,7 @@ class SearchGridViewProduk extends StatelessWidget {
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
-                                color:
-                                    DesignCourseAppTheme.grey.withOpacity(0.08),
+                                color: DesignAppTheme.grey.withOpacity(0.08),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(16.0)),
                                 // border: new Border.all(
@@ -66,8 +64,7 @@ class SearchGridViewProduk extends StatelessWidget {
                                               fontWeight: FontWeight.w600,
                                               fontSize: 16,
                                               letterSpacing: 0.27,
-                                              color: DesignCourseAppTheme
-                                                  .darkerText,
+                                              color: DesignAppTheme.darkerText,
                                             ),
                                           ),
                                         ),
@@ -90,8 +87,7 @@ class SearchGridViewProduk extends StatelessWidget {
                                                   fontWeight: FontWeight.w200,
                                                   fontSize: 12,
                                                   letterSpacing: 0.27,
-                                                  color:
-                                                      DesignCourseAppTheme.grey,
+                                                  color: DesignAppTheme.grey,
                                                 ),
                                               ),
                                             ],
@@ -123,8 +119,7 @@ class SearchGridViewProduk extends StatelessWidget {
                                 const BorderRadius.all(Radius.circular(16.0)),
                             boxShadow: <BoxShadow>[
                               BoxShadow(
-                                  color: DesignCourseAppTheme.grey
-                                      .withOpacity(0.2),
+                                  color: DesignAppTheme.grey.withOpacity(0.2),
                                   offset: const Offset(0.0, 0.0),
                                   blurRadius: 6.0),
                             ],
@@ -135,11 +130,12 @@ class SearchGridViewProduk extends StatelessWidget {
                             child: AspectRatio(
                                 aspectRatio: 1.28,
                                 child: dataProduk["foto_produk"] == "noimage"
-                                    ? Image.asset("assets/logo/noproduk.png",
-                                        fit: BoxFit.cover)
-                                    : Image.network(
-                                        "${dataProduk["foto_produk"]}",
-                                        fit: BoxFit.fill)),
+                                    ? fotoProdukKosong()
+                                    : dataProduk["foto_produk"] == null
+                                        ? fotoProdukKosong()
+                                        : Image.network(
+                                            "${dataProduk["foto_produk"]}",
+                                            fit: BoxFit.fill)),
                           ),
                         ),
                       ),
@@ -152,6 +148,10 @@ class SearchGridViewProduk extends StatelessWidget {
         );
       },
     );
+  }
+
+  Image fotoProdukKosong() {
+    return Image.asset("assets/logo/noproduk.png", fit: BoxFit.fill);
   }
 }
 
@@ -192,8 +192,7 @@ class GridViewProduk extends StatelessWidget {
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
-                                color:
-                                    DesignCourseAppTheme.grey.withOpacity(0.08),
+                                color: DesignAppTheme.grey.withOpacity(0.08),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(16.0)),
                                 // border: new Border.all(
@@ -215,8 +214,7 @@ class GridViewProduk extends StatelessWidget {
                                               fontWeight: FontWeight.w600,
                                               fontSize: 16,
                                               letterSpacing: 0.27,
-                                              color: DesignCourseAppTheme
-                                                  .darkerText,
+                                              color: DesignAppTheme.darkerText,
                                             ),
                                           ),
                                         ),
@@ -239,8 +237,7 @@ class GridViewProduk extends StatelessWidget {
                                                   fontWeight: FontWeight.w200,
                                                   fontSize: 12,
                                                   letterSpacing: 0.27,
-                                                  color:
-                                                      DesignCourseAppTheme.grey,
+                                                  color: DesignAppTheme.grey,
                                                 ),
                                               ),
                                             ],
@@ -272,8 +269,7 @@ class GridViewProduk extends StatelessWidget {
                                 const BorderRadius.all(Radius.circular(16.0)),
                             boxShadow: <BoxShadow>[
                               BoxShadow(
-                                  color: DesignCourseAppTheme.grey
-                                      .withOpacity(0.2),
+                                  color: DesignAppTheme.grey.withOpacity(0.2),
                                   offset: const Offset(0.0, 0.0),
                                   blurRadius: 6.0),
                             ],

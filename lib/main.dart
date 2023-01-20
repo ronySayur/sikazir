@@ -1,5 +1,6 @@
 // ignore_for_file: unused_field
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,8 @@ Future<void> main() async {
     name: "sikasir",
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
   await GetStorage.init();
+  accessDataOffline_configureCache();
   runApp(MyApp());
 }
 
@@ -46,6 +47,15 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+}
+
+void accessDataOffline_configureCache() {
+  // [START access_data_offline_configure_cache_size]
+  FirebaseFirestore.instance.settings = const Settings(
+    persistenceEnabled: true,
+    cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
+  );
+  // [END access_data_offline_configure_cache_size]
 }
 
 class HexColor extends Color {

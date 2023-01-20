@@ -3,8 +3,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 
-import '../app/modules/home_produk/views/design_course_app_theme.dart';
+import '../app/modules/home_produk/views/theme.dart';
+import '../app/routes/app_pages.dart';
 
 const primaryColor = Color(0xFFD32F2F);
 const secondaryColor = Color.fromARGB(255, 248, 248, 248);
@@ -168,11 +170,11 @@ Widget wTimeBoxUI(String title, String deskripsi) {
     padding: const EdgeInsets.all(8.0),
     child: Container(
       decoration: BoxDecoration(
-        color: DesignCourseAppTheme.nearlyWhite,
+        color: DesignAppTheme.nearlyWhite,
         borderRadius: const BorderRadius.all(Radius.circular(16.0)),
         boxShadow: [
           BoxShadow(
-              color: DesignCourseAppTheme.grey.withOpacity(0.2),
+              color: DesignAppTheme.grey.withOpacity(0.2),
               offset: const Offset(1.1, 1.1),
               blurRadius: 8.0),
         ],
@@ -191,7 +193,7 @@ Widget wTimeBoxUI(String title, String deskripsi) {
                 fontWeight: FontWeight.w600,
                 fontSize: 14,
                 letterSpacing: 0.27,
-                color: DesignCourseAppTheme.nearlyBlue,
+                color: DesignAppTheme.nearlyBlue,
               ),
             ),
             Text(
@@ -201,7 +203,7 @@ Widget wTimeBoxUI(String title, String deskripsi) {
                 fontWeight: FontWeight.w300,
                 fontSize: 14,
                 letterSpacing: 0.27,
-                color: DesignCourseAppTheme.grey,
+                color: DesignAppTheme.grey,
               ),
             ),
           ],
@@ -209,4 +211,29 @@ Widget wTimeBoxUI(String title, String deskripsi) {
       ),
     ),
   );
+}
+
+Future<bool> willPopScope() async {
+  return (await Get.defaultDialog(
+          title: "Konfirmasi",
+          content: Column(
+            children: [
+              wSmallText(text: "Apakah anda yakin untuk kembali?"),
+              SizedBox(height: wDimension.height10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  OutlinedButton(
+                      onPressed: () => Get.back(), child: const Text("Batal")),
+                  ElevatedButton(
+                      onPressed: () {
+                        Get.back();
+                        Get.back();
+                      },
+                      child: Text("Konfirmasi"))
+                ],
+              ),
+            ],
+          ))) ??
+      false;
 }

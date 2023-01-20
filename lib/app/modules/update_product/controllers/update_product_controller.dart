@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sikasir/app/routes/app_pages.dart';
 
 import '../../../../widgets/widgets.dart';
 
@@ -10,55 +15,118 @@ class UpdateProductController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isLoadingDelete = false.obs;
   String? uid;
-  final ImagePicker picker = ImagePicker();
 
+  final TextEditingController idProduk = TextEditingController();
+  final TextEditingController emailPegawai = TextEditingController();
+  final TextEditingController namaProduk = TextEditingController();
   final TextEditingController hargaJual = TextEditingController();
   final TextEditingController hargaModal = TextEditingController();
-  final TextEditingController namaProduk = TextEditingController();
-  final TextEditingController merkC = TextEditingController();
-  final TextEditingController kategoriC = TextEditingController();
   final TextEditingController stokC = TextEditingController();
+  final TextEditingController fotoNetwork = TextEditingController();
+
+  final TextEditingController kategoriC = TextEditingController();
   final TextEditingController tambahKategoriC = TextEditingController();
+  final TextEditingController merkC = TextEditingController();
   final TextEditingController tambahmerkC = TextEditingController();
-  final TextEditingController imageC = TextEditingController();
-  XFile? image;
+
+  FirebaseStorage storage = FirebaseStorage.instance;
+
+  XFile? fotoLocal;
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   void pickImage() async {
-    image = await picker.pickImage(source: ImageSource.gallery);
+    fotoLocal = await ImagePicker().pickImage(source: ImageSource.gallery);
     update();
   }
 
-  Future<Map<String, dynamic>> updateProduct(Map<String, dynamic> data) async {
+  Future<void> updateProduct() async {
+    isLoading.value = true;
     try {
-      await firestore.collection("produk").doc(data["id_produk"]).update({
-        "name": data["name"],
-        "qty": data["qty"],
-        "foto_produk": "noimage",
-        "nama_produk": data["nama_produk"],
-        "harga_jual": data["harga_jual"],
-        "harga_modal": data["harga_modal"],
-        "kategori": data["kategori"],
-        "merek": data["merek"],
-        "email_pegawai": data["email_pegawai"]
-      });
+      Map<String, dynamic> dataMapProduk = {
+        "nama_produk": namaProduk.text,
+        "harga_jual": hargaJual.text,
+        "harga_modal": hargaModal.text,
+        "kategori": kategoriC.text,
+        "merek": merkC.text,
+        "email_pegawai": emailPegawai.text
+      };
 
-      return {
-        "error": false,
-        "message": "Produk berhasil diperbaharui.",
-      };
+      if (fotoLocal != null) {
+        File file = File(fotoLocal!.path);
+        String ext = fotoLocal!.name.split(".").last;
+        await storage.ref('${idProduk.text}/profile.$ext').putFile(file);
+        String urlImage =
+            await storage.ref('${idProduk.text}/profile.$ext').getDownloadURL();
+
+        dataMapProduk.addAll({"foto_produk": urlImage});
+      }
+
+      await firestore
+          .collection("produk")
+          .doc(idProduk.text)
+          .update(dataMapProduk);
+
+      fotoLocal = null;
+
+      Get.offNamed(Routes.HOME_PRODUK);
+      Get.snackbar("Berhasil", "Berhasil update profile",
+          duration: const Duration(seconds: 2));
     } catch (e) {
-      return {
-        "error": true,
-        "message": "Produk gagal diperbaharui",
-      };
+      Get.snackbar("Terjadi Kesalahan", "Tidak dapat update profile($e)");
+    } finally {
+      isLoading.value = false;
     }
   }
 
-  Future<Map<String, dynamic>> deleteProduct(String id) async {
+  Future<void> deleteFoto() async {
+    isLoading.value = true;
+    
     try {
-      await firestore.collection("produk").doc(id).delete();
+      if (fotoNetwork.text != "noimage" && fotoNetwork.text != null) {
+        await storage.ref(idProduk.text).listAll().then((value) {
+          value.items.forEach((element) {
+            storage.ref(element.fullPath).delete();
+          });
+        });
+
+        await firestore.collection("produk").doc(idProduk.text).update({
+          "foto_produk": "noimage",
+        });
+
+        fotoLocal = null;
+        fotoNetwork.text = "noimage";
+
+        update();
+
+        Get.back();
+        Get.snackbar("Berhasil", "Berhasil hapus image",
+            duration: const Duration(seconds: 2));
+      } else {
+        await firestore.collection("produk").doc(idProduk.text).update({
+          "foto_produk": "noimage",
+        });
+
+        fotoNetwork.text = "noimage";
+
+        fotoLocal = null;
+
+        update();
+
+        Get.back();
+        Get.snackbar("Berhasil", "Berhasil hapus image",
+            duration: const Duration(seconds: 2));
+      }
+    } catch (e) {
+      Get.snackbar("Terjadi Kesalahan", "Tidak dapat delete profile($e)");
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<Map<String, dynamic>> deleteProduct() async {
+    try {
+      await firestore.collection("produk").doc(idProduk.text).delete();
       return {
         "error": false,
         "message": "Produk berhasil dihapus.",

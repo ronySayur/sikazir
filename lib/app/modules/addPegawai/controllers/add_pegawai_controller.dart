@@ -125,61 +125,65 @@ class AddPegawaiController extends GetxController {
         teleponC.text.isNotEmpty &&
         image != null) {
       isLoading.value = true;
-      Get.defaultDialog(
-          title: "Valdiasi admin",
-          content: Column(
-            children: [
-              wSmallText(text: "masukan password untuk validasi"),
-              SizedBox(height: wDimension.height10),
-              TextField(
-                controller: passAdminC,
-                cursorColor: Colors.black,
-                textInputAction: TextInputAction.done,
-                maxLength: 6,
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: "Pin",
-                  counterText: "",
-                  labelStyle: TextStyle(
-                      color: Colors.black, fontSize: wDimension.font16),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(wDimension.radius30 * 10),
-                      borderSide: const BorderSide(color: Colors.red)),
-                  border: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(wDimension.radius30 * 10),
-                  ),
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: wDimension.width30,
-                    vertical: wDimension.width15,
-                  ),
-                ),
-              ),
-              OutlinedButton(
-                  onPressed: () async {
-                    isLoading.value = false;
-                    Get.back();
-                  },
-                  child: const Text("Batal")),
-              Obx(() => ElevatedButton(
-                  onPressed: () async {
-                    if (isLoadingAddPegawai.isFalse) {
-                      await prosesAddPegawai();
-                      isLoading.value = false;
-                    }
-                  },
-                  child: Text(isLoadingAddPegawai.isFalse
-                      ? "Add Pegawai"
-                      : "Loading..")))
-            ],
-          ));
+      await konfirmasiDialog();
     } else {
       Get.snackbar("Error", "Semua form dan foto harap diisi terlebih dahulu");
     }
+  }
+
+  konfirmasiDialog() async {
+    Get.defaultDialog(
+        title: "Valdiasi admin",
+        content: Column(
+          children: [
+            wSmallText(text: "masukan password untuk validasi"),
+            SizedBox(height: wDimension.height10),
+            TextField(
+              controller: passAdminC,
+              cursorColor: Colors.black,
+              textInputAction: TextInputAction.done,
+              maxLength: 6,
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: "Pin",
+                counterText: "",
+                labelStyle: TextStyle(
+                    color: Colors.black, fontSize: wDimension.font16),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(wDimension.radius30 * 10),
+                    borderSide: const BorderSide(color: Colors.red)),
+                border: OutlineInputBorder(
+                  borderRadius:
+                      BorderRadius.circular(wDimension.radius30 * 10),
+                ),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: wDimension.width30,
+                  vertical: wDimension.width15,
+                ),
+              ),
+            ),
+            OutlinedButton(
+                onPressed: () async {
+                  isLoading.value = false;
+                  Get.back();
+                },
+                child: const Text("Batal")),
+            Obx(() => ElevatedButton(
+                onPressed: () async {
+                  if (isLoadingAddPegawai.isFalse) {
+                    await prosesAddPegawai();
+                    isLoading.value = false;
+                  }
+                },
+                child: Text(isLoadingAddPegawai.isFalse
+                    ? "Add Pegawai"
+                    : "Loading..")))
+          ],
+        ));
   }
 
 
