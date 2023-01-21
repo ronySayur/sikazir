@@ -1,8 +1,12 @@
-import 'package:flutter/animation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sikasir/widgets/widgets.dart';
 
 class DetailProdukController extends GetxController
     with GetTickerProviderStateMixin {
+  RxBool isLoading = false.obs;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
   final double infoHeight = 364.0;
   AnimationController? animationController;
   Animation<double>? animation;
@@ -21,6 +25,27 @@ class DetailProdukController extends GetxController
     await Future<dynamic>.delayed(const Duration(milliseconds: 200));
     opacity3.value = 1;
     print("3");
+  }
+
+  Future<Map<String, dynamic>> deleteProduct(String IDdelete) async {
+    loading();
+    try {
+      await firestore.collection("produk").doc(IDdelete).delete();
+
+      Get.back();
+      Get.back();
+      Get.back();
+
+      return {
+        "error": false,
+        "message": "Produk berhasil dihapus.",
+      };
+    } catch (e) {
+      return {
+        "error": true,
+        "message": "Produk gagal dihapus.",
+      };
+    }
   }
 
   @override

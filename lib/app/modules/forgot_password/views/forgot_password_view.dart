@@ -12,7 +12,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-                backgroundColor: Colors.red,
+        backgroundColor: Colors.red,
         title: const Text('Forgot Password'),
         centerTitle: true,
       ),
@@ -28,7 +28,11 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
         Obx(() => ElevatedButton(
             onPressed: () async {
               if (controller.isLoading.isFalse) {
+                loading();
                 await controller.sendEmail();
+                await Future.delayed(Duration(seconds: 1));
+
+                Get.back();
               }
             },
             child: controller.isLoading.isFalse
@@ -41,4 +45,6 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
       ]),
     );
   }
+
+
 }

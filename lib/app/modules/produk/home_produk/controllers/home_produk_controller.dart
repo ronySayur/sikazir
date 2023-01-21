@@ -41,7 +41,6 @@ class HomeProdukController extends GetxController
             queryAwal.add(keyNameResult.docs[i].data() as Map<String, dynamic>);
           }
         }
-        print(queryAwal);
       }
 
       if (queryAwal.isNotEmpty) {
@@ -62,7 +61,7 @@ class HomeProdukController extends GetxController
   void onInit() {
     searchC = TextEditingController();
     animationController = AnimationController(
-        duration: const Duration(milliseconds: 2000), vsync: this);
+        duration: const Duration(milliseconds: 500), vsync: this);
     super.onInit();
   }
 

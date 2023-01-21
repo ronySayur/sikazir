@@ -118,11 +118,15 @@ class LoginView extends GetView<LoginController> {
                       width: wDimension.screenWidth,
                       decoration: BoxDecoration(
                           borderRadius:
-                              BorderRadius.circular(wDimension.radius30)),
+                              BorderRadius.circular(wDimension.radius30 * 5)),
                       child: Obx(() => ElevatedButton(
                           onPressed: () async {
                             if (controller.isLoading.isFalse) {
+                              loading();
+
                               await controller.login();
+                              await Future.delayed(Duration(seconds: 2));
+                              Get.back();
                             }
                           },
                           child: controller.isLoading.isFalse

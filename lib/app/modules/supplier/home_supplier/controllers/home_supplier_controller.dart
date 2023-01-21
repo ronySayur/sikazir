@@ -7,7 +7,6 @@ class HomeSupplierController extends GetxController
   AnimationController? animationController;
   late TextEditingController searchC;
 
-  var ontap = false.obs;
   var queryAwal = [].obs;
   var tempSearch = [].obs;
 
@@ -30,9 +29,9 @@ class HomeSupplierController extends GetxController
       var capitalized = data.substring(0, 1).toUpperCase() + data.substring(1);
       if (queryAwal.isEmpty && data.length == 1) {
         //fungsi yang akan dijalankan pada 1 ketikan pertama
-        CollectionReference products = firestore.collection("supplier");
+        CollectionReference sup = firestore.collection("supplier");
 
-        final keyNameResult = await products
+        final keyNameResult = await sup
             .where("keyName", isEqualTo: data.substring(0, 1).toUpperCase())
             .get();
 
@@ -41,27 +40,33 @@ class HomeSupplierController extends GetxController
             queryAwal.add(keyNameResult.docs[i].data() as Map<String, dynamic>);
           }
         }
+        print(keyNameResult.docs);
       }
-
+      print("tempSearch $tempSearch");
       if (queryAwal.isNotEmpty) {
         tempSearch.value = [];
+
         queryAwal.forEach((element) {
-          if (element["nama_supplier"].startsWith(capitalized)) {
+          if (element["nama_vendor"].startsWith(capitalized)) {
             tempSearch.add(element);
           }
         });
+
+        print("queryAwal $queryAwal");
+        print("queryAwal $tempSearch");
       }
     }
 
     queryAwal.refresh();
     tempSearch.refresh();
+    update();
   }
 
   @override
   void onInit() {
     searchC = TextEditingController();
     animationController = AnimationController(
-        duration: const Duration(milliseconds: 2000), vsync: this);
+        duration: const Duration(milliseconds: 500), vsync: this);
     super.onInit();
   }
 

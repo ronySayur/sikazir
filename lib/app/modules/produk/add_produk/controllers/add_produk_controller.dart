@@ -46,14 +46,11 @@ class AddProdukController extends GetxController {
           namaProduk.text.isNotEmpty) {
         //buat loading
         isLoading(true);
-        
-        var idProduk =
-            merkC.text.substring(0, 1) + "-" + namaProduk.text.substring(1, 3);
 
         //hasil berupa map
         Map<String, dynamic> hasil = await afterAddProduct({
           "keyName": namaProduk.text.substring(0, 1).toUpperCase(),
-          "id_produk": idProduk,
+          "id_produk": "idProduk",
           "foto_produk": "noimage",
           "nama_produk": namaProduk.text,
           "harga_jual": hargaJual.text,
@@ -70,6 +67,7 @@ class AddProdukController extends GetxController {
         isLoading(false);
 
         Get.back();
+        Get.back();
 
         Get.snackbar(
             hasil["error"] == true ? "Error" : "Success", hasil["message"]);
@@ -81,40 +79,72 @@ class AddProdukController extends GetxController {
 
   Future<Map<String, dynamic>> afterAddProduct(
       Map<String, dynamic> data) async {
-    try {
-      //tambah produk data
-      var produk = await firestore.collection("produk").add(data);
+    if (image != null) {
+      try {
+        //tambah produk data
+        var produk = await firestore.collection("produk").add(data);
+        uid = produk.id;
 
-      //ambil id produk dari data dan masukan ke uid
-      uid = produk.id;
+        //file = path image
+        File file = File(image!.path);
+        String ext = image!.name.split(".").last;
+        await storage.ref('$uid/produk.$ext').putFile(file);
+        String urlImage =
+            await storage.ref('$uid/produk.$ext').getDownloadURL();
 
-      //file = path image
-      File file = File(image!.path);
-      //ext = nama image dipisah . dari terakhir
-      String ext = image!.name.split(".").last;
+        //habis data masuk di update menambahkan urlimage
+        await firestore
+            .collection("produk")
+            .doc(uid)
+            .update({"foto_produk": urlImage, "id_produk": uid});
 
-      //tambah produk pada firebase storage
-      await storage.ref('$uid/produk.$ext').putFile(file);
+        return {
+          "error": false,
+          "message": "Berhasil menambah product.",
+        };
+      } catch (e) {
+        return {
+          "error": true,
+          "message": "Gagal menambah product",
+        };
+      }
+    } else {
+      try {
+        //tambah produk data
+        var produk = await firestore.collection("produk").add(data);
+        uid = produk.id;
+        //habis data masuk di update menambahkan urlimage
+        await firestore
+            .collection("produk")
+            .doc(uid)
+            .update({"id_produk": uid});
 
-      //url image ddari storage ditambah ext
-      String urlImage = await storage.ref('$uid/produk.$ext').getDownloadURL();
-
-      //habis data masuk di update menambahkan produk id
-      await firestore
-          .collection("produk")
-          .doc(uid)
-          .set({"id_produk": uid, "foto_produk": urlImage});
-
-      return {
-        "error": false,
-        "message": "Berhasil menambah product.",
-      };
-    } catch (e) {
-      return {
-        "error": true,
-        "message": "Tidak dapat menambah product.",
-      };
+        return {
+          "error": false,
+          "message": "Berhasil menambah product.",
+        };
+      } catch (e) {
+        return {
+          "error": true,
+          "message": "Gagal menambah product",
+        };
+      }
     }
+  }
+
+  void cekModal() {
+    if (hargaModal.text.isNotEmpty) {
+      final hargaM =
+          int.parse(hargaModal.text.replaceAll(RegExp('[^0-9]'), ''));
+      final hargaJ = int.parse(hargaJual.text.replaceAll(RegExp('[^0-9]'), ''));
+      if (hargaM >= hargaJ) {
+        Get.snackbar("Peringatan",
+            "Harga modal tidak boleh lebih tinggi dari harga jual");
+        hargaModal.text = "";
+      }
+    }
+
+    update();
   }
 
 //menampilkan stream kategori

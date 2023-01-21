@@ -67,13 +67,13 @@ class bodyDashboard extends StatelessWidget {
                                   ),
                                   SizedBox(height: defaultPadding),
                                   Responsive(
-                                    mobile: FileInfoCardGridView(
+                                    mobile: gridCard(
                                       crossAxisCount: _size.width < 650 ? 2 : 4,
                                       childAspectRatio:
                                           _size.width < 650 ? 1.3 : 1,
                                     ),
-                                    tablet: FileInfoCardGridView(),
-                                    desktop: FileInfoCardGridView(
+                                    tablet: gridCard(),
+                                    desktop: gridCard(
                                       childAspectRatio:
                                           _size.width < 1400 ? 1.1 : 1.4,
                                     ),

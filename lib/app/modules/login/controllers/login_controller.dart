@@ -21,7 +21,6 @@ class LoginController extends GetxController {
           email: emailC.text,
           password: passC.text,
         );
-
         //jika user tidak ada
         if (userCredential.user != null) {
           //jika email sudah di verifikasi
@@ -88,10 +87,18 @@ class LoginController extends GetxController {
         print('$e');
       } finally {
         isLoading.value = false;
+
+        await Future.delayed(Duration(seconds: 1));
+
+        Get.back();
       }
     } else {
       Get.snackbar("Terjadi Kesalahan!", "Email dan password wajib diisi",
           backgroundColor: Colors.white);
+
+      await Future.delayed(Duration(seconds: 1));
+
+ Get.back();
     }
   }
 }

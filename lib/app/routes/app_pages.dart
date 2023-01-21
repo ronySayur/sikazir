@@ -153,7 +153,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DETAIL_SUPPLIER,
-      page: () => const DetailSupplierView(),
+      page: () => DetailSupplierView(),
       binding: DetailSupplierBinding(),
     ),
   ];

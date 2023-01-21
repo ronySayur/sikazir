@@ -20,7 +20,7 @@ class CloudStorageInfo {
   });
 }
 
-List demoMyFiles = [
+List dataMenu = [
   CloudStorageInfo(
     press: () {},
     title: "Transaksi",

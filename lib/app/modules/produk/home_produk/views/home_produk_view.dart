@@ -72,16 +72,28 @@ class HomeProdukView extends GetView<HomeProdukController> {
               return dataKosong();
             }
 
-            List<ProdukModel> allProducts = [];
+            return GetBuilder<HomeProdukController>(builder: (controller) {
+              if (controller.searchC.text.isEmpty) {
+                List<ProdukModel> allProd = [];
 
-            for (var element in snap.data!.docs) {
-              allProducts.add(ProdukModel.fromJson(element.data()));
-            }
-            return Obx(() => controller.ontap.isTrue
-                ? controller.tempSearch.isEmpty
-                    ? dataKosong()
-                    : searchProduk()
-                : showProduk(allProducts));
+                for (var element in snap.data!.docs) {
+                  allProd.add(ProdukModel.fromJson(element.data()));
+                }
+
+                return showProduk(allProd);
+              } else {
+                if (controller.tempSearch.isNotEmpty) {
+                  List<ProdukModel> searchSup = [];
+
+                  for (var element in controller.tempSearch) {
+                    searchSup.add(ProdukModel.fromJson(element));
+                  }
+                  return showProduk(searchSup);
+                } else {
+                  return dataKosong();
+                }
+              }
+            });
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed(Routes.ADD_PRODUK),
@@ -120,10 +132,16 @@ class HomeProdukView extends GetView<HomeProdukController> {
                   ),
                 );
                 controller.animationController?.forward();
-                return GridViewProduk(
-                  animation: animation,
-                  animationController: controller.animationController,
-                  dataProduk: allProducts[index],
+                return GetBuilder<HomeProdukController>(
+                  init: HomeProdukController(),
+                  initState: (_) {},
+                  builder: (c) {
+                    return GridViewProduk(
+                      animation: animation,
+                      animationController: controller.animationController,
+                      dataProduk: allProducts[index],
+                    );
+                  },
                 );
               },
             ),
@@ -139,49 +157,6 @@ class HomeProdukView extends GetView<HomeProdukController> {
         children: [
           Lottie.asset("assets/lottie/empty.json"),
           wBigText(text: "Produk Kosong")
-        ],
-      ),
-    );
-  }
-
-  SingleChildScrollView searchProduk() {
-    return SingleChildScrollView(
-      physics: ScrollPhysics(),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(defaultPadding),
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 32.0,
-                crossAxisSpacing: 32.0,
-                childAspectRatio: 0.8,
-              ),
-              padding: const EdgeInsets.all(8),
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: controller.tempSearch.length,
-              itemBuilder: (context, index) {
-                final int count = controller.tempSearch.length;
-                final Animation<double> animation =
-                    Tween<double>(begin: 0.0, end: 1.0).animate(
-                  CurvedAnimation(
-                    parent: controller.animationController!,
-                    curve: Interval((1 / count) * index, 1.0,
-                        curve: Curves.fastOutSlowIn),
-                  ),
-                );
-                controller.animationController?.forward();
-                return SearchGridViewProduk(
-                  animation: animation,
-                  animationController: controller.animationController,
-                  dataProduk: controller.tempSearch[index],
-                );
-              },
-            ),
-          ),
         ],
       ),
     );

@@ -28,8 +28,8 @@ class FileInfoCard extends StatelessWidget {
                 children: [
                   Container(
                     padding: EdgeInsets.all(defaultPadding * 0.75),
-                    height: wDimension.height45,
-                    width: wDimension.height45,
+                    height: 45,
+                    width: 45,
                     decoration: BoxDecoration(
                       color: info.color!.withOpacity(0.1),
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -120,8 +120,8 @@ class ProgressLine extends StatelessWidget {
   }
 }
 
-class FileInfoCardGridView extends StatelessWidget {
-  const FileInfoCardGridView({
+class gridCard extends StatelessWidget {
+  const gridCard({
     Key? key,
     this.crossAxisCount = 4,
     this.childAspectRatio = 1,
@@ -135,14 +135,14 @@ class FileInfoCardGridView extends StatelessWidget {
     return GridView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: demoMyFiles.length,
+      itemCount: dataMenu.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
         crossAxisSpacing: defaultPadding,
         mainAxisSpacing: defaultPadding,
         childAspectRatio: childAspectRatio,
       ),
-      itemBuilder: (context, index) => FileInfoCard(info: demoMyFiles[index]),
+      itemBuilder: (context, index) => FileInfoCard(info: dataMenu[index]),
     );
   }
 }

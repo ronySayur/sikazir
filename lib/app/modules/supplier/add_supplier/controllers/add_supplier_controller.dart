@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sikasir/widgets/widgets.dart';
 
 class AddSupplierController extends GetxController with StateMixin {
   String? uid;
@@ -21,6 +22,7 @@ class AddSupplierController extends GetxController with StateMixin {
   }
 
   Future<void> addSup() async {
+ loading();
     if (isLoading.isFalse) {
       if (vendorNama.text.isNotEmpty &&
           vendorTelp.text.isNotEmpty &&
@@ -44,9 +46,7 @@ class AddSupplierController extends GetxController with StateMixin {
         });
 
         isLoading(false);
-        Get.back();
-        Get.back();
-        await Future.delayed(Duration(seconds: 3));
+
         Get.snackbar(
             hasil["error"] == true ? "Error" : "Success", hasil["message"]);
       } else {
@@ -64,6 +64,8 @@ class AddSupplierController extends GetxController with StateMixin {
           .doc(supplier.id)
           .update({"id_supplier": supplier.id});
 
+      Get.back();
+      Get.back();
       return {
         "error": false,
         "message": "Berhasil menambah product.",

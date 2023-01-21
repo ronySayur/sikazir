@@ -122,20 +122,7 @@ class UpdateProductController extends GetxController {
     }
   }
 
-  Future<Map<String, dynamic>> deleteProduct() async {
-    try {
-      await firestore.collection("produk").doc(idProduk.text).delete();
-      return {
-        "error": false,
-        "message": "Produk berhasil dihapus.",
-      };
-    } catch (e) {
-      return {
-        "error": true,
-        "message": "Produk gagal dihapus.",
-      };
-    }
-  }
+
 
   //menampilkan stream kategori
   Stream<QuerySnapshot<Map<String, dynamic>>> streamKategori() async* {

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -86,7 +85,7 @@ class wBigText extends StatelessWidget {
       overflow: overflow,
       style: TextStyle(
         color: color,
-        fontSize: size == 0 ? wDimension.font20 : size,
+        fontSize: size == 0 ? 20 : size,
         fontWeight: weight,
       ),
     );
@@ -208,6 +207,13 @@ Widget wTimeBoxUI(String title, String deskripsi) {
     ),
   );
 }
+
+  void loading() {
+    Get.defaultDialog(
+        title: "Tunggu Sebentar",
+        content: CircularProgressIndicator(),
+        barrierDismissible: true);
+  }
 
 Future<bool> willPopScope() async {
   return (await Get.defaultDialog(

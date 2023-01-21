@@ -255,36 +255,44 @@ class AddProdukView extends GetView<AddProdukController> {
                                         horizontal: wDimension.width30,
                                         vertical: wDimension.height15))),
                             SizedBox(height: wDimension.height10),
-                            TextField(
-                                controller: controller.hargaModal,
-                                cursorColor: Colors.black,
-                                textInputAction: TextInputAction.next,
-                                inputFormatters: <TextInputFormatter>[
-                                  CurrencyTextInputFormatter(
-                                    locale: 'ID',
-                                    decimalDigits: 0,
-                                    symbol: 'Rp. ',
-                                  ),
-                                ],
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  labelText: "Harga modal",
-                                  labelStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: wDimension.font16),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          wDimension.radius30 * 10),
-                                      borderSide:
-                                          const BorderSide(color: Colors.red)),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        wDimension.radius30 * 10),
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: wDimension.width30,
-                                      vertical: wDimension.width15),
-                                )),
+                            GetBuilder<AddProdukController>(
+                              init: AddProdukController(),
+                              initState: (_) {},
+                              builder: (c) {
+                                return TextField(
+                                    onChanged: (value) => c.cekModal(),
+                                    onEditingComplete: () => c.cekModal(),
+                                    controller: controller.hargaModal,
+                                    cursorColor: Colors.black,
+                                    textInputAction: TextInputAction.done,
+                                    inputFormatters: <TextInputFormatter>[
+                                      CurrencyTextInputFormatter(
+                                        locale: 'ID',
+                                        decimalDigits: 0,
+                                        symbol: 'Rp. ',
+                                      ),
+                                    ],
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                      labelText: "Harga modal",
+                                      labelStyle: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: wDimension.font16),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              wDimension.radius30 * 10),
+                                          borderSide: const BorderSide(
+                                              color: Colors.red)),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            wDimension.radius30 * 10),
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: wDimension.width30,
+                                          vertical: wDimension.width15),
+                                    ));
+                              },
+                            ),
                           ]),
 
                       //Button
@@ -302,7 +310,15 @@ class AddProdukView extends GetView<AddProdukController> {
                                         horizontal: wDimension.width30,
                                         vertical: wDimension.height15)),
                                 onPressed: () async {
-                                  controller.addProduct(user);
+                                  if (controller.isLoading.isFalse) {
+loading();
+
+                                    await controller.addProduct(user);
+
+                                    await Future.delayed(Duration(seconds: 3));
+                                    Get.back();
+                                    Get.back();
+                                  }
                                 },
                                 child: wSmallText(
                                     text: "Simpan",

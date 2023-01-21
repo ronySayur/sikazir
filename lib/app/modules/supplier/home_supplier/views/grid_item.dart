@@ -5,133 +5,23 @@ import 'package:sikasir/app/routes/app_pages.dart';
 
 import '../../../../../widgets/theme.dart';
 
-class SearchGridViewS extends StatelessWidget {
-  const SearchGridViewS({
-    Key? key,
-    required this.dataSupplier,
-    required this.animationController,
-    this.animation,
-  }) : super(key: key);
-
-  final Map<String, dynamic> dataSupplier;
-  final AnimationController? animationController;
-  final Animation<double>? animation;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: animationController!,
-      builder: (BuildContext context, Widget? child) {
-        return FadeTransition(
-          opacity: animation!,
-          child: Transform(
-            transform: Matrix4.translationValues(
-                0.0, 50 * (1.0 - animation!.value), 0.0),
-            child: InkWell(
-              splashColor: Colors.transparent,
-              onTap: () =>
-                  Get.toNamed(Routes.DETAIL_SUPPLIER, arguments: dataSupplier),
-              child: SizedBox(
-                height: 280,
-                child: Stack(
-                  alignment: AlignmentDirectional.bottomCenter,
-                  children: [
-                    Container(
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: DesignAppTheme.grey.withOpacity(0.08),
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(16.0)),
-                              ),
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 16, left: 16, right: 16),
-                                          child: Text(
-                                            dataSupplier["nama_pic"]
-                                                .toUpperCase(),
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 16,
-                                              letterSpacing: 0.27,
-                                              color: DesignAppTheme.darkerText,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 8,
-                                              left: 16,
-                                              right: 16,
-                                              bottom: 8),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                '${dataSupplier["stok"]}',
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w200,
-                                                  fontSize: 12,
-                                                  letterSpacing: 0.27,
-                                                  color: DesignAppTheme.grey,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 48,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 48,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
 class GridViewS extends StatelessWidget {
   const GridViewS({
     Key? key,
-    required this.dataSupplier,
+    required this.dataSupplierModel,
     required this.animationController,
     this.animation,
   }) : super(key: key);
 
-  final SupplierModel dataSupplier;
+  final SupplierModel dataSupplierModel;
   final AnimationController? animationController;
   final Animation<double>? animation;
 
   @override
   Widget build(BuildContext context) {
+    String defaultImage =
+        "https://ui-avatars.com/api/?name=${dataSupplierModel.namaVendor}";
+
     return AnimatedBuilder(
       animation: animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -142,8 +32,8 @@ class GridViewS extends StatelessWidget {
                 0.0, 50 * (1.0 - animation!.value), 0.0),
             child: InkWell(
               splashColor: Colors.transparent,
-              onTap: () =>
-                  Get.toNamed(Routes.DETAIL_SUPPLIER, arguments: dataSupplier),
+              onTap: () => Get.toNamed(Routes.DETAIL_SUPPLIER,
+                  arguments: dataSupplierModel),
               child: SizedBox(
                 height: 280,
                 child: Stack(
@@ -155,49 +45,73 @@ class GridViewS extends StatelessWidget {
                           child: Container(
                             decoration: BoxDecoration(
                               color: DesignAppTheme.grey.withOpacity(0.08),
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(16.0)),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(16.0)),
                             ),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(right: 8, top: 8),
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(30),
+                                      child: Image.network(defaultImage)),
+                                ),
                                 Expanded(
                                   child: Column(
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.only(
-                                            top: 16, left: 16, right: 16),
-                                        child: Text(
-                                          dataSupplier.namaPic.toUpperCase(),
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 16,
-                                            letterSpacing: 0.27,
-                                            color: DesignAppTheme.darkerText,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 8,
+                                            top: 16,
                                             left: 16,
                                             right: 16,
                                             bottom: 8),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        child: Column(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              dataSupplier.emailVendor,
+                                              dataSupplierModel.namaVendor,
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
-                                                fontWeight: FontWeight.w200,
-                                                fontSize: 12,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 22,
                                                 letterSpacing: 0.27,
                                                 color: DesignAppTheme.grey,
                                               ),
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  '${dataSupplierModel.emailVendor}\n${dataSupplierModel.alamatVendor}',
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16,
+                                                    letterSpacing: 0.27,
+                                                    color: DesignAppTheme.grey,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${dataSupplierModel.jabatanPic}\n${dataSupplierModel.namaPic}\n${dataSupplierModel.noPic}',
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16,
+                                                    letterSpacing: 0.27,
+                                                    color: DesignAppTheme.grey,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),

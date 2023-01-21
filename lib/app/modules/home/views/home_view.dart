@@ -100,8 +100,8 @@ class HomeView extends GetView<HomeController> {
               ),
               body: SlidingUpPanel(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(wDimension.radius20),
-                    topRight: Radius.circular(wDimension.radius20)),
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
                 maxHeight: wDimension.heightSetengah,
                 minHeight: wDimension.screenHeight * 0.1,
                 panel: Container(

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:get/get.dart';
-import 'package:sikasir/app/routes/app_pages.dart';
 
 import '../../../../../widgets/widgets.dart';
 import '../controllers/add_supplier_controller.dart';
@@ -21,7 +20,11 @@ class AddSupplierView extends GetView<AddSupplierController> {
           centerTitle: false,
           actions: [
             TextButton(
-                onPressed: () => controller.obx((state) => state.addSup()),
+                onPressed: () {
+                  if (controller.isLoading.isFalse) {
+                    controller.addSup();
+                  }
+                },
                 child: Container(
                   padding: const EdgeInsets.only(
                       bottom: 10, top: 10, left: 20, right: 20),
@@ -63,6 +66,7 @@ class AddSupplierView extends GetView<AddSupplierController> {
                             controller: controller.vendorNama,
                             cursorColor: Colors.black,
                             textInputAction: TextInputAction.next,
+                            textCapitalization: TextCapitalization.sentences,
                             decoration: InputDecoration(
                                 labelText: "Nama vendor",
                                 labelStyle: TextStyle(
@@ -144,6 +148,7 @@ class AddSupplierView extends GetView<AddSupplierController> {
                         TextField(
                             controller: controller.vendorAlamat,
                             textInputAction: TextInputAction.next,
+                            textCapitalization: TextCapitalization.sentences,
                             cursorColor: Colors.black,
                             decoration: InputDecoration(
                                 labelText: "Alamat",
@@ -178,6 +183,7 @@ class AddSupplierView extends GetView<AddSupplierController> {
                     controller: controller.picNama,
                     cursorColor: Colors.black,
                     textInputAction: TextInputAction.next,
+                    textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
                         labelText: "Nama",
                         labelStyle: TextStyle(
@@ -198,6 +204,7 @@ class AddSupplierView extends GetView<AddSupplierController> {
                     controller: controller.picJabatan,
                     cursorColor: Colors.black,
                     textInputAction: TextInputAction.next,
+                    textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
                         labelText: "Jabatan",
                         labelStyle: TextStyle(
@@ -265,13 +272,7 @@ class AddSupplierView extends GetView<AddSupplierController> {
                             vertical: wDimension.height15)),
                     onPressed: () async {
                       if (controller.isLoading.isFalse) {
-                        Get.defaultDialog(
-                          title: "Tunggu Sebentar",
-                          content: CircularProgressIndicator(),
-                        );
-
                         await controller.addSup();
-
                       }
                     },
                     child: wSmallText(

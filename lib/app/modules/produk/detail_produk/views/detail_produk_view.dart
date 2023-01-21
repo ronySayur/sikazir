@@ -210,7 +210,7 @@ class DetailProdukView extends GetView<DetailProdukController> {
               ),
             ),
             Positioned(
-              top: (MediaQuery.of(context).size.width / 1.2) - 24.0 - 35,
+              top: (MediaQuery.of(context).size.width) - 125,
               right: 30,
               child: ScaleTransition(
                 alignment: Alignment.center,
@@ -241,7 +241,7 @@ class DetailProdukView extends GetView<DetailProdukController> {
               ),
             ),
             Positioned(
-              top: (MediaQuery.of(context).size.width) - 20 - 35,
+              top: (MediaQuery.of(context).size.width) - 50,
               right: 30,
               child: ScaleTransition(
                 alignment: Alignment.center,
@@ -249,7 +249,7 @@ class DetailProdukView extends GetView<DetailProdukController> {
                     parent: controller.animationController!,
                     curve: Curves.fastOutSlowIn),
                 child: Card(
-                  color: primaryColor,
+                  color: Colors.green,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50.0)),
                   elevation: 10.0,
@@ -261,6 +261,69 @@ class DetailProdukView extends GetView<DetailProdukController> {
                         Icons.store,
                         color: DesignAppTheme.nearlyWhite,
                         size: 30,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: (MediaQuery.of(context).size.width) + 25,
+              right: 30,
+              child: ScaleTransition(
+                alignment: Alignment.center,
+                scale: CurvedAnimation(
+                    parent: controller.animationController!,
+                    curve: Curves.fastOutSlowIn),
+                child: Card(
+                  color: primaryColor,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50.0)),
+                  elevation: 10.0,
+                  child: InkWell(
+                    onTap: () {
+                      Get.defaultDialog(
+                          title: "Konfirmasi",
+                          content: Column(
+                            children: [
+                              wSmallText(
+                                  text:
+                                      "Apakah anda yakin untuk menghapus produk?"),
+                              SizedBox(height: wDimension.height10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  OutlinedButton(
+                                      onPressed: () async {
+                                        Get.back();
+                                        controller.isLoading.isFalse;
+                                      },
+                                      child: const Text("Batal")),
+                                  Obx(() => ElevatedButton(
+                                      onPressed: () async {
+                                        if (controller.isLoading.isFalse) {
+                                          controller.deleteProduct(
+                                              dataProduk.idProduk!);
+                                        }
+                                      },
+                                      child: Text(controller.isLoading.isFalse
+                                          ? "Konfirmasi"
+                                          : "Loading..")))
+                                ],
+                              ),
+                            ],
+                          ));
+                    },
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      child: Center(
+                        child: Icon(
+                          Icons.delete,
+                          color: DesignAppTheme.nearlyWhite,
+                          size: 30,
+                        ),
                       ),
                     ),
                   ),
