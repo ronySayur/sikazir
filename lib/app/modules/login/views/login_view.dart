@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -61,7 +62,7 @@ class LoginView extends GetView<LoginController> {
                       text: "Silahkan masuk dengan akun yang sudah diberikan",
                       size: wDimension.font16 * 0.86,
                     ),
-                    SizedBox(height: wDimension.height20 * 1.5),
+                    const SizedBox(height: 15),
                     TextField(
                       controller: controller.emailC,
                       cursorColor: Colors.black,
@@ -107,11 +108,15 @@ class LoginView extends GetView<LoginController> {
                           borderRadius:
                               BorderRadius.circular(wDimension.radius30 * 10),
                         ),
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: wDimension.width30,
-                          vertical: wDimension.width15,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 30,
+                          vertical: 15,
                         ),
                       ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: wSmallText(text: "*pin awal anda adalah 111111"),
                     ),
                     SizedBox(height: wDimension.height15),
                     Container(
@@ -122,11 +127,7 @@ class LoginView extends GetView<LoginController> {
                       child: Obx(() => ElevatedButton(
                           onPressed: () async {
                             if (controller.isLoading.isFalse) {
-                              loading();
-
                               await controller.login();
-                              await Future.delayed(Duration(seconds: 2));
-                              Get.back();
                             }
                           },
                           child: controller.isLoading.isFalse

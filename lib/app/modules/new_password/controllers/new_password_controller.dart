@@ -1,33 +1,40 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sikasir/app/controllers/auth_controller.dart';
+import 'package:sikasir/widgets/widgets.dart';
 
 import '../../../routes/app_pages.dart';
 
 class NewPasswordController extends GetxController {
   TextEditingController newPassC = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final authC = Get.find<AuthController>();
 
-  void newPaswword() async {
+  Future<void> newPaswword() async {
     if (newPassC.text.isNotEmpty) {
-      if (newPassC.text != "password") {
+      if (newPassC.text != "111111") {
         try {
-          //ambil data email
+          loading();
           String email = auth.currentUser!.email!;
 
-          //update password
           await auth.currentUser!.updatePassword(newPassC.text);
 
-          //logout
+          await firestore
+              .collection("pegawai")
+              .doc(email)
+              .update({"pin": newPassC.text});
+
           await auth.signOut();
 
-          //Login
           auth.signInWithEmailAndPassword(
             email: email,
             password: newPassC.text,
           );
+          Get.back();
 
-          //Close semua pindah Home
           Get.offAllNamed(Routes.HOME);
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {
@@ -40,7 +47,7 @@ class NewPasswordController extends GetxController {
           Get.snackbar("Error", "$e");
         }
       } else {
-        Get.snackbar("Error", "Ubah password anda!");
+        Get.snackbar("Error", "Password tidak boleh sama!");
       }
     } else {
       Get.snackbar("Error", "Password wajib diisi!");

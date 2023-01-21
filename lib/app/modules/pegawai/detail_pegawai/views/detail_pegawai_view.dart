@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:sikasir/app/models/pegawai_model.dart';
 import 'package:sikasir/widgets/widgets.dart';
 
 import '../controllers/detail_pegawai_controller.dart';
 
 class DetailPegawaiView extends GetView<DetailPegawaiController> {
-  final Map<String, dynamic> user = Get.arguments;
+  final PegawaiModel user = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.red,
-          title: Text('${user["name"]}'),
+          title: Text('${user.namaPegawai}'),
           centerTitle: false,
         ),
         body: ListView(
@@ -29,8 +30,8 @@ class DetailPegawaiView extends GetView<DetailPegawaiController> {
                 children: [
                   Center(
                       child: ClipOval(
-                    child: user["foto"] != null
-                        ? Image.network(user["foto"])
+                    child: user.foto != null
+                        ? Image.network(user.foto)
                         : Image.asset(
                             "assets/logo/noimage.png",
                             fit: BoxFit.cover,

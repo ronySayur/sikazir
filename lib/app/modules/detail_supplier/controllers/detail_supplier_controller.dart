@@ -20,16 +20,16 @@ class DetailSupplierController extends GetxController with StateMixin {
     isLoading.value = true;
     try {
       Map<String, dynamic> dataSup = {
-        "email_vendor": vendorNama.text,
-        "no_pic": vendorTelp.text,
+        "email_vendor": vendorEmail.text,
+        "no_pic": picTelp.text,
         "alamat_vendor": vendorAlamat.text,
-        "jabatan_pic": vendorEmail.text,
-        "nama_pic": picJabatan.text,
-        "nama_vendor": picNama.text,
-        "no_vendor": picTelp.text,
+        "jabatan_pic": picJabatan.text,
+        "nama_pic": picNama.text,
+        "nama_vendor": vendorNama.text,
+        "no_vendor": vendorTelp.text,
       };
 
-      await firestore.collection("produk").doc(idSup).update(dataSup);
+      await firestore.collection("supplier").doc(idSup).update(dataSup);
 
       Get.back();
       Get.back();
@@ -39,6 +39,27 @@ class DetailSupplierController extends GetxController with StateMixin {
       Get.snackbar("Terjadi Kesalahan", "Tidak dapat update profile($e)");
     } finally {
       isLoading.value = false;
+    }
+  }
+  
+  Future<Map<String, dynamic>> deleteSup(String IDdelete) async {
+
+    try {
+      await firestore.collection("produk").doc(IDdelete).delete();
+
+      Get.back();
+      Get.back();
+      Get.back();
+
+      return {
+        "error": false,
+        "message": "Produk berhasil dihapus.",
+      };
+    } catch (e) {
+      return {
+        "error": true,
+        "message": "Produk gagal dihapus.",
+      };
     }
   }
 }

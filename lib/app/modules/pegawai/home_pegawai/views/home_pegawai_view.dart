@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sikasir/app/controllers/auth_controller.dart';
+import 'package:sikasir/app/models/pegawai_model.dart';
 import 'package:sikasir/app/routes/app_pages.dart';
 import 'package:sikasir/widgets/widgets.dart';
 
@@ -49,7 +50,7 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
           stream: authC.streamUser(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
 
             if (snapshot.hasData) {
@@ -57,7 +58,7 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
               String defaultImage =
                   "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";
               return ListView(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 children: [
                   Row(
                     children: [
@@ -105,14 +106,14 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
                         wBigText(
                             text: "${user['jabatan']}",
                             weight: FontWeight.bold),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         wBigText(
                           text: "${user['nama_pegawai']}",
                           weight: FontWeight.bold,
                           size: wDimension.font26,
                         ),
-                        SizedBox(height: 10),
-                        wBigText(text: "${user['email']}"),
+                        const SizedBox(height: 10),
+                        wBigText(text: "${user['email_pegawai']}"),
                       ],
                     ),
                   ),
@@ -139,15 +140,26 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
                   ),
                   StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                       stream: controller.streamPegawai(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.active) {
-                          //datapegawai
-                          var dataPegawai = snapshot.data!.docs;
+                      builder: (context, snap) {
+                        if (snap.connectionState == ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                        if (snap.data!.docs.isEmpty) {
+                          return dataKosong();
+                        }
+                        if (snap.connectionState == ConnectionState.active) {
+                          List<PegawaiModel> pegawaiM = [];
+
+                          for (var element in snap.data!.docs) {
+                            pegawaiM.add(PegawaiModel.fromJson(element.data()));
+                          }
 
                           //swiper
                           return Swiper(
-                            itemCount: dataPegawai.length,
+                            itemCount: pegawaiM.length,
                             itemWidth: wDimension.screenWidth,
                             itemHeight: wDimension.heightSetengah,
                             layout: SwiperLayout.TINDER,
@@ -155,7 +167,7 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
                               return InkWell(
                                 radius: wDimension.radius20,
                                 onTap: () => Get.toNamed(Routes.DETAIL_PEGAWAI,
-                                    arguments: dataPegawai[index].data()),
+                                    arguments: pegawaiM),
                                 borderRadius:
                                     BorderRadius.circular(wDimension.radius20),
                                 child: Card(
@@ -174,13 +186,10 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
                                                 top: Radius.circular(
                                                     wDimension.radius20)),
                                             child: Image.network(
-                                              dataPegawai[index]["profile"] !=
-                                                      null
-                                                  ? dataPegawai[index]
-                                                              ["profile"] !=
-                                                          ""
-                                                      ? dataPegawai[index]
-                                                          ["profile"]
+                                              pegawaiM[index].foto != null
+                                                  ? pegawaiM[index].foto !=
+                                                          "noimage"
+                                                      ? pegawaiM[index].foto
                                                       : defaultImage
                                                   : defaultImage,
                                               fit: BoxFit.cover,
@@ -191,11 +200,10 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
                                             title: wBigText(
                                                 size: wDimension.font26,
                                                 weight: FontWeight.bold,
-                                                text:
-                                                    "${dataPegawai[index]["nama_pegawai"]}"),
+                                                text: pegawaiM[index]
+                                                    .namaPegawai),
                                             subtitle: wSmallText(
-                                                text:
-                                                    "${dataPegawai[index]["jabatan"]}")),
+                                                text: pegawaiM[index].hak)),
                                       ),
                                       SizedBox(
                                         height: wDimension.height20,
@@ -207,7 +215,7 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
                             },
                           );
                         }
-                        return CircularProgressIndicator();
+                        return const CircularProgressIndicator();
                       }),
                 ],
               );

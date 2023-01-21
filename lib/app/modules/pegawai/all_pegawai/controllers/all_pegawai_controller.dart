@@ -1,54 +1,54 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class AllPegawaiController extends GetxController {
-  FirebaseAuth auth = FirebaseAuth.instance;
+class AllPegawaiController extends GetxController
+    with GetTickerProviderStateMixin {
+  AnimationController? animationController;
+  late TextEditingController searchC;
+
+  var ontap = false.obs;
+  var queryAwal = [].obs;
+  var tempSearch = [].obs;
+
+  RxBool isLoading = false.obs;
+
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  FirebaseStorage storage = FirebaseStorage.instance;
 
   Stream<QuerySnapshot<Map<String, dynamic>>> streamPegawai() {
     return firestore.collection("pegawai").snapshots();
   }
 
-  late TextEditingController searchC;
-
-  var queryAwal = [].obs;
-  var tempSearch = [].obs;
-
-  Future<void> searchPegawai(String nama, String email) async {
-    if (nama.isEmpty) {
+  Future<void> searchProduk(String data) async {
+    if (data.isEmpty) {
       queryAwal.value = [];
       tempSearch.value = [];
     } else {
-      var capitalized = nama.substring(0, 1).toUpperCase() + nama.substring(1);
-      if (queryAwal.isEmpty && nama.length == 1) {
-        //fungsi yang akan dijalankan pada 1 ketikan pertama
-        CollectionReference pegawai = firestore.collection("pegawai");
+      var capitalized = data.substring(0, 1).toUpperCase() + data.substring(1);
+      if (queryAwal.isEmpty && data.length == 1) {
+        CollectionReference products = firestore.collection("pegawai");
 
-        final keyNameResult = await pegawai
-            .where("name", isEqualTo: nama.substring(0, 1).toUpperCase())
-            .where("email", isNotEqualTo: email)
+        final keyNameResult = await products
+            .where("keyName", isEqualTo: data.substring(0, 1).toUpperCase())
             .get();
 
         if (keyNameResult.docs.isNotEmpty) {
           for (int i = 0; i < keyNameResult.docs.length; i++) {
             queryAwal.add(keyNameResult.docs[i].data() as Map<String, dynamic>);
           }
-        } else {}
+        }
       }
 
       if (queryAwal.isNotEmpty) {
         tempSearch.value = [];
         queryAwal.forEach((element) {
-          if (element["name"].startsWith(capitalized)) {
+          if (element["nama_pegawai"].startsWith(capitalized)) {
             tempSearch.add(element);
           }
         });
       }
     }
+
     queryAwal.refresh();
     tempSearch.refresh();
   }
@@ -56,6 +56,8 @@ class AllPegawaiController extends GetxController {
   @override
   void onInit() {
     searchC = TextEditingController();
+    animationController = AnimationController(
+        duration: const Duration(milliseconds: 500), vsync: this);
     super.onInit();
   }
 

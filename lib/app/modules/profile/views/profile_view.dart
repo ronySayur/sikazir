@@ -14,8 +14,8 @@ class ProfileView extends GetView<ProfileController> {
     return Scaffold(
       appBar: AppBar(
                 backgroundColor: Colors.red,
-        title: const Text('ProfileView'),
-        centerTitle: true,
+        title: const Text('Profile'),
+        centerTitle: false,
       ),
       //stream
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(

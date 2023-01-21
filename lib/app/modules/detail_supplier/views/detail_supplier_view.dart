@@ -35,7 +35,7 @@ class DetailSupplierView extends GetView<DetailSupplierController> {
             TextButton(
                 onPressed: () {
                   if (controller.isLoading.isFalse) {
-                    controller.updateSup();
+                    controller.updateSup(dataSup.idSupplier);
                   }
                 },
                 child: Container(
@@ -261,7 +261,8 @@ class DetailSupplierView extends GetView<DetailSupplierController> {
                           vertical: wDimension.height15)),
                   onPressed: () async {
                     if (controller.isLoading.isFalse) {
-                      await controller.updateSup(dataSup.);
+                      loading();
+                      await controller.updateSup(dataSup.idSupplier);
                     }
                   },
                   child: wSmallText(
@@ -274,9 +275,12 @@ class DetailSupplierView extends GetView<DetailSupplierController> {
           ),
           Expanded(
               child: TextButton(
-                  onPressed: () async {if (controller.isLoading.isFalse) {
-                      await controller.updateSup();
-                    }},
+                  onPressed: () async {
+                    if (controller.isLoading.isFalse) {
+                      loading();
+                      await controller.deleteSup(dataSup.idSupplier);
+                    }
+                  },
                   child: wSmallText(
                     text: "Hapus Supplier",
                     weight: FontWeight.bold,

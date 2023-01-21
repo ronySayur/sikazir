@@ -6,6 +6,8 @@ import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/home_toko/bindings/home_toko_binding.dart';
+import '../modules/home_toko/views/home_toko_view.dart';
 import '../modules/introduction/bindings/introduction_binding.dart';
 import '../modules/introduction/views/introduction_view.dart';
 import '../modules/laporan/bindings/laporan_binding.dart';
@@ -155,6 +157,11 @@ class AppPages {
       name: _Paths.DETAIL_SUPPLIER,
       page: () => DetailSupplierView(),
       binding: DetailSupplierBinding(),
+    ),
+    GetPage(
+      name: _Paths.HOME_TOKO,
+      page: () => const HomeTokoView(),
+      binding: HomeTokoBinding(),
     ),
   ];
 }

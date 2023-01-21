@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import 'theme.dart';
 
@@ -208,11 +209,22 @@ Widget wTimeBoxUI(String title, String deskripsi) {
   );
 }
 
-  void loading() {
-    Get.defaultDialog(
-        title: "Tunggu Sebentar",
-        content: CircularProgressIndicator(),
-        barrierDismissible: true);
+void loading() {
+  Get.defaultDialog(
+      title: "Tunggu Sebentar",
+      content: const CircularProgressIndicator(),
+      barrierDismissible: false);
+
+}
+  Center dataKosong() {
+    return Center(
+      child: Column(
+        children: [
+          Lottie.asset("assets/lottie/empty.json"),
+          wBigText(text: "Produk Kosong")
+        ],
+      ),
+    );
   }
 
 Future<bool> willPopScope() async {

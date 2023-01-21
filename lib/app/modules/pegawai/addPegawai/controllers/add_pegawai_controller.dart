@@ -18,11 +18,14 @@ class AddPegawaiController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseStorage storage = FirebaseStorage.instance;
 
-  TextEditingController nameC = TextEditingController();
   TextEditingController emailC = TextEditingController();
+  TextEditingController passAdminC = TextEditingController();
+
+  TextEditingController nameC = TextEditingController();
   TextEditingController teleponC = TextEditingController();
   TextEditingController hakC = TextEditingController();
-  TextEditingController passAdminC = TextEditingController();
+  TextEditingController pinC = TextEditingController();
+
   final jabatanC = "".obs;
 
   String? uid;
@@ -44,99 +47,29 @@ class AddPegawaiController extends GetxController {
     update();
   }
 
-  Future<void> prosesAddPegawai() async {
-    isLoadingAddPegawai.value = true;
-    try {
-      String emailAdmin = auth.currentUser!.email!;
-
-      UserCredential pegawaiCredential =
-          await auth.createUserWithEmailAndPassword(
-        email: emailC.text,
-        password: "111111",
-      );
-
-      uid = pegawaiCredential.user!.uid;
-
-      //Input ke firestore
-      if (pegawaiCredential.user != null) {
-        try {
-          File file = File(image!.path);
-          String ext = image!.name.split(".").last;
-
-          await storage.ref('$uid/profile.$ext').putFile(file);
-
-          String urlImage =
-              await storage.ref('$uid/profile.$ext').getDownloadURL();
-
-          firestore.collection("pegawai").doc(uid).set({
-            "email": emailC.text,
-            "nama_pegawai": nameC.text,
-            "jabatan": jabatanC.value,
-            "telepon": teleponC.text,
-            "hak": hakC.text,
-            "foto": urlImage,
-            "password": "111111",
-            "uid": uid,
-            //TODO
-            "role": "pegawai",
-            "createdAt": DateTime.now().toIso8601String()
-          });
-
-          await pegawaiCredential.user!.sendEmailVerification();
-
-          await auth.signOut();
-
-          await auth.signInWithEmailAndPassword(
-            email: emailAdmin,
-            password: passAdminC.text,
-          );
-        } catch (e) {
-          Get.snackbar("Terjadi Kesalahan", "Tidak dapat update profile($e)");
-        }
-
-        Get.back();
-        Get.back();
-        Get.snackbar("Berhasil", "Berhasil menambahkan data pegawai");
-      }
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        Get.snackbar("Peringatan", "Password yang digunakan terlalu lemah");
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        Get.snackbar("Peringatan", "Akun sudah ada");
-        print('The account already exists for that email.');
-      } else if (e.code == 'wrong-password') {
-        Get.snackbar("Terjadi Kesalahan", "Password salah");
-        isLoading.value = false;
-      } else {
-        Get.snackbar("Terjadi Kesalahan", e.code);
-      }
-    } catch (e) {
-      print(e);
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
   Future<void> addPegawai() async {
     if (emailC.text.isNotEmpty &&
         nameC.text.isNotEmpty &&
-        jabatanC.value.isNotEmpty &&
         teleponC.text.isNotEmpty &&
         image != null) {
       isLoading.value = true;
       await konfirmasiDialog();
     } else {
-      Get.snackbar("Error", "Semua form dan foto harap diisi terlebih dahulu");
+      //matikan loading()
+      Get.back();
+      Get.snackbar("Error", "Semua Form dan Foto harap diisi terlebih dahulu");
     }
   }
 
   konfirmasiDialog() async {
+    //matikan loading()
+    Get.back();
+    //validasi admin
     Get.defaultDialog(
         title: "Valdiasi admin",
         content: Column(
           children: [
-            wSmallText(text: "masukan password untuk validasi"),
+            wSmallText(text: "Masukan password untuk validasi"),
             SizedBox(height: wDimension.height10),
             TextField(
               controller: passAdminC,
@@ -165,22 +98,118 @@ class AddPegawaiController extends GetxController {
                 ),
               ),
             ),
-            OutlinedButton(
-                onPressed: () async {
-                  isLoading.value = false;
-                  Get.back();
-                },
-                child: const Text("Batal")),
-            Obx(() => ElevatedButton(
-                onPressed: () async {
-                  if (isLoadingAddPegawai.isFalse) {
-                    await prosesAddPegawai();
-                    isLoading.value = false;
-                  }
-                },
-                child: Text(
-                    isLoadingAddPegawai.isFalse ? "Add Pegawai" : "Loading..")))
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 10),
+                OutlinedButton(
+                    onPressed: () async {
+                      isLoading.value = false;
+                      Get.back();
+                    },
+                    child: const Text("Batal")),
+                Obx(() => ElevatedButton(
+                    onPressed: () async {
+                      if (isLoadingAddPegawai.isFalse) {
+                        await prosesAddPegawai();
+                      }
+                    },
+                    child: Text(isLoadingAddPegawai.isFalse
+                        ? "Add Pegawai"
+                        : "Loading..")))
+              ],
+            ),
           ],
         ));
+  }
+
+  Future<void> prosesAddPegawai() async {
+    loading();
+    isLoadingAddPegawai.value = true;
+    try {
+      String emailAdmin = auth.currentUser!.email!;
+
+      UserCredential userCredentialAdmin =
+          await auth.signInWithEmailAndPassword(
+        email: emailAdmin,
+        password: passAdminC.text,
+      );
+
+      UserCredential pegawaiCredential =
+          await auth.createUserWithEmailAndPassword(
+        email: emailC.text,
+        password: "111111",
+      );
+
+      uid = pegawaiCredential.user!.uid;
+
+      //Input ke firestore
+      if (pegawaiCredential.user != null) {
+        try {
+          File file = File(image!.path);
+          String ext = image!.name.split(".").last;
+
+          await storage.ref('$uid/profile.$ext').putFile(file);
+
+          String urlImage =
+              await storage.ref('$uid/profile.$ext').getDownloadURL();
+
+          await firestore.collection("pegawai").doc(emailC.text).set({
+            "email_pegawai": emailC.text,
+            "nama_pegawai": nameC.text,
+            "jabatan": jabatanC.value,
+            "telepon": teleponC.text,
+            "hak": hakC.text,
+            "foto": urlImage,
+            "pin": "111111",
+            "role": "pegawai",
+            "createdAt": DateTime.now().toIso8601String()
+          });
+
+          await pegawaiCredential.user!.sendEmailVerification();
+
+          await auth.signOut();
+
+          await auth.signInWithEmailAndPassword(
+              email: emailAdmin, password: passAdminC.text);
+        } catch (e) {
+          Get.snackbar("Terjadi Kesalahan", "Tidak dapat update profile($e)");
+        } finally {
+          isLoading.value = false;
+        }
+
+        Get.back();
+        Get.back();
+        Get.back();
+        Get.snackbar("Berhasil", "Berhasil menambahkan data pegawai");
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        Get.back();
+        Get.back();
+        Get.snackbar("Peringatan", "Password yang digunakan terlalu lemah");
+        isLoading.value = false;
+      } else if (e.code == 'email-already-in-use') {
+        Get.back();
+        Get.back();
+
+        Get.snackbar("Peringatan", "Akun sudah ada");
+        isLoading.value = false;
+      } else if (e.code == 'wrong-password') {
+        Get.back();
+        Get.snackbar("Terjadi Kesalahan", "Password salah");
+        isLoading.value = false;
+      } else {
+        isLoading.value = false;
+        Get.back();
+        Get.back();
+        Get.snackbar("Terjadi Kesalahan", e.code);
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

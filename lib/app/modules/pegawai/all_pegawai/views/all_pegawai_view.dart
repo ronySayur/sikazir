@@ -1,123 +1,123 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:sikasir/app/controllers/auth_controller.dart';
+import 'package:lottie/lottie.dart';
+import 'package:sikasir/app/models/pegawai_model.dart';
+import 'package:sikasir/app/modules/pegawai/all_pegawai/views/grid_item.dart';
 
-import 'package:sikasir/app/routes/app_pages.dart';
-import 'package:sikasir/widgets/widgets.dart';
+import '../../../../../widgets/widgets.dart';
+import '../../../../routes/app_pages.dart';
 import '../controllers/all_pegawai_controller.dart';
 
 class AllPegawaiView extends GetView<AllPegawaiController> {
-  final authC = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.red,
-          title: const Text('Semua Pegawai'),
-          centerTitle: false,
-        ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              Container(
-                height: wDimension.height20,
-                width: wDimension.screenWidth,
-                child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                    stream: authC.streamUser(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      }
+      appBar: AppBar(
+        backgroundColor: Colors.red,
+        title: const Text('Semua Pegawai'),
+        centerTitle: false,
+      ),
+      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          stream: controller.streamPegawai(),
+          builder: (context, snap) {
+            if (snap.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
 
-                      if (snapshot.hasData) {
-                        Map<String, dynamic> user = snapshot.data!.data()!;
-                        return TextField(
-                            onChanged: (value) =>
-                                controller.searchPegawai(value, user['email']),
-                            controller: controller.searchC,
-                            cursorColor: Colors.red[900],
-                            decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      wDimension.height45),
-                                  borderSide: BorderSide(
-                                      color: Colors.white,
-                                      width: wDimension.width10 / 10)),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      wDimension.height45),
-                                  borderSide: BorderSide(
-                                      color: Colors.white,
-                                      width: wDimension.width10 / 10)),
-                              hintText: "Search friend",
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: wDimension.height30,
-                                  vertical: wDimension.height20),
-                              suffixIcon: InkWell(
-                                  borderRadius: BorderRadius.circular(
-                                      wDimension.height45),
-                                  child: wAppIcon(
-                                      icon: Icons.search,
-                                      iconColor: Colors.red,
-                                      size: wDimension.iconSize24)),
-                            ));
-                      } else {
-                        return const CircularProgressIndicator();
-                      }
-                    }),
-              ),
-              StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                stream: controller.streamPegawai(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.active) {
-                    var listDocsChats = snapshot.data!.docs;
+            if (snap.data!.docs.isEmpty) {
+              return dataKosong();
+            }
 
-                    return ListView.builder(
-                      itemCount: listDocsChats.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Column(
-                          children: [
-                            ListTile(
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: wDimension.width20,
-                                  vertical: wDimension.height10 / 2),
-                              onTap: () => Get.toNamed(Routes.DETAIL_PEGAWAI),
-                              leading: CircleAvatar(
-                                  radius: wDimension.radius30,
-                                  backgroundColor: Colors.black26,
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                          wDimension.radius30 * 5),
-                                      child: listDocsChats[index]["profile"] ==
-                                              "noimage"
-                                          ? Image.asset(
-                                              "assets/logo/noimage.png",
-                                              fit: BoxFit.cover)
-                                          : Image.network(
-                                              "${listDocsChats[index]["profile"]}",
-                                              fit: BoxFit.cover))),
-                              title: wBigText(
-                                  text: "${listDocsChats[index]["name"]}",
-                                  weight: FontWeight.w600,
-                                  size: wDimension.font20),
-                              subtitle: wSmallText(
-                                  text: "${listDocsChats[index]["jabatan"]}"),
-                            ),
-                            const Divider()
-                          ],
-                        );
-                      },
-                    );
+            return GetBuilder<AllPegawaiController>(builder: (controller) {
+              if (controller.searchC.text.isEmpty) {
+                List<PegawaiModel> allPeg = [];
+
+                for (var element in snap.data!.docs) {
+                  allPeg.add(PegawaiModel.fromJson(element.data()));
+                }
+
+                return showData(allPeg);
+              } else {
+                if (controller.tempSearch.isNotEmpty) {
+                  List<PegawaiModel> searchSup = [];
+
+                  for (var element in controller.tempSearch) {
+                    searchSup.add(PegawaiModel.fromJson(element));
                   }
-                  return const Center(child: CircularProgressIndicator());
-                },
+                  return showData(searchSup);
+                } else {
+                  return dataKosong();
+                }
+              }
+            });
+          }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.toNamed(Routes.ADD_PEGAWAI),
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  SingleChildScrollView showData(List<PegawaiModel> allPegawai) {
+    return SingleChildScrollView(
+      physics: ScrollPhysics(),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(defaultPadding),
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 32.0,
+                crossAxisSpacing: 32.0,
+                childAspectRatio: 0.8,
               ),
-            ],
+              padding: const EdgeInsets.all(8),
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: allPegawai.length,
+              itemBuilder: (context, index) {
+                final int count = allPegawai.length;
+                final Animation<double> animation =
+                    Tween<double>(begin: 0.0, end: 1.0).animate(
+                  CurvedAnimation(
+                    parent: controller.animationController!,
+                    curve: Interval((1 / count) * index, 1.0,
+                        curve: Curves.fastOutSlowIn),
+                  ),
+                );
+                controller.animationController?.forward();
+                return GetBuilder<AllPegawaiController>(
+                  init: AllPegawaiController(),
+                  initState: (_) {},
+                  builder: (c) {
+                    return GridViewPegawai(
+                      animation: animation,
+                      animationController: controller.animationController,
+                      dataPegawai: allPegawai[index],
+                    );
+                  },
+                );
+              },
+            ),
           ),
-        ));
+        ],
+      ),
+    );
+  }
+
+  Center dataKosong() {
+    return Center(
+      child: Column(
+        children: [
+          Lottie.asset("assets/lottie/empty.json"),
+          wBigText(text: "Tidak ada pegawai")
+        ],
+      ),
+    );
   }
 }

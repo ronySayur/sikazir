@@ -25,6 +25,7 @@ abstract class Routes {
   static const UPDATE_PRODUCT = _Paths.UPDATE_PRODUCT;
   static const HOME_SUPPLIER = _Paths.HOME_SUPPLIER;
   static const DETAIL_SUPPLIER = _Paths.DETAIL_SUPPLIER;
+  static const HOME_TOKO = _Paths.HOME_TOKO;
 }
 
 abstract class _Paths {
@@ -51,4 +52,5 @@ abstract class _Paths {
   static const UPDATE_PRODUCT = '/update-product';
   static const HOME_SUPPLIER = '/home-supplier';
   static const DETAIL_SUPPLIER = '/detail-supplier';
+  static const HOME_TOKO = '/home-toko';
 }

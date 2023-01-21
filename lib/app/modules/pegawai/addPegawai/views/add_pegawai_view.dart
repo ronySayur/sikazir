@@ -227,6 +227,7 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
                         controller: controller.teleponC,
                         textInputAction: TextInputAction.next,
                         cursorColor: Colors.black,
+                        maxLength: 13,
                         decoration: InputDecoration(
                             labelText: "Telepon",
                             labelStyle: TextStyle(
@@ -254,6 +255,7 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
               child: Obx(() => ElevatedButton(
                   onPressed: () async {
                     if (controller.isLoading.isFalse) {
+                      loading();
                       await controller.addPegawai();
                     }
                   },

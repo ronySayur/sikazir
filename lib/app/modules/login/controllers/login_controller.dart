@@ -17,20 +17,20 @@ class LoginController extends GetxController {
     if (emailC.text.isNotEmpty && passC.text.isNotEmpty) {
       isLoading.value = true;
       try {
+        loading();
         UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: emailC.text,
           password: passC.text,
         );
-        //jika user tidak ada
+        Get.back();
         if (userCredential.user != null) {
-          //jika email sudah di verifikasi
           if (userCredential.user!.emailVerified == true) {
-            //jika pass masih 111111
             if (passC.text == "111111") {
               Get.snackbar(
                   backgroundColor: Colors.white,
                   "Peringatan",
                   "Ubah password anda");
+              
               Get.offAllNamed(Routes.NEW_PASSWORD);
             } else {
               Get.offAllNamed(Routes.HOME);
@@ -39,24 +39,27 @@ class LoginController extends GetxController {
             Get.defaultDialog(
                 title: "Peringatan",
                 middleText:
-                    "akun belum di Verifikasi. kirim verifikasi sekarang!",
+                    "akun belum di Verifikasi. Kirim verifikasi sekarang!",
                 actions: [
                   OutlinedButton(
-                      onPressed: () {
-                        Get.back();
+                      onPressed: () async {
+                        await auth.signOut();
                         Get.back();
                       },
                       child: wSmallText(text: "Batal")),
                   ElevatedButton(
                       onPressed: () async {
                         try {
+                          loading();
+                          await userCredential.user!.sendEmailVerification();
+                          await auth.signOut();
+                          Get.back();
+
                           Get.snackbar(
                             backgroundColor: Colors.white,
                             "Berhasil",
                             "Cek Email anda!",
                           );
-                          await userCredential.user!.sendEmailVerification();
-                          Get.back();
                         } catch (e) {
                           Get.snackbar(
                               backgroundColor: Colors.white, "Error", "$e");
@@ -71,34 +74,28 @@ class LoginController extends GetxController {
         }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
+          Get.back();
           Get.snackbar(
               backgroundColor: Colors.white,
               "Terjadi Kesalahan!",
               "Email tidak terdaftar");
-          print('No user found for that email.');
         } else if (e.code == 'wrong-password') {
-          print('Wrong password provided for that user.');
+          Get.back();
           Get.snackbar(
               backgroundColor: Colors.white,
               "Terjadi Kesalahan!",
               "Password salah!");
         }
       } catch (e) {
-        print('$e');
+        Get.back();
+        Get.snackbar(backgroundColor: Colors.white, "Terjadi Kesalahan!", '$e');
       } finally {
         isLoading.value = false;
-
-        await Future.delayed(Duration(seconds: 1));
-
-        Get.back();
       }
     } else {
+      Get.back();
       Get.snackbar("Terjadi Kesalahan!", "Email dan password wajib diisi",
           backgroundColor: Colors.white);
-
-      await Future.delayed(Duration(seconds: 1));
-
- Get.back();
     }
   }
 }

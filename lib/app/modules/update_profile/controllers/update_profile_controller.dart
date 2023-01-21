@@ -28,7 +28,16 @@ class UpdateProfileController extends GetxController {
       isLoading.value = true;
       try {
         Map<String, dynamic> data = {"nama": nameC.text};
-
+// "email_pegawai": emailC.text,
+//             "nama_pegawai": nameC.text,
+//             "jabatan": jabatanC.value,
+//             "telepon": teleponC.text,
+//             "hak": hakC.text,
+//             "foto": urlImage,
+//             "pin": "111111",
+//             "uid": uid,
+//             "role": "pegawai",
+//             "createdAt": DateTime.now().toIso8601String()
         if (image != null) {
           File file = File(image!.path);
           String ext = image!.name.split(".").last;

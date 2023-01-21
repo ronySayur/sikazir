@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sikasir/app/models/product_model.dart';
+import 'package:sikasir/app/models/pegawai_model.dart';
 import 'package:sikasir/app/routes/app_pages.dart';
 
 import '../../../../../widgets/theme.dart';
@@ -9,15 +9,15 @@ Image fotoProdukKosong() {
   return Image.asset("assets/logo/noproduk.png", fit: BoxFit.fill);
 }
 
-class GridViewProduk extends StatelessWidget {
-  const GridViewProduk({
+class GridViewPegawai extends StatelessWidget {
+  const GridViewPegawai({
     Key? key,
-    required this.dataProduk,
+    required this.dataPegawai,
     required this.animationController,
     this.animation,
   }) : super(key: key);
 
-  final ProdukModel dataProduk;
+  final PegawaiModel dataPegawai;
   final AnimationController? animationController;
   final Animation<double>? animation;
 
@@ -34,7 +34,7 @@ class GridViewProduk extends StatelessWidget {
             child: InkWell(
               splashColor: Colors.transparent,
               onTap: () =>
-                  Get.toNamed(Routes.DETAIL_PRODUK, arguments: dataProduk),
+                  Get.toNamed(Routes.DETAIL_PEGAWAI, arguments: dataPegawai),
               child: SizedBox(
                 height: 280,
                 child: Stack(
@@ -49,8 +49,6 @@ class GridViewProduk extends StatelessWidget {
                                 color: DesignAppTheme.grey.withOpacity(0.08),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(16.0)),
-                                // border: new Border.all(
-                                //     color: DesignCourseAppTheme.notWhite),
                               ),
                               child: Column(
                                 children: [
@@ -61,7 +59,7 @@ class GridViewProduk extends StatelessWidget {
                                           padding: const EdgeInsets.only(
                                               top: 16, left: 16, right: 16),
                                           child: Text(
-                                            dataProduk.namaProduk!
+                                            dataPegawai.namaPegawai
                                                 .toUpperCase(),
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
@@ -85,7 +83,7 @@ class GridViewProduk extends StatelessWidget {
                                                 CrossAxisAlignment.center,
                                             children: [
                                               Text(
-                                                '${dataProduk.stok} tersisa',
+                                                dataPegawai.hak,
                                                 textAlign: TextAlign.left,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w200,
@@ -133,10 +131,10 @@ class GridViewProduk extends StatelessWidget {
                                 const BorderRadius.all(Radius.circular(16.0)),
                             child: AspectRatio(
                                 aspectRatio: 1.28,
-                                child: dataProduk.fotoProduk == "noimage"
+                                child: dataPegawai.foto == "noimage"
                                     ? Image.asset("assets/logo/noproduk.png",
                                         fit: BoxFit.cover)
-                                    : Image.network("${dataProduk.fotoProduk}",
+                                    : Image.network(dataPegawai.foto,
                                         fit: BoxFit.fill)),
                           ),
                         ),
