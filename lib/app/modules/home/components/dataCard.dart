@@ -40,7 +40,7 @@ List demoMyFiles = [
     percentage: 35,
   ),
   CloudStorageInfo(
-    press: () {},
+    press: () => Get.toNamed(Routes.HOME_SUPPLIER),
     title: "Supplier",
     svgSrc: "assets/icons/supplier.svg",
     numOfFiles: 1328,

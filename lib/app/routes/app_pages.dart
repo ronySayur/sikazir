@@ -1,23 +1,7 @@
 import 'package:get/get.dart';
-import 'package:sikasir/app/modules/pegawai/addPegawai/bindings/add_pegawai_binding.dart';
-import 'package:sikasir/app/modules/pegawai/addPegawai/views/add_pegawai_view.dart';
-import 'package:sikasir/app/modules/pegawai/all_pegawai/bindings/all_pegawai_binding.dart';
-import 'package:sikasir/app/modules/pegawai/all_pegawai/views/all_pegawai_view.dart';
-import 'package:sikasir/app/modules/pegawai/detail_pegawai/bindings/detail_pegawai_binding.dart';
-import 'package:sikasir/app/modules/pegawai/detail_pegawai/views/detail_pegawai_view.dart';
-import 'package:sikasir/app/modules/pegawai/home_pegawai/bindings/home_pegawai_binding.dart';
-import 'package:sikasir/app/modules/pegawai/home_pegawai/views/home_pegawai_view.dart';
-import 'package:sikasir/app/modules/produk/add_produk/bindings/add_barang_binding.dart';
-import 'package:sikasir/app/modules/produk/add_produk/views/add_produk_view.dart';
-import 'package:sikasir/app/modules/produk/detail_produk/bindings/detail_produk_binding.dart';
-import 'package:sikasir/app/modules/produk/detail_produk/views/detail_produk_view.dart';
-import 'package:sikasir/app/modules/produk/home_produk/bindings/home_produk_binding.dart';
-import 'package:sikasir/app/modules/produk/home_produk/views/home_produk_view.dart';
-import 'package:sikasir/app/modules/produk/update_product/bindings/update_product_binding.dart';
-import 'package:sikasir/app/modules/produk/update_product/views/update_product_view.dart';
 
-import '../modules/add_supplier/bindings/add_supplier_binding.dart';
-import '../modules/add_supplier/views/add_supplier_view.dart';
+import '../modules/detail_supplier/bindings/detail_supplier_binding.dart';
+import '../modules/detail_supplier/views/detail_supplier_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -30,8 +14,28 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/new_password/bindings/new_password_binding.dart';
 import '../modules/new_password/views/new_password_view.dart';
+import '../modules/pegawai/addPegawai/bindings/add_pegawai_binding.dart';
+import '../modules/pegawai/addPegawai/views/add_pegawai_view.dart';
+import '../modules/pegawai/all_pegawai/bindings/all_pegawai_binding.dart';
+import '../modules/pegawai/all_pegawai/views/all_pegawai_view.dart';
+import '../modules/pegawai/detail_pegawai/bindings/detail_pegawai_binding.dart';
+import '../modules/pegawai/detail_pegawai/views/detail_pegawai_view.dart';
+import '../modules/pegawai/home_pegawai/bindings/home_pegawai_binding.dart';
+import '../modules/pegawai/home_pegawai/views/home_pegawai_view.dart';
+import '../modules/produk/add_produk/bindings/add_barang_binding.dart';
+import '../modules/produk/add_produk/views/add_produk_view.dart';
+import '../modules/produk/detail_produk/bindings/detail_produk_binding.dart';
+import '../modules/produk/detail_produk/views/detail_produk_view.dart';
+import '../modules/produk/home_produk/bindings/home_produk_binding.dart';
+import '../modules/produk/home_produk/views/home_produk_view.dart';
+import '../modules/produk/update_product/bindings/update_product_binding.dart';
+import '../modules/produk/update_product/views/update_product_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/supplier/add_supplier/bindings/add_supplier_binding.dart';
+import '../modules/supplier/add_supplier/views/add_supplier_view.dart';
+import '../modules/supplier/home_supplier/bindings/home_supplier_binding.dart';
+import '../modules/supplier/home_supplier/views/home_supplier_view.dart';
 import '../modules/transaksi_penjualan/bindings/transaksi_penjualan_binding.dart';
 import '../modules/transaksi_penjualan/views/transaksi_penjualan_view.dart';
 import '../modules/update_password/bindings/update_password_binding.dart';
@@ -142,5 +146,15 @@ class AppPages {
         page: () => UpdateProductView(),
         binding: UpdateProductBinding(),
         transition: Transition.fadeIn),
+    GetPage(
+      name: _Paths.HOME_SUPPLIER,
+      page: () => HomeSupplierView(),
+      binding: HomeSupplierBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_SUPPLIER,
+      page: () => const DetailSupplierView(),
+      binding: DetailSupplierBinding(),
+    ),
   ];
 }

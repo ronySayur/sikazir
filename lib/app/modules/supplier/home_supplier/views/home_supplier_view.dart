@@ -1,16 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:sikasir/app/models/product_model.dart';
+import 'package:sikasir/app/models/supplier_model.dart';
 import 'package:sikasir/app/routes/app_pages.dart';
 import 'package:sikasir/widgets/widgets.dart';
-
-import '../controllers/home_produk_controller.dart';
 import 'grid_item.dart';
 
-class HomeProdukView extends GetView<HomeProdukController> {
-  HomeProdukView({Key? key}) : super(key: key);
+import '../controllers/home_supplier_controller.dart';
+
+class HomeSupplierView extends GetView<HomeSupplierController> {
+  HomeSupplierView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class HomeProdukView extends GetView<HomeProdukController> {
         preferredSize: Size.fromHeight(wDimension.height30 * 4.25),
         child: AppBar(
           backgroundColor: Colors.red[900],
-          title: wBigText(text: "Produk", color: Colors.white),
+          title: wBigText(text: "Supplier", color: Colors.white),
           centerTitle: false,
           flexibleSpace: Padding(
               padding: EdgeInsets.fromLTRB(
@@ -31,7 +32,7 @@ class HomeProdukView extends GetView<HomeProdukController> {
                   alignment: Alignment.bottomCenter,
                   child: TextField(
                       onChanged: (value) {
-                        controller.searchProduk(value);
+                        controller.searchSupplier(value);
                         controller.ontap.toggle();
                       },
                       controller: controller.searchC,
@@ -60,7 +61,7 @@ class HomeProdukView extends GetView<HomeProdukController> {
         ),
       ),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: controller.streamProduk(),
+          stream: controller.streamSupplier(),
           builder: (context, snap) {
             if (snap.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -72,25 +73,25 @@ class HomeProdukView extends GetView<HomeProdukController> {
               return dataKosong();
             }
 
-            List<ProdukModel> allProducts = [];
+            List<SupplierModel> allSupplier = [];
 
             for (var element in snap.data!.docs) {
-              allProducts.add(ProdukModel.fromJson(element.data()));
+              allSupplier.add(SupplierModel.fromJson(element.data()));
             }
             return Obx(() => controller.ontap.isTrue
                 ? controller.tempSearch.isEmpty
                     ? dataKosong()
-                    : searchProduk()
-                : showProduk(allProducts));
+                    : searchSupplier()
+                : showSupplier(allSupplier));
           }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(Routes.ADD_PRODUK),
+        onPressed: () => Get.toNamed(Routes.ADD_SUPPLIER),
         child: const Icon(Icons.add),
       ),
     );
   }
 
-  SingleChildScrollView showProduk(List<ProdukModel> allProducts) {
+  SingleChildScrollView showSupplier(List<SupplierModel> allSup) {
     return SingleChildScrollView(
       physics: ScrollPhysics(),
       child: Column(
@@ -108,9 +109,9 @@ class HomeProdukView extends GetView<HomeProdukController> {
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: allProducts.length,
+              itemCount: allSup.length,
               itemBuilder: (context, index) {
-                final int count = allProducts.length;
+                final int count = allSup.length;
                 final Animation<double> animation =
                     Tween<double>(begin: 0.0, end: 1.0).animate(
                   CurvedAnimation(
@@ -120,10 +121,10 @@ class HomeProdukView extends GetView<HomeProdukController> {
                   ),
                 );
                 controller.animationController?.forward();
-                return GridViewProduk(
+                return GridViewS(
                   animation: animation,
                   animationController: controller.animationController,
-                  dataProduk: allProducts[index],
+                  dataSupplier: allSup[index],
                 );
               },
             ),
@@ -138,13 +139,13 @@ class HomeProdukView extends GetView<HomeProdukController> {
       child: Column(
         children: [
           Lottie.asset("assets/lottie/empty.json"),
-          wBigText(text: "Produk Kosong")
+          wBigText(text: "Data suplier Kosong")
         ],
       ),
     );
   }
 
-  SingleChildScrollView searchProduk() {
+  SingleChildScrollView searchSupplier() {
     return SingleChildScrollView(
       physics: ScrollPhysics(),
       child: Column(
@@ -174,10 +175,10 @@ class HomeProdukView extends GetView<HomeProdukController> {
                   ),
                 );
                 controller.animationController?.forward();
-                return SearchGridViewProduk(
+                return SearchGridViewS(
                   animation: animation,
                   animationController: controller.animationController,
-                  dataProduk: controller.tempSearch[index],
+                  dataSupplier: controller.tempSearch[index],
                 );
               },
             ),

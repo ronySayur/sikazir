@@ -23,6 +23,8 @@ abstract class Routes {
   static const HOME_PRODUK = _Paths.HOME_PRODUK;
   static const DETAIL_PRODUK = _Paths.DETAIL_PRODUK;
   static const UPDATE_PRODUCT = _Paths.UPDATE_PRODUCT;
+  static const HOME_SUPPLIER = _Paths.HOME_SUPPLIER;
+  static const DETAIL_SUPPLIER = _Paths.DETAIL_SUPPLIER;
 }
 
 abstract class _Paths {
@@ -47,4 +49,6 @@ abstract class _Paths {
   static const HOME_PRODUK = '/home-produk';
   static const DETAIL_PRODUK = '/detail-produk';
   static const UPDATE_PRODUCT = '/update-product';
+  static const HOME_SUPPLIER = '/home-supplier';
+  static const DETAIL_SUPPLIER = '/detail-supplier';
 }
