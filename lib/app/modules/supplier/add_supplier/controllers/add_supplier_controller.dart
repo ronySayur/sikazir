@@ -22,7 +22,7 @@ class AddSupplierController extends GetxController with StateMixin {
   }
 
   Future<void> addSup() async {
- loading();
+    loading();
     if (isLoading.isFalse) {
       if (vendorNama.text.isNotEmpty &&
           vendorTelp.text.isNotEmpty &&

@@ -148,7 +148,7 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
                         }
 
                         if (snap.data!.docs.isEmpty) {
-                          return dataKosong();
+                          return dataKosong('Pegawai');
                         }
                         if (snap.connectionState == ConnectionState.active) {
                           List<PegawaiModel> pegawaiM = [];

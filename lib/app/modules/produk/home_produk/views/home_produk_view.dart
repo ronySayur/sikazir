@@ -68,7 +68,7 @@ class HomeProdukView extends GetView<HomeProdukController> {
             }
 
             if (snap.data!.docs.isEmpty) {
-              return dataKosong();
+              return dataKosong('Produk');
             }
 
             return GetBuilder<HomeProdukController>(builder: (controller) {
@@ -89,7 +89,7 @@ class HomeProdukView extends GetView<HomeProdukController> {
                   }
                   return showProduk(searchSup);
                 } else {
-                  return dataKosong();
+                  return dataKosong('Produk');
                 }
               }
             });
@@ -149,6 +149,4 @@ class HomeProdukView extends GetView<HomeProdukController> {
       ),
     );
   }
-
-
 }

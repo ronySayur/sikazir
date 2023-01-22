@@ -28,7 +28,7 @@ class AllPegawaiView extends GetView<AllPegawaiController> {
             }
 
             if (snap.data!.docs.isEmpty) {
-              return dataKosong();
+              return dataKosong("Pegawai");
             }
 
             return GetBuilder<AllPegawaiController>(builder: (controller) {
@@ -49,7 +49,7 @@ class AllPegawaiView extends GetView<AllPegawaiController> {
                   }
                   return showData(searchSup);
                 } else {
-                  return dataKosong();
+                  return dataKosong('Pegawai');
                 }
               }
             });
@@ -110,14 +110,4 @@ class AllPegawaiView extends GetView<AllPegawaiController> {
     );
   }
 
-  Center dataKosong() {
-    return Center(
-      child: Column(
-        children: [
-          Lottie.asset("assets/lottie/empty.json"),
-          wBigText(text: "Tidak ada pegawai")
-        ],
-      ),
-    );
-  }
 }

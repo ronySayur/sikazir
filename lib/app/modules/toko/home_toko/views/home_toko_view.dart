@@ -1,16 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:sikasir/app/models/supplier_model.dart';
+import 'package:sikasir/app/models/toko_model.dart';
 import 'package:sikasir/app/routes/app_pages.dart';
 import 'package:sikasir/widgets/widgets.dart';
+import 'package:get/get.dart';
+import 'package:sikasir/app/modules/toko/home_toko/views/grid_item.dart';
 
-import '../controllers/home_supplier_controller.dart';
-import 'grid_item.dart';
+import '../controllers/home_toko_controller.dart';
 
-class HomeSupplierView extends GetView<HomeSupplierController> {
-  HomeSupplierView({Key? key}) : super(key: key);
-
+class HomeTokoView extends GetView<HomeTokoController> {
+  const HomeTokoView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +51,7 @@ class HomeSupplierView extends GetView<HomeSupplierController> {
         ),
       ),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: controller.streamSupplier(),
+          stream: controller.streamToko(),
           builder: (context, snap) {
             if (snap.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -61,42 +60,42 @@ class HomeSupplierView extends GetView<HomeSupplierController> {
             }
 
             if (snap.data!.docs.isEmpty) {
-              return dataKosong('Supplier');
+              return dataKosong('Toko');
             }
 
-            return GetBuilder<HomeSupplierController>(builder: (controller) {
+            return GetBuilder<HomeTokoController>(builder: (controller) {
               if (controller.searchC.text.isEmpty) {
-                List<SupplierModel> allSupplier = [];
+                List<TokoModel> dataToko = [];
 
                 for (var element in snap.data!.docs) {
-                  allSupplier.add(SupplierModel.fromJson(element.data()));
+                  dataToko.add(TokoModel.fromJson(element.data()));
                 }
 
-                return showSupplier(allSupplier);
+                return showToko(dataToko);
               } else {
                 if (controller.tempSearch.isNotEmpty) {
-                  List<SupplierModel> searchSup = [];
+                  List<TokoModel> search = [];
 
                   for (var element in controller.tempSearch) {
-                    searchSup.add(SupplierModel.fromJson(element));
+                    search.add(TokoModel.fromJson(element));
                   }
-                  return showSupplier(searchSup);
+                  return showToko(search);
                 } else {
-                  return dataKosong('Supploer');
+                  return dataKosong('Toko');
                 }
               }
             });
           }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(Routes.ADD_SUPPLIER),
+        onPressed: () => Get.toNamed(Routes.ADD_TOKO),
         child: const Icon(Icons.add),
       ),
     );
   }
 
-  SingleChildScrollView showSupplier(List<SupplierModel> allSup) {
+  SingleChildScrollView showToko(List<TokoModel> allToko) {
     return SingleChildScrollView(
-      physics: ScrollPhysics(),
+      physics: const ScrollPhysics(),
       child: Column(
         children: [
           Padding(
@@ -106,9 +105,9 @@ class HomeSupplierView extends GetView<HomeSupplierController> {
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: allSup.length,
+              itemCount: allToko.length,
               itemBuilder: (context, index) {
-                final int count = allSup.length;
+                final int count = allToko.length;
                 final Animation<double> animation =
                     Tween<double>(begin: 0.0, end: 1.0).animate(
                   CurvedAnimation(
@@ -118,14 +117,14 @@ class HomeSupplierView extends GetView<HomeSupplierController> {
                   ),
                 );
                 controller.animationController?.forward();
-                return GetBuilder<HomeSupplierController>(
-                  init: HomeSupplierController(),
+                return GetBuilder<HomeTokoController>(
+                  init: HomeTokoController(),
                   initState: (_) {},
                   builder: (c) {
-                    return GridViewS(
+                    return GridViewToko(
                       animation: animation,
                       animationController: controller.animationController,
-                      dataSupplierModel: allSup[index],
+                      dataToko: allToko[index],
                     );
                   },
                 );
@@ -136,5 +135,4 @@ class HomeSupplierView extends GetView<HomeSupplierController> {
       ),
     );
   }
-
 }

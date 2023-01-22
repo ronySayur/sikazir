@@ -216,12 +216,12 @@ void loading() {
       barrierDismissible: false);
 
 }
-  Center dataKosong() {
+  Center dataKosong(String descData) {
     return Center(
       child: Column(
         children: [
           Lottie.asset("assets/lottie/empty.json"),
-          wBigText(text: "Produk Kosong")
+          wBigText(text: "Data $descData kosong")
         ],
       ),
     );

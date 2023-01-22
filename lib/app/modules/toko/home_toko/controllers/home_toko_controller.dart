@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class HomeSupplierController extends GetxController
+class HomeTokoController extends GetxController
     with GetTickerProviderStateMixin {
   AnimationController? animationController;
   late TextEditingController searchC;
@@ -14,8 +14,8 @@ class HomeSupplierController extends GetxController
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> streamSupplier() {
-    return firestore.collection("supplier").snapshots();
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamToko() {
+    return firestore.collection("toko").snapshots();
   }
 
   Future<void> searchSupplier(String data) async {
@@ -29,9 +29,9 @@ class HomeSupplierController extends GetxController
       var capitalized = data.substring(0, 1).toUpperCase() + data.substring(1);
       if (queryAwal.isEmpty && data.length == 1) {
         //fungsi yang akan dijalankan pada 1 ketikan pertama
-        CollectionReference sup = firestore.collection("supplier");
+        CollectionReference toko = firestore.collection("toko");
 
-        final keyNameResult = await sup
+        final keyNameResult = await toko
             .where("keyName", isEqualTo: data.substring(0, 1).toUpperCase())
             .get();
 
@@ -43,12 +43,12 @@ class HomeSupplierController extends GetxController
       }
       if (queryAwal.isNotEmpty) {
         tempSearch.value = [];
+
         queryAwal.forEach((element) {
-          if (element["nama_vendor"].startsWith(capitalized)) {
+          if (element["nama_toko"].startsWith(capitalized)) {
             tempSearch.add(element);
           }
         });
-
       }
     }
 

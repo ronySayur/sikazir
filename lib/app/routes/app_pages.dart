@@ -6,8 +6,8 @@ import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
-import '../modules/home_toko/bindings/home_toko_binding.dart';
-import '../modules/home_toko/views/home_toko_view.dart';
+import '../modules/home_laporan/bindings/home_laporan_binding.dart';
+import '../modules/home_laporan/views/home_laporan_view.dart';
 import '../modules/introduction/bindings/introduction_binding.dart';
 import '../modules/introduction/views/introduction_view.dart';
 import '../modules/laporan/bindings/laporan_binding.dart';
@@ -38,6 +38,14 @@ import '../modules/supplier/add_supplier/bindings/add_supplier_binding.dart';
 import '../modules/supplier/add_supplier/views/add_supplier_view.dart';
 import '../modules/supplier/home_supplier/bindings/home_supplier_binding.dart';
 import '../modules/supplier/home_supplier/views/home_supplier_view.dart';
+import '../modules/toko/add_toko/bindings/add_toko_binding.dart';
+import '../modules/toko/add_toko/views/add_toko_view.dart';
+import '../modules/toko/detail_toko/bindings/detail_toko_binding.dart';
+import '../modules/toko/detail_toko/views/detail_toko_view.dart';
+import '../modules/toko/home_toko/bindings/home_toko_binding.dart';
+import '../modules/toko/home_toko/views/home_toko_view.dart';
+import '../modules/toko/update_toko/bindings/update_toko_binding.dart';
+import '../modules/toko/update_toko/views/update_toko_view.dart';
 import '../modules/transaksi_penjualan/bindings/transaksi_penjualan_binding.dart';
 import '../modules/transaksi_penjualan/views/transaksi_penjualan_view.dart';
 import '../modules/update_password/bindings/update_password_binding.dart';
@@ -149,19 +157,46 @@ class AppPages {
         binding: UpdateProductBinding(),
         transition: Transition.fadeIn),
     GetPage(
+      transition: Transition.fadeIn,
       name: _Paths.HOME_SUPPLIER,
       page: () => HomeSupplierView(),
       binding: HomeSupplierBinding(),
     ),
     GetPage(
+      transition: Transition.fadeIn,
       name: _Paths.DETAIL_SUPPLIER,
       page: () => DetailSupplierView(),
       binding: DetailSupplierBinding(),
     ),
     GetPage(
+      transition: Transition.fadeIn,
       name: _Paths.HOME_TOKO,
       page: () => const HomeTokoView(),
       binding: HomeTokoBinding(),
+    ),
+    GetPage(
+      transition: Transition.fadeIn,
+      name: _Paths.ADD_TOKO,
+      page: () => AddTokoView(),
+      binding: AddTokoBinding(),
+    ),
+    GetPage(
+      transition: Transition.fadeIn,
+      name: _Paths.UPDATE_TOKO,
+      page: () => const UpdateTokoView(),
+      binding: UpdateTokoBinding(),
+    ),
+    GetPage(
+      transition: Transition.fadeIn,
+      name: _Paths.DETAIL_TOKO,
+      page: () => const DetailTokoView(),
+      binding: DetailTokoBinding(),
+    ),
+    GetPage(
+      transition: Transition.fadeIn,
+      name: _Paths.HOME_LAPORAN,
+      page: () => const HomeLaporanView(),
+      binding: HomeLaporanBinding(),
     ),
   ];
 }

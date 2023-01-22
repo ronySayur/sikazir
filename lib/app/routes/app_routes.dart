@@ -26,6 +26,10 @@ abstract class Routes {
   static const HOME_SUPPLIER = _Paths.HOME_SUPPLIER;
   static const DETAIL_SUPPLIER = _Paths.DETAIL_SUPPLIER;
   static const HOME_TOKO = _Paths.HOME_TOKO;
+  static const ADD_TOKO = _Paths.ADD_TOKO;
+  static const UPDATE_TOKO = _Paths.UPDATE_TOKO;
+  static const DETAIL_TOKO = _Paths.DETAIL_TOKO;
+  static const HOME_LAPORAN = _Paths.HOME_LAPORAN;
 }
 
 abstract class _Paths {
@@ -53,4 +57,8 @@ abstract class _Paths {
   static const HOME_SUPPLIER = '/home-supplier';
   static const DETAIL_SUPPLIER = '/detail-supplier';
   static const HOME_TOKO = '/home-toko';
+  static const ADD_TOKO = '/add-toko';
+  static const UPDATE_TOKO = '/update-toko';
+  static const DETAIL_TOKO = '/detail-toko';
+  static const HOME_LAPORAN = '/home-laporan';
 }

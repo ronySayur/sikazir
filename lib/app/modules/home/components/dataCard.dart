@@ -22,7 +22,7 @@ class CloudStorageInfo {
 
 List dataMenu = [
   CloudStorageInfo(
-    press: () {},
+    press: () => Get.toNamed(Routes.TRANSAKSI_PENJUALAN),
     title: "Transaksi",
     svgSrc: "assets/icons/transactions.svg",
     numOfFiles: 1328,
@@ -49,7 +49,7 @@ List dataMenu = [
     percentage: 10,
   ),
   CloudStorageInfo(
-    press: () {},
+    press: () => Get.toNamed(Routes.HOME_TOKO),
     title: "Toko",
     svgSrc: "assets/icons/toko.svg",
     numOfFiles: 5328,
@@ -67,7 +67,7 @@ List dataMenu = [
     percentage: 78,
   ),
   CloudStorageInfo(
-    press: () {},
+    press: () => Get.toNamed(Routes.HOME_LAPORAN),
     title: "Laporan",
     svgSrc: "assets/icons/reports.svg",
     numOfFiles: 5328,
