@@ -20,9 +20,9 @@ class AddSupplierView extends GetView<AddSupplierController> {
           centerTitle: false,
           actions: [
             TextButton(
-                onPressed: () {
+                onPressed: () async {
                   if (controller.isLoading.isFalse) {
-                    controller.addSup();
+                    await controller.addSup();
                   }
                 },
                 child: Container(

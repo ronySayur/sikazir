@@ -22,7 +22,6 @@ class AddSupplierController extends GetxController with StateMixin {
   }
 
   Future<void> addSup() async {
-    loading();
     if (isLoading.isFalse) {
       if (vendorNama.text.isNotEmpty &&
           vendorTelp.text.isNotEmpty &&
@@ -32,7 +31,7 @@ class AddSupplierController extends GetxController with StateMixin {
           picNama.text.isNotEmpty &&
           picTelp.text.isNotEmpty) {
         isLoading(true);
-
+        loading();
         Map<String, dynamic> hasil = await afterAddSup({
           "keyName": vendorNama.text.substring(0, 1).toUpperCase(),
           "id_supplier": "id",
@@ -44,7 +43,7 @@ class AddSupplierController extends GetxController with StateMixin {
           "no_pic": picTelp.text,
           "jabatan_pic": picJabatan.text,
         });
-
+        Get.back;
         isLoading(false);
 
         Get.snackbar(

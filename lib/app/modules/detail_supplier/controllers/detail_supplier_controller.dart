@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sikasir/widgets/widgets.dart';
 
 class DetailSupplierController extends GetxController with StateMixin {
   String? uid;
@@ -29,28 +30,24 @@ class DetailSupplierController extends GetxController with StateMixin {
         "no_vendor": vendorTelp.text,
       };
 
+      loading();
       await firestore.collection("supplier").doc(idSup).update(dataSup);
+      Get.back();
 
       Get.back();
-      Get.back();
-      Get.snackbar("Berhasil", "Berhasil update profile",
+      Get.snackbar("Berhasil", "Berhasil update supplier",
           duration: const Duration(seconds: 2));
     } catch (e) {
-      Get.snackbar("Terjadi Kesalahan", "Tidak dapat update profile($e)");
+      Get.snackbar("Terjadi Kesalahan", "Tidak dapat update supplier($e)");
     } finally {
       isLoading.value = false;
     }
   }
-  
-  Future<Map<String, dynamic>> deleteSup(String IDdelete) async {
 
+  Future<Map<String, dynamic>> deleteSup(String idDelete) async {
     try {
-      await firestore.collection("produk").doc(IDdelete).delete();
-
-      Get.back();
-      Get.back();
-      Get.back();
-
+      await firestore.collection("supplier").doc(idDelete).delete();
+      
       return {
         "error": false,
         "message": "Produk berhasil dihapus.",

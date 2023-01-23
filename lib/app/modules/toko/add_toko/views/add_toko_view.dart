@@ -15,7 +15,7 @@ class AddTokoView extends GetView<AddTokoController> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.red,
-          title: const Text('Tambah Suplier'),
+          title: const Text('Tambah Toko'),
           centerTitle: false,
           actions: [
             TextButton(

@@ -20,14 +20,14 @@ class ForgotPasswordController extends GetxController {
       } finally {
         isLoading.value = false;
       }
-            await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 1));
 
- Get.back();
+      Get.back();
     } else {
       Get.snackbar("Peringatan!", "Email tidak boleh kosong");
-            await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 1));
 
- Get.back();
+      Get.back();
     }
   }
 }

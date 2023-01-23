@@ -18,23 +18,15 @@ class DetailProdukController extends GetxController
     animationController?.forward();
     await Future<dynamic>.delayed(const Duration(milliseconds: 200));
     opacity1.value = 1;
-    print("1");
     await Future<dynamic>.delayed(const Duration(milliseconds: 200));
     opacity2.value = 1;
-    print("2");
     await Future<dynamic>.delayed(const Duration(milliseconds: 200));
     opacity3.value = 1;
-    print("3");
   }
 
-  Future<Map<String, dynamic>> deleteProduct(String IDdelete) async {
-    loading();
+  Future<Map<String, dynamic>> deleteProduct(String idProduk) async {
     try {
-      await firestore.collection("produk").doc(IDdelete).delete();
-
-      Get.back();
-      Get.back();
-      Get.back();
+      await firestore.collection("produk").doc(idProduk).delete();
 
       return {
         "error": false,

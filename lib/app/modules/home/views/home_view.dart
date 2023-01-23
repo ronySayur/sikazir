@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/list_notifier.dart';
 import 'package:sikasir/app/controllers/auth_controller.dart';
 import 'package:sikasir/widgets/widgets.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -23,6 +22,7 @@ class HomeView extends GetView<HomeController> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
+          
           if (snapshot.hasData) {
             
             Map<String, dynamic> user = snapshot.data!.data()!;

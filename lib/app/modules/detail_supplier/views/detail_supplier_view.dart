@@ -276,10 +276,11 @@ class DetailSupplierView extends GetView<DetailSupplierController> {
           Expanded(
               child: TextButton(
                   onPressed: () async {
-                    if (controller.isLoading.isFalse) {
-                      loading();
-                      await controller.deleteSup(dataSup.idSupplier);
-                    }
+                    await dialogDeleteFutureMap(
+                      'Supplier',
+                      controller.isLoading,
+                      controller.deleteSup(dataSup.idSupplier),
+                    );
                   },
                   child: wSmallText(
                     text: "Hapus Supplier",

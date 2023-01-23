@@ -281,39 +281,12 @@ class DetailProdukView extends GetView<DetailProdukController> {
                       borderRadius: BorderRadius.circular(50.0)),
                   elevation: 10.0,
                   child: InkWell(
-                    onTap: () {
-                      Get.defaultDialog(
-                          title: "Konfirmasi",
-                          content: Column(
-                            children: [
-                              wSmallText(
-                                  text:
-                                      "Apakah anda yakin untuk menghapus produk?"),
-                              SizedBox(height: wDimension.height10),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  OutlinedButton(
-                                      onPressed: () async {
-                                        Get.back();
-                                        controller.isLoading.isFalse;
-                                      },
-                                      child: const Text("Batal")),
-                                  Obx(() => ElevatedButton(
-                                      onPressed: () async {
-                                        if (controller.isLoading.isFalse) {
-                                          controller.deleteProduct(
-                                              dataProduk.idProduk!);
-                                        }
-                                      },
-                                      child: Text(controller.isLoading.isFalse
-                                          ? "Konfirmasi"
-                                          : "Loading..")))
-                                ],
-                              ),
-                            ],
-                          ));
+                    onTap: () async {
+                      await dialogDeleteFutureMap(
+                        'Produk',
+                        controller.isLoading,
+                        controller.deleteProduct(dataProduk.idProduk!),
+                      );
                     },
                     child: Container(
                       width: 60,

@@ -294,6 +294,7 @@ class AddProdukController extends GetxController {
 
           isLoading(false);
         } else {
+          
           Map<String, dynamic> kategori =
               await afterAddKategori({"kategori": tambahKategoriC.text});
 

@@ -81,6 +81,7 @@ class AllPegawaiView extends GetView<AllPegawaiController> {
               shrinkWrap: true,
               itemCount: allPegawai.length,
               itemBuilder: (context, index) {
+                
                 final int count = allPegawai.length;
                 final Animation<double> animation =
                     Tween<double>(begin: 0.0, end: 1.0).animate(

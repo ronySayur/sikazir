@@ -127,7 +127,9 @@ class LoginView extends GetView<LoginController> {
                       child: Obx(() => ElevatedButton(
                           onPressed: () async {
                             if (controller.isLoading.isFalse) {
+                              //todo cek apakah sudah kirim email atau belum
                               await controller.login();
+                              // await controller.cadanganCreate();
                             }
                           },
                           child: controller.isLoading.isFalse

@@ -13,12 +13,10 @@ class AuthController extends GetxController {
 
   //Ambil data pegawai sekarang yang login
   Stream<DocumentSnapshot<Map<String, dynamic>>> streamUser() async* {
-    String uid = auth.currentUser!.uid;
+    String uid = auth.currentUser!.email!;
 
     yield* firestore.collection("pegawai").doc(uid).snapshots();
   }
-
-
 
   Future<void> signOut() async {
     await auth.signOut();

@@ -406,9 +406,9 @@ class UpdateProductView extends GetView<UpdateProductController> {
                               child: const Text("Batal")),
                           Obx(() => ElevatedButton(
                               onPressed: () async {
+
                                 if (controller.isLoading.isFalse) {
                                   controller.deleteFoto();
-                                  controller.isLoading.isFalse;
                                 }
                               },
                               child: Text(controller.isLoading.isFalse

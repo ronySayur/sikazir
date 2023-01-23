@@ -209,23 +209,57 @@ Widget wTimeBoxUI(String title, String deskripsi) {
   );
 }
 
+Future<dynamic> dialogDeleteFutureMap(
+    String nama, RxBool loadingC, Future<Map<String, dynamic>> perintahC) {
+  return Get.defaultDialog(
+      title: "Konfirmasi",
+      content: Column(
+        children: [
+          wSmallText(text: "Apakah anda yakin untuk menghapus $nama?"),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              OutlinedButton(
+                  onPressed: () async {
+                    Get.back();
+                  },
+                  child: const Text("Batal")),
+              Obx(() => ElevatedButton(
+                  onPressed: () async {
+                    if (loadingC.isFalse) {
+                      loading();
+                      await perintahC;
+                    }
+                    await Future.delayed(const Duration(seconds: 3));
+                    Get.back();
+                    Get.back();
+                    Get.back();
+                  },
+                  child: Text(loadingC.isFalse ? "Konfirmasi" : "Loading..")))
+            ],
+          ),
+        ],
+      ));
+}
+
 void loading() {
   Get.defaultDialog(
       title: "Tunggu Sebentar",
       content: const CircularProgressIndicator(),
       barrierDismissible: false);
-
 }
-  Center dataKosong(String descData) {
-    return Center(
-      child: Column(
-        children: [
-          Lottie.asset("assets/lottie/empty.json"),
-          wBigText(text: "Data $descData kosong")
-        ],
-      ),
-    );
-  }
+
+Center dataKosong(String descData) {
+  return Center(
+    child: Column(
+      children: [
+        Lottie.asset("assets/lottie/empty.json"),
+        wBigText(text: "Data $descData kosong")
+      ],
+    ),
+  );
+}
 
 Future<bool> willPopScope() async {
   return (await Get.defaultDialog(

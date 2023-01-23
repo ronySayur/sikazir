@@ -11,7 +11,7 @@ class NewPasswordController extends GetxController {
   TextEditingController newPassC = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final authC = Get.find<AuthController>();
+  
 
   Future<void> newPaswword() async {
     if (newPassC.text.isNotEmpty) {

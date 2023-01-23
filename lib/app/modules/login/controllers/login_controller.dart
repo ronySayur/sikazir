@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,24 @@ class LoginController extends GetxController {
   TextEditingController passC = TextEditingController();
 
   FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  Future<void> cadanganCreate() async {
+    if (emailC.text.isNotEmpty && passC.text.isNotEmpty) {
+      await firestore.collection("pegawai").doc(emailC.text).set({
+        "email_pegawai": emailC.text,
+        "nama_pegawai": "cadangan",
+        "jabatan": "admin",
+        "telepon": "9128301274",
+        "hak": "hak",
+        "foto":
+            "https://firebasestorage.googleapis.com/v0/b/sikasir-rony.appspot.com/o/3yjYopVejKex0BgVzuykS0hxVkn2%2Fprofile.jpg?alt=media&token=05f3bf3c-ea4f-4203-ba93-755b050cc939",
+        "pin": "111111",
+        "role": "pegawai",
+        "createdAt": DateTime.now().toIso8601String()
+      });
+    }
+  }
 
   Future<void> login() async {
     if (emailC.text.isNotEmpty && passC.text.isNotEmpty) {
@@ -30,7 +49,7 @@ class LoginController extends GetxController {
                   backgroundColor: Colors.white,
                   "Peringatan",
                   "Ubah password anda");
-              
+
               Get.offAllNamed(Routes.NEW_PASSWORD);
             } else {
               Get.offAllNamed(Routes.HOME);

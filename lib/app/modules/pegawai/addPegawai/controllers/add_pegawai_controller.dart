@@ -62,9 +62,7 @@ class AddPegawaiController extends GetxController {
   }
 
   konfirmasiDialog() async {
-    //matikan loading()
     Get.back();
-    //validasi admin
     Get.defaultDialog(
         title: "Valdiasi admin",
         content: Column(

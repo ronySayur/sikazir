@@ -68,7 +68,7 @@ class AppPages {
         transition: Transition.fadeIn),
     GetPage(
         name: _Paths.INTRODUCTION,
-        page: () => const IntroductionView(),
+        page: () => IntroductionView(),
         binding: IntroductionBinding(),
         transition: Transition.fadeIn),
     GetPage(
@@ -88,7 +88,7 @@ class AppPages {
         transition: Transition.fadeIn),
     GetPage(
         name: _Paths.NEW_PASSWORD,
-        page: () => const NewPasswordView(),
+        page: () => NewPasswordView(),
         binding: NewPasswordBinding(),
         transition: Transition.fadeIn),
     GetPage(
@@ -98,12 +98,12 @@ class AppPages {
         transition: Transition.fadeIn),
     GetPage(
         name: _Paths.FORGOT_PASSWORD,
-        page: () => const ForgotPasswordView(),
+        page: () => ForgotPasswordView(),
         binding: ForgotPasswordBinding(),
         transition: Transition.fadeIn),
     GetPage(
         name: _Paths.PROFILE,
-        page: () => const ProfileView(),
+        page: () => ProfileView(),
         binding: ProfileBinding(),
         transition: Transition.fadeIn),
     GetPage(
@@ -113,12 +113,12 @@ class AppPages {
         transition: Transition.fadeIn),
     GetPage(
         name: _Paths.UPDATE_PASSWORD,
-        page: () => const UpdatePasswordView(),
+        page: () => UpdatePasswordView(),
         binding: UpdatePasswordBinding(),
         transition: Transition.fadeIn),
     GetPage(
         name: _Paths.TRANSAKSI_PENJUALAN,
-        page: () => const TransaksiPenjualanView(),
+        page: () => TransaksiPenjualanView(),
         binding: TransaksiPenjualanBinding(),
         transition: Transition.fadeIn),
     GetPage(
@@ -138,7 +138,7 @@ class AppPages {
         transition: Transition.fadeIn),
     GetPage(
         name: _Paths.LAPORAN,
-        page: () => const LaporanView(),
+        page: () => LaporanView(),
         binding: LaporanBinding(),
         transition: Transition.fadeIn),
     GetPage(
@@ -171,7 +171,7 @@ class AppPages {
     GetPage(
       transition: Transition.fadeIn,
       name: _Paths.HOME_TOKO,
-      page: () => const HomeTokoView(),
+      page: () => HomeTokoView(),
       binding: HomeTokoBinding(),
     ),
     GetPage(
@@ -183,19 +183,19 @@ class AppPages {
     GetPage(
       transition: Transition.fadeIn,
       name: _Paths.UPDATE_TOKO,
-      page: () => const UpdateTokoView(),
+      page: () => UpdateTokoView(),
       binding: UpdateTokoBinding(),
     ),
     GetPage(
       transition: Transition.fadeIn,
       name: _Paths.DETAIL_TOKO,
-      page: () => const DetailTokoView(),
+      page: () => DetailTokoView(),
       binding: DetailTokoBinding(),
     ),
     GetPage(
       transition: Transition.fadeIn,
       name: _Paths.HOME_LAPORAN,
-      page: () => const HomeLaporanView(),
+      page: () => HomeLaporanView(),
       binding: HomeLaporanBinding(),
     ),
   ];

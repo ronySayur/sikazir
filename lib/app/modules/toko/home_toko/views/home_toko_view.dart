@@ -17,7 +17,7 @@ class HomeTokoView extends GetView<HomeTokoController> {
         preferredSize: Size.fromHeight(wDimension.height30 * 4.25),
         child: AppBar(
           backgroundColor: Colors.red[900],
-          title: wBigText(text: "Supplier", color: Colors.white),
+          title: wBigText(text: "Toko", color: Colors.white),
           centerTitle: false,
           flexibleSpace: Padding(
               padding: const EdgeInsets.all(defaultPadding),

@@ -32,8 +32,7 @@ class GridViewToko extends StatelessWidget {
                 0.0, 50 * (1.0 - animation!.value), 0.0),
             child: InkWell(
               splashColor: Colors.transparent,
-              onTap: () =>
-                  Get.toNamed(Routes.DETAIL_SUPPLIER, arguments: dataToko),
+              onTap: () => Get.toNamed(Routes.UPDATE_TOKO, arguments: dataToko),
               child: SizedBox(
                 height: 280,
                 child: Stack(
@@ -92,7 +91,7 @@ class GridViewToko extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  '${dataToko.namaToko}\n${dataToko.alamat}',
+                                                  '${dataToko.emailToko}\n${dataToko.alamat}',
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w500,

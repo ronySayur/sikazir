@@ -79,7 +79,7 @@ class UpdateProductController extends GetxController {
 
   Future<void> deleteFoto() async {
     isLoading.value = true;
-    
+
     try {
       if (fotoNetwork.text != "noimage" && fotoNetwork.text != null) {
         await storage.ref(idProduk.text).listAll().then((value) {
@@ -122,8 +122,6 @@ class UpdateProductController extends GetxController {
     }
   }
 
-
-
   //menampilkan stream kategori
   Stream<QuerySnapshot<Map<String, dynamic>>> streamKategori() async* {
     yield* firestore.collection("kategori").snapshots();
@@ -164,12 +162,12 @@ class UpdateProductController extends GetxController {
                   size: 18,
                   text: "Tambahkan Kategori lain",
                   weight: FontWeight.bold)),
-          Divider(),
+          const Divider(),
           Container(
             width: wDimension.widthSetengah,
             height: wDimension.heightSetengah / 2,
             child: SingleChildScrollView(
-              physics: ScrollPhysics(),
+              physics: const ScrollPhysics(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
@@ -179,19 +177,19 @@ class UpdateProductController extends GetxController {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(child: CircularProgressIndicator());
                         }
 
                         if (snapshot.data?.docs.length == 0 ||
                             snapshot.data == null) {
                           return SizedBox(
                             height: wDimension.height20 * 10,
-                            child: Center(child: Text("Belum ada kategori")),
+                            child: const Center(child: Text("Belum ada kategori")),
                           );
                         }
                         return ListView.builder(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (BuildContext context, int index) {
                             Map<String, dynamic> data =
@@ -248,7 +246,7 @@ class UpdateProductController extends GetxController {
               ),
             ),
           ),
-          Divider(),
+          const Divider(),
         ],
       ),
     );
@@ -348,12 +346,12 @@ class UpdateProductController extends GetxController {
                   size: 18,
                   text: "Tambahkan merk lain",
                   weight: FontWeight.bold)),
-          Divider(),
+          const Divider(),
           Container(
             width: wDimension.widthSetengah,
             height: wDimension.heightSetengah / 2,
             child: SingleChildScrollView(
-              physics: ScrollPhysics(),
+              physics: const ScrollPhysics(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
@@ -363,19 +361,19 @@ class UpdateProductController extends GetxController {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(child: CircularProgressIndicator());
                         }
 
                         if (snapshot.data?.docs.length == 0 ||
                             snapshot.data == null) {
                           return SizedBox(
                             height: wDimension.height20 * 10,
-                            child: Center(child: Text("Belum ada merk")),
+                            child: const Center(child: Text("Belum ada merk")),
                           );
                         }
                         return ListView.builder(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (BuildContext context, int index) {
                             Map<String, dynamic> data =
@@ -432,7 +430,7 @@ class UpdateProductController extends GetxController {
               ),
             ),
           ),
-          Divider(),
+          const Divider(),
         ],
       ),
     );
