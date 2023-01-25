@@ -49,8 +49,7 @@ class GridViewProduk extends StatelessWidget {
                                 color: DesignAppTheme.grey.withOpacity(0.08),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(16.0)),
-                                // border: new Border.all(
-                                //     color: DesignCourseAppTheme.notWhite),
+
                               ),
                               child: Column(
                                 children: [

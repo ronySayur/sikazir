@@ -47,21 +47,21 @@ class bodyDashboard extends StatelessWidget {
                                         text:
                                             "Selamat Datang ${user["nama_pegawai"]}",
                                         color: primaryColor,
-                                      ),
-                                      ElevatedButton.icon(
-                                        style: TextButton.styleFrom(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: defaultPadding * 1.5,
-                                            vertical: defaultPadding /
-                                                (Responsive.isMobile(context)
-                                                    ? 2
-                                                    : 1),
-                                          ),
-                                        ),
-                                        onPressed: () => Get.toNamed(
-                                            Routes.TRANSAKSI_PENJUALAN),
-                                        icon: Icon(Icons.add),
-                                        label: Text("Tambah Transaksi"),
+                                        // ),
+                                        // ElevatedButton.icon(
+                                        //   style: TextButton.styleFrom(
+                                        //     padding: EdgeInsets.symmetric(
+                                        //       horizontal: defaultPadding * 1.5,
+                                        //       vertical: defaultPadding /
+                                        //           (Responsive.isMobile(context)
+                                        //               ? 2
+                                        //               : 1),
+                                        //     ),
+                                        //   ),
+                                        //   onPressed: () => Get.toNamed(
+                                        //       Routes.TRANSAKSI_PENJUALAN),
+                                        //   icon: Icon(Icons.add),
+                                        //   label: Text("Tambah Transaksi"),
                                       ),
                                     ],
                                   ),

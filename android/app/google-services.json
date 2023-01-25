@@ -38,6 +38,13 @@
             {
               "client_id": "544523707198-1rqpc0kkplsrjtfmictg167jtukgg8ud.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "544523707198-ghkmaiod6uctp8o8sqnqjte2joh9lkif.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ta.sikasir"
+              }
             }
           ]
         }

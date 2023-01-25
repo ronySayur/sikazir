@@ -1,13 +1,19 @@
 import 'package:get/get.dart';
 
+import '../modules/add_pembelian/bindings/add_pembelian_binding.dart';
+import '../modules/add_pembelian/views/add_pembelian_view.dart';
 import '../modules/detail_supplier/bindings/detail_supplier_binding.dart';
 import '../modules/detail_supplier/views/detail_supplier_view.dart';
+import '../modules/detail_transaksi/bindings/detail_transaksi_binding.dart';
+import '../modules/detail_transaksi/views/detail_transaksi_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/home_laporan/bindings/home_laporan_binding.dart';
 import '../modules/home_laporan/views/home_laporan_view.dart';
+import '../modules/home_pembelian/bindings/home_pembelian_binding.dart';
+import '../modules/home_pembelian/views/home_pembelian_view.dart';
 import '../modules/introduction/bindings/introduction_binding.dart';
 import '../modules/introduction/views/introduction_view.dart';
 import '../modules/laporan/bindings/laporan_binding.dart';
@@ -48,6 +54,10 @@ import '../modules/toko/update_toko/bindings/update_toko_binding.dart';
 import '../modules/toko/update_toko/views/update_toko_view.dart';
 import '../modules/transaksi_penjualan/bindings/transaksi_penjualan_binding.dart';
 import '../modules/transaksi_penjualan/views/transaksi_penjualan_view.dart';
+import '../modules/transaksi_selesai/bindings/transaksi_selesai_binding.dart';
+import '../modules/transaksi_selesai/views/transaksi_selesai_view.dart';
+import '../modules/update_keranjang/bindings/update_keranjang_binding.dart';
+import '../modules/update_keranjang/views/update_keranjang_view.dart';
 import '../modules/update_password/bindings/update_password_binding.dart';
 import '../modules/update_password/views/update_password_view.dart';
 import '../modules/update_profile/bindings/update_profile_binding.dart';
@@ -197,6 +207,33 @@ class AppPages {
       name: _Paths.HOME_LAPORAN,
       page: () => HomeLaporanView(),
       binding: HomeLaporanBinding(),
+    ),
+    GetPage(
+      transition: Transition.fadeIn,
+      name: _Paths.DETAIL_TRANSAKSI,
+      page: () => DetailTransaksiView(),
+      binding: DetailTransaksiBinding(),
+    ),
+    GetPage(
+      transition: Transition.fadeIn,
+      name: _Paths.UPDATE_KERANJANG,
+      page: () => UpdateKeranjangView(),
+      binding: UpdateKeranjangBinding(),
+    ),
+    GetPage(
+      name: _Paths.HOME_PEMBELIAN,
+      page: () => const HomePembelianView(),
+      binding: HomePembelianBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_PEMBELIAN,
+      page: () => const AddPembelianView(),
+      binding: AddPembelianBinding(),
+    ),
+    GetPage(
+      name: _Paths.TRANSAKSI_SELESAI,
+      page: () => const TransaksiSelesaiView(),
+      binding: TransaksiSelesaiBinding(),
     ),
   ];
 }

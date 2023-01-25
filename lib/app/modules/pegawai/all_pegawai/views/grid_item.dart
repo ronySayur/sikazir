@@ -119,7 +119,7 @@ class GridViewPegawai extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(16.0)),
-                            boxShadow: <BoxShadow>[
+                            boxShadow:[
                               BoxShadow(
                                   color: DesignAppTheme.grey.withOpacity(0.2),
                                   offset: const Offset(0.0, 0.0),

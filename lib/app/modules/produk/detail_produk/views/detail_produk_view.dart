@@ -23,10 +23,10 @@ class DetailProdukView extends GetView<DetailProdukController> {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            Column(
+            ListView(
               children: [
                 AspectRatio(
-                  aspectRatio: 1.2,
+                  aspectRatio: 1.5,
                   child: dataProduk.fotoProduk == "noimage"
                       ? Image.asset("assets/logo/noproduk.png",
                           fit: BoxFit.cover)
@@ -83,16 +83,16 @@ class DetailProdukView extends GetView<DetailProdukController> {
                                     color: DesignAppTheme.nearlyBlue,
                                   ),
                                 ),
-                                Text(
-                                  'ID Produk: ${dataProduk.idProduk}',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18,
-                                    letterSpacing: 0.1,
-                                    color: DesignAppTheme.darkerText,
-                                  ),
-                                ),
+                                // Text(
+                                //   'ID Produk: ${dataProduk.idProduk}',
+                                //   textAlign: TextAlign.left,
+                                //   style: TextStyle(
+                                //     fontWeight: FontWeight.w600,
+                                //     fontSize: 18,
+                                //     letterSpacing: 0.1,
+                                //     color: DesignAppTheme.darkerText,
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
@@ -253,14 +253,17 @@ class DetailProdukView extends GetView<DetailProdukController> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50.0)),
                   elevation: 10.0,
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    child: Center(
-                      child: Icon(
-                        Icons.store,
-                        color: DesignAppTheme.nearlyWhite,
-                        size: 30,
+                  child: InkWell(
+                    onTap: () => Get.toNamed(Routes.HOME_PEMBELIAN),
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      child: Center(
+                        child: Icon(
+                          Icons.store,
+                          color: DesignAppTheme.nearlyWhite,
+                          size: 30,
+                        ),
                       ),
                     ),
                   ),

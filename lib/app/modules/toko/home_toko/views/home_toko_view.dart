@@ -1,17 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sikasir/app/models/toko_model.dart';
+import 'package:sikasir/app/modules/toko/home_toko/views/grid_item.dart';
 import 'package:sikasir/app/routes/app_pages.dart';
 import 'package:sikasir/widgets/widgets.dart';
-import 'package:get/get.dart';
-import 'package:sikasir/app/modules/toko/home_toko/views/grid_item.dart';
 
 import '../controllers/home_toko_controller.dart';
 
 class HomeTokoView extends GetView<HomeTokoController> {
-  const HomeTokoView({Key? key}) : super(key: key);
+  HomeTokoView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(wDimension.height30 * 4.25),

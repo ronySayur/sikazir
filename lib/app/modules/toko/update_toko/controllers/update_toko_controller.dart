@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:sikasir/widgets/widgets.dart';
 
 class UpdateTokoController extends GetxController {
-    
   String? uid;
   RxBool isLoading = false.obs;
 
@@ -19,13 +18,13 @@ class UpdateTokoController extends GetxController {
     isLoading.value = true;
     try {
       Map<String, dynamic> dataToko = {
-          "nama_toko": namaToko.text,
-          "email_toko": emailToko.text,
-          "alamat": alamatToko.text,
-          "no_telp": telpToko.text      };
+        "nama_toko": namaToko.text,
+        "email_toko": emailToko.text,
+        "alamat": alamatToko.text,
+        "no_telp": telpToko.text
+      };
 
-
-loading();
+      loading();
       await firestore.collection("toko").doc(idToko).update(dataToko);
       Get.back();
 

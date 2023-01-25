@@ -40,7 +40,6 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: "Sikasir",
           initialRoute:
-              //cek apakah data tidak kosong
               snapshot.data != null ? Routes.HOME : Routes.LOGIN,
           getPages: AppPages.routes,
         );

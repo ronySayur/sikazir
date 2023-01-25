@@ -30,6 +30,12 @@ abstract class Routes {
   static const UPDATE_TOKO = _Paths.UPDATE_TOKO;
   static const DETAIL_TOKO = _Paths.DETAIL_TOKO;
   static const HOME_LAPORAN = _Paths.HOME_LAPORAN;
+  static const DETAIL_TRANSAKSI = _Paths.DETAIL_TRANSAKSI;
+  static const UPDATE_KERANJANG = _Paths.UPDATE_KERANJANG;
+  static const PEMBELIAN_PRODUK = _Paths.PEMBELIAN_PRODUK;
+  static const HOME_PEMBELIAN = _Paths.HOME_PEMBELIAN;
+  static const ADD_PEMBELIAN = _Paths.ADD_PEMBELIAN;
+  static const TRANSAKSI_SELESAI = _Paths.TRANSAKSI_SELESAI;
 }
 
 abstract class _Paths {
@@ -61,4 +67,10 @@ abstract class _Paths {
   static const UPDATE_TOKO = '/update-toko';
   static const DETAIL_TOKO = '/detail-toko';
   static const HOME_LAPORAN = '/home-laporan';
+  static const DETAIL_TRANSAKSI = '/detail-transaksi';
+  static const UPDATE_KERANJANG = '/update-keranjang';
+  static const PEMBELIAN_PRODUK = '/pembelian-produk';
+  static const HOME_PEMBELIAN = '/home-pembelian';
+  static const ADD_PEMBELIAN = '/add-pembelian';
+  static const TRANSAKSI_SELESAI = '/transaksi-selesai';
 }

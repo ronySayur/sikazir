@@ -48,7 +48,7 @@ class AddSupplierView extends GetView<AddSupplierController> {
                 ))
           ],
         ),
-        body: ListView(children: [
+        body: Column(children: [
           Container(
               padding: EdgeInsets.fromLTRB(wDimension.width10,
                   wDimension.height20, wDimension.width10, wDimension.height10),
@@ -258,29 +258,29 @@ class AddSupplierView extends GetView<AddSupplierController> {
           ),
 
           //Button
-          Spacer(flex: 3),
-          Expanded(
-            flex: 1,
-            child: Container(
-                padding: EdgeInsets.symmetric(horizontal: wDimension.width10),
-                width: wDimension.screenWidth,
-                child: Obx(() => ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        shape: const StadiumBorder(),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: wDimension.width30,
-                            vertical: wDimension.height15)),
-                    onPressed: () async {
-                      if (controller.isLoading.isFalse) {
-                        await controller.addSup();
-                      }
-                    },
-                    child: wSmallText(
-                        text: controller.isLoading.isFalse
-                            ? "Simpan"
-                            : "Loading...",
-                        weight: FontWeight.bold,
-                        color: Colors.white)))),
+          const Spacer(),
+          Container(
+              padding: const EdgeInsets.all(defaultPadding),
+              width: wDimension.screenWidth,
+              child: Obx(() => ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: const StadiumBorder(),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: wDimension.width30,
+                          vertical: wDimension.height15)),
+                  onPressed: () async {
+                    if (controller.isLoading.isFalse) {
+                      await controller.addSup();
+                    }
+                  },
+                  child: wSmallText(
+                      text: controller.isLoading.isFalse
+                          ? "Simpan"
+                          : "Loading...",
+                      weight: FontWeight.bold,
+                      color: Colors.white)))),
+          SizedBox(
+            height: MediaQuery.of(context).padding.bottom,
           )
         ]));
   }

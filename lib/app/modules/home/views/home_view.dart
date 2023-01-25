@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sikasir/app/controllers/auth_controller.dart';
 import 'package:sikasir/widgets/widgets.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -13,6 +14,7 @@ import '../controllers/home_controller.dart';
 class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
+    final box = GetStorage();
     final authC = Get.find<AuthController>();
     final Size _size = MediaQuery.of(context).size;
 
@@ -20,18 +22,17 @@ class HomeView extends GetView<HomeController> {
         stream: authC.streamUser(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
-          
+
           if (snapshot.hasData) {
-            
             Map<String, dynamic> user = snapshot.data!.data()!;
 
             String defaultImage =
                 "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";
 
             return Scaffold(
-              drawer: SideBar(),
+              drawer: const SideBar(),
               key: controller.scaffoldKey,
               appBar: AppBar(
                 backgroundColor: Colors.red,
@@ -39,8 +40,8 @@ class HomeView extends GetView<HomeController> {
                 centerTitle: false,
                 actions: [
                   Container(
-                      margin: EdgeInsets.only(left: defaultPadding),
-                      padding: EdgeInsets.symmetric(
+                      margin: const EdgeInsets.only(left: defaultPadding),
+                      padding: const EdgeInsets.symmetric(
                         horizontal: defaultPadding,
                         vertical: defaultPadding / 2,
                       ),
@@ -71,7 +72,6 @@ class HomeView extends GetView<HomeController> {
                             initialValue: 2,
                             elevation: 3.2,
                             onSelected: (value) async {
-                              print("value:$value");
                               switch (value) {
                                 case 1:
                                   Get.toNamed(Routes.PROFILE);
@@ -88,6 +88,7 @@ class HomeView extends GetView<HomeController> {
                                       radius: wDimension.radius15,
                                       onCancel: () => Get.back(),
                                       onConfirm: () async {
+                                        await box.remove('userEmail');
                                         await authC.signOut();
                                         Get.offAllNamed(Routes.LOGIN);
                                       });
@@ -102,7 +103,7 @@ class HomeView extends GetView<HomeController> {
                 ],
               ),
               body: SlidingUpPanel(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20)),
                 maxHeight: wDimension.heightSetengah,
@@ -140,7 +141,7 @@ class HomeView extends GetView<HomeController> {
               ),
             );
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         });
   }

@@ -217,6 +217,7 @@ class AddProdukController extends GetxController {
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (BuildContext context, int index) {
+                            
                             Map<String, dynamic> data =
                                 snapshot.data!.docs[index].data();
 

@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../../routes/app_pages.dart';
 
 class ProfileController extends GetxController {
- RxBool isLoading = false.obs;
+  final box = GetStorage();
+  RxBool isLoading = false.obs;
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -19,6 +21,7 @@ class ProfileController extends GetxController {
 
   //Controller Logout
   Future<void> logout() async {
+    await box.remove('userEmail');
     await auth.signOut();
     Get.offAllNamed(Routes.LOGIN);
   }

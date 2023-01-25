@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:lottie/lottie.dart';
 
 import 'theme.dart';
@@ -185,7 +186,7 @@ Widget wTimeBoxUI(String title, String deskripsi) {
             Text(
               title,
               textAlign: TextAlign.start,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 14,
                 letterSpacing: 0.27,
@@ -195,7 +196,7 @@ Widget wTimeBoxUI(String title, String deskripsi) {
             Text(
               deskripsi,
               textAlign: TextAlign.start,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w300,
                 fontSize: 14,
                 letterSpacing: 0.27,
@@ -243,6 +244,33 @@ Future<dynamic> dialogDeleteFutureMap(
       ));
 }
 
+Future<dynamic> dialogKonfirmasi(
+    String deskripsi, Future<Map<String, dynamic>> perintahC) {
+  return Get.defaultDialog(
+      title: "Konfirmasi",
+      content: Column(
+        children: [
+          wSmallText(text: deskripsi),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              OutlinedButton(
+                  onPressed: ()  {
+                    Get.back();
+                  },
+                  child: const Text("Batal")),
+              ElevatedButton(
+                  onPressed: ()  {
+                     perintahC;
+                  },
+                  child: const Text("Konfirmasi"))
+            ],
+          ),
+        ],
+      ));
+}
+
 void loading() {
   Get.defaultDialog(
       title: "Tunggu Sebentar",
@@ -278,7 +306,7 @@ Future<bool> willPopScope() async {
                         Get.back();
                         Get.back();
                       },
-                      child: Text("Konfirmasi"))
+                      child: const Text("Konfirmasi"))
                 ],
               ),
             ],

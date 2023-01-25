@@ -6,6 +6,7 @@ import 'package:sikasir/app/routes/app_pages.dart';
 
 class AuthController extends GetxController {
   var isSkipIntro = false.obs;
+  final box = GetStorage();
   var isAuth = false.obs;
 
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -20,6 +21,7 @@ class AuthController extends GetxController {
 
   Future<void> signOut() async {
     await auth.signOut();
+    await box.remove('userEmail');
     Get.toNamed(Routes.LOGIN);
     Get.snackbar("Berhasil", "Anda berhasil Logout");
   }
