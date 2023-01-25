@@ -83,16 +83,6 @@ class DetailProdukView extends GetView<DetailProdukController> {
                                     color: DesignAppTheme.nearlyBlue,
                                   ),
                                 ),
-                                // Text(
-                                //   'ID Produk: ${dataProduk.idProduk}',
-                                //   textAlign: TextAlign.left,
-                                //   style: TextStyle(
-                                //     fontWeight: FontWeight.w600,
-                                //     fontSize: 18,
-                                //     letterSpacing: 0.1,
-                                //     color: DesignAppTheme.darkerText,
-                                //   ),
-                                // ),
                               ],
                             ),
                           ),
@@ -136,8 +126,10 @@ class DetailProdukView extends GetView<DetailProdukController> {
                                       const EdgeInsets.fromLTRB(8, 4, 8, 4),
                                   child: Row(
                                     children: [
+                                      wTimeBoxUI(
+                                          'Harga Modal', '${dataProduk.hargaJual} '),
                                       wTimeBoxUI('Sisa Stok',
-                                          '${dataProduk.stok} tersisa')
+                                          '${dataProduk.stok} tersisa'),
                                     ],
                                   ),
                                 ),
@@ -254,7 +246,8 @@ class DetailProdukView extends GetView<DetailProdukController> {
                       borderRadius: BorderRadius.circular(50.0)),
                   elevation: 10.0,
                   child: InkWell(
-                    onTap: () => Get.toNamed(Routes.HOME_PEMBELIAN),
+                    onTap: () => Get.toNamed(Routes.HOME_PEMBELIAN,
+                        arguments: dataProduk),
                     child: Container(
                       width: 60,
                       height: 60,

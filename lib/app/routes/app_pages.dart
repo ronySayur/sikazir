@@ -222,17 +222,17 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.HOME_PEMBELIAN,
-      page: () => const HomePembelianView(),
+      page: () => HomePembelianView(),
       binding: HomePembelianBinding(),
     ),
     GetPage(
       name: _Paths.ADD_PEMBELIAN,
-      page: () => const AddPembelianView(),
+      page: () => AddPembelianView(),
       binding: AddPembelianBinding(),
     ),
     GetPage(
       name: _Paths.TRANSAKSI_SELESAI,
-      page: () => const TransaksiSelesaiView(),
+      page: () => TransaksiSelesaiView(),
       binding: TransaksiSelesaiBinding(),
     ),
   ];

@@ -84,6 +84,16 @@ class GridViewProduk extends StatelessWidget {
                                                 CrossAxisAlignment.center,
                                             children: [
                                               Text(
+                                                '${dataProduk.hargaJual}',
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w200,
+                                                  fontSize: 12,
+                                                  letterSpacing: 0.27,
+                                                  color: DesignAppTheme.grey,
+                                                ),
+                                              ),
+                                              Text(
                                                 '${dataProduk.stok} tersisa',
                                                 textAlign: TextAlign.left,
                                                 style: TextStyle(

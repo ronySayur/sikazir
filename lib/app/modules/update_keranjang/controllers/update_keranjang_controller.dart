@@ -14,8 +14,9 @@ class UpdateKeranjangController extends GetxController {
 
   var emailPegawai = "".obs;
   var namaProduk = "".obs;
-  var jumlah = 0.obs;
   var hargaJual = "".obs;
+
+  var jumlah = 0.obs;
   var total = 0.obs;
   var subtotal = 0.obs;
   var diskonproduk = 0.obs;
@@ -23,13 +24,15 @@ class UpdateKeranjangController extends GetxController {
   increment() {
     jumlah.value += 1;
     final hargaJ = int.parse(hargaJual.replaceAll(RegExp('[^0-9]'), ''));
-    total.value = jumlah.value * hargaJ;
+    subtotal.value = jumlah.value * hargaJ;
+    total.value = subtotal.value - diskonproduk.value;
   }
 
   decrement() {
     jumlah.value -= 1;
     final hargaJ = int.parse(hargaJual.replaceAll(RegExp('[^0-9]'), ''));
-    total.value = jumlah.value * hargaJ;
+    subtotal.value = jumlah.value * hargaJ;
+    total.value = subtotal.value - diskonproduk.value;
   }
 
   Future<void> updateKeranjang() async {
@@ -40,13 +43,18 @@ class UpdateKeranjangController extends GetxController {
           .doc("$emailPegawai")
           .collection('produk')
           .doc(namaProduk.value)
-          .update({"total_harga": total.value, "jumlah": jumlah.value});
+          .update({
+        "total_harga": total.value,
+        "jumlah": jumlah.value,
+        "diskon": diskon.text,
+        "nama_diskon": namaDiskon.text,
+      });
       Get.back();
       Get.back();
     } catch (e) {
       Get.back();
 
-      Get.snackbar("Terjadi Kesalahan", "Tidak dapat update toko($e)");
+      Get.snackbar("Terjadi Kesalahan", "Tidak dapat update keranjang($e)");
     }
   }
 

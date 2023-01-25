@@ -141,70 +141,68 @@ class UpdateKeranjangView extends GetView<UpdateKeranjangController> {
   Visibility containDiskon() {
     return Visibility(
       visible: controller.pakaiDiskon.value,
-      child: Container(
-        child: Column(
-          children: [
-            TextField(
-                controller: controller.diskon,
-                textInputAction: TextInputAction.next,
-                cursorColor: Colors.black,
-                inputFormatters: <TextInputFormatter>[
-                  CurrencyTextInputFormatter(
-                    locale: 'ID',
-                    decimalDigits: 0,
-                    symbol: 'Rp. ',
-                  ),
-                ],
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                    labelText: "Diskon",
-                    labelStyle: TextStyle(
-                        color: Colors.black, fontSize: wDimension.font16),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius:
-                            BorderRadius.circular(wDimension.radius30 * 10),
-                        borderSide: const BorderSide(color: Colors.red)),
-                    border: OutlineInputBorder(
-                        borderRadius:
-                            BorderRadius.circular(wDimension.radius30 * 10)),
-                    contentPadding: EdgeInsets.symmetric(
-                        horizontal: wDimension.width30,
-                        vertical: wDimension.height15))),
-            SizedBox(height: wDimension.height10),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextField(
-                  controller: controller.namaDiskon,
-                  cursorColor: Colors.black,
-                  textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
-                    labelText: "Nama produk",
-                    labelStyle: TextStyle(
-                        color: Colors.black, fontSize: wDimension.font16),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius:
-                            BorderRadius.circular(wDimension.radius30 * 10),
-                        borderSide: const BorderSide(color: Colors.red)),
-                    border: OutlineInputBorder(
+      child: Column(
+        children: [
+          TextField(
+              controller: controller.diskon,
+              textInputAction: TextInputAction.next,
+              cursorColor: Colors.black,
+              inputFormatters: <TextInputFormatter>[
+                CurrencyTextInputFormatter(
+                  locale: 'ID',
+                  decimalDigits: 0,
+                  symbol: 'Rp. ',
+                ),
+              ],
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  labelText: "Diskon",
+                  labelStyle: TextStyle(
+                      color: Colors.black, fontSize: wDimension.font16),
+                  focusedBorder: OutlineInputBorder(
                       borderRadius:
                           BorderRadius.circular(wDimension.radius30 * 10),
-                    ),
-                    contentPadding: EdgeInsets.symmetric(
+                      borderSide: const BorderSide(color: Colors.red)),
+                  border: OutlineInputBorder(
+                      borderRadius:
+                          BorderRadius.circular(wDimension.radius30 * 10)),
+                  contentPadding: EdgeInsets.symmetric(
                       horizontal: wDimension.width30,
-                      vertical: wDimension.width15,
-                    ),
+                      vertical: wDimension.height15))),
+          SizedBox(height: wDimension.height10),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                controller: controller.namaDiskon,
+                cursorColor: Colors.black,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  labelText: "Nama diskon",
+                  labelStyle: TextStyle(
+                      color: Colors.black, fontSize: wDimension.font16),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius:
+                          BorderRadius.circular(wDimension.radius30 * 10),
+                      borderSide: const BorderSide(color: Colors.red)),
+                  border: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(wDimension.radius30 * 10),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: wDimension.width30,
+                    vertical: wDimension.width15,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 24, top: 4, bottom: 18),
-                  child: wSmallText(text: "*Tidak wajib diisi"),
-                )
-              ],
-            ),
-          ],
-        ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 24, top: 4, bottom: 18),
+                child: wSmallText(text: "*Tidak wajib diisi"),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }

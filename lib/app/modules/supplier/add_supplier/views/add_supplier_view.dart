@@ -280,7 +280,7 @@ class AddSupplierView extends GetView<AddSupplierController> {
                       weight: FontWeight.bold,
                       color: Colors.white)))),
           SizedBox(
-            height: MediaQuery.of(context).padding.bottom,
+            height: MediaQuery.of(context).padding.bottom
           )
         ]));
   }

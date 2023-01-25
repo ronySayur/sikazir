@@ -74,7 +74,7 @@ class TransaksiPenjualanController extends GetxController
     if (cekKeranjang.exists) {
       await updateKeranjang(dataProduk);
     } else {
-      await detailKeranjangAdd(dataProduk, hargaJ);
+      await addKeranjangProduk(dataProduk, hargaJ);
 
       await keranjangAdd(dataProduk);
     }
@@ -135,15 +135,13 @@ class TransaksiPenjualanController extends GetxController
     }
 
     await keranjang({
-      "diskon": 0,
-      "nama_diskon": "",
       "email_pegawai": emailPegawai,
       "total": 0,
     });
   }
 
-  Future<void> detailKeranjangAdd(ProdukModel dataProduk, int hargaJ) async {
-    Future<Map<String, dynamic>> detailKeranjang(
+  Future<void> addKeranjangProduk(ProdukModel dataProduk, int hargaJ) async {
+    Future<Map<String, dynamic>> keranjangProduk(
         Map<String, dynamic> data) async {
       var emailPegawai = box.read('userEmail');
 
@@ -167,13 +165,15 @@ class TransaksiPenjualanController extends GetxController
       }
     }
 
-    await detailKeranjang({
+    await keranjangProduk({
       "id_produk": dataProduk.idProduk,
       "nama_produk": dataProduk.namaProduk,
       "harga_jual": dataProduk.hargaJual,
       "harga_modal": dataProduk.hargaModal,
       "jumlah": 1,
       "total_harga": hargaJ,
+      "diskon": 0,
+      "nama_diskon": "",
     });
   }
 

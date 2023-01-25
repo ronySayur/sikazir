@@ -44,12 +44,9 @@ class GridViewProdukTransaksi extends StatelessWidget {
                         Expanded(
                           child: Container(
                             decoration: BoxDecoration(
-                              color: DesignAppTheme.grey.withOpacity(0.08),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(16.0)),
-                              // border: new Border.all(
-                              //     color: DesignCourseAppTheme.notWhite),
-                            ),
+                                color: DesignAppTheme.grey.withOpacity(0.08),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(16.0))),
                             child: Column(
                               children: [
                                 Expanded(
@@ -81,6 +78,16 @@ class GridViewProdukTransaksi extends StatelessWidget {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
+                                            Text(
+                                              '${dataProduk.hargaJual}',
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w200,
+                                                fontSize: 12,
+                                                letterSpacing: 0.27,
+                                                color: DesignAppTheme.grey,
+                                              ),
+                                            ),
                                             Text(
                                               '${dataProduk.stok} tersisa',
                                               textAlign: TextAlign.left,

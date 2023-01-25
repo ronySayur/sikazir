@@ -110,8 +110,9 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
                                   snapKeranjang.data!.docs[index].data();
 
                               return InkWell(
-                                onTap: () =>
-                                    Get.toNamed(Routes.UPDATE_KERANJANG,arguments: dataK),
+                                onTap: () => Get.toNamed(
+                                    Routes.UPDATE_KERANJANG,
+                                    arguments: dataK),
                                 child: Column(
                                   children: [
                                     SizedBox(height: wDimension.height10),
@@ -161,8 +162,9 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
                             children: [
                               Expanded(
                                 child: TextButton(
-                                  onPressed: () =>
-                                      Get.toNamed(Routes.DETAIL_TRANSAKSI),
+                                  onPressed: () => Get.toNamed(
+                                      Routes.DETAIL_TRANSAKSI,
+                                      arguments: controller.totalHarga.value),
                                   child: Container(
                                     height: 48,
                                     decoration: BoxDecoration(
@@ -196,8 +198,7 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
                             ],
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).padding.bottom
-                          )
+                              height: MediaQuery.of(context).padding.bottom)
                         ],
                       ),
                     ),
@@ -352,6 +353,16 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
+                                Text(
+                                  '${dataProdukJSON[index].hargaJual} ',
+                                  textAlign: TextAlign.left,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w200,
+                                    fontSize: 12,
+                                    letterSpacing: 0.27,
+                                    color: DesignAppTheme.grey,
+                                  ),
+                                ),
                                 Text(
                                   '${dataProdukJSON[index].stok} tersisa',
                                   textAlign: TextAlign.left,
