@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 
-import '../modules/add_pembelian/bindings/add_pembelian_binding.dart';
-import '../modules/add_pembelian/views/add_pembelian_view.dart';
 import '../modules/detail_supplier/bindings/detail_supplier_binding.dart';
 import '../modules/detail_supplier/views/detail_supplier_view.dart';
 import '../modules/detail_transaksi/bindings/detail_transaksi_binding.dart';
@@ -224,11 +222,6 @@ class AppPages {
       name: _Paths.HOME_PEMBELIAN,
       page: () => HomePembelianView(),
       binding: HomePembelianBinding(),
-    ),
-    GetPage(
-      name: _Paths.ADD_PEMBELIAN,
-      page: () => AddPembelianView(),
-      binding: AddPembelianBinding(),
     ),
     GetPage(
       name: _Paths.TRANSAKSI_SELESAI,

@@ -143,12 +143,12 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
                           ),
                           child: Obx(() => DropdownButton(
                                 onChanged: (newValue) {
-                                  controller.setSelected(newValue!);
+                                  controller.selectedJabatan(newValue!);
                                 },
                                 value: controller.jabatanC.value == ""
                                     ? null
                                     : controller.jabatanC.value,
-                                items: controller.items.map((selectedType) {
+                                items: controller.jabatan.map((selectedType) {
                                   return DropdownMenuItem(
                                     value: selectedType,
                                     child: Text(
@@ -199,29 +199,6 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
                       ),
                     ),
                     SizedBox(height: wDimension.height10),
-
-                    // TextField(
-                    //     controller: controller.jabatanC,
-                    //     textInputAction: TextInputAction.next,
-                    //     cursorColor: Colors.black,
-                    //     decoration: InputDecoration(
-                    //         labelText: "Jabatan",
-                    //         labelStyle: TextStyle(
-                    //             color: Colors.black,
-                    //             fontSize: wDimension.font16),
-                    //         focusedBorder: OutlineInputBorder(
-                    //             borderRadius: BorderRadius.circular(
-                    //                 wDimension.radius30 * 10),
-                    //             borderSide:
-                    //                 const BorderSide(color: Colors.red)),
-                    //         border: OutlineInputBorder(
-                    //             borderRadius: BorderRadius.circular(
-                    //                 wDimension.radius30 * 10)),
-                    //         contentPadding: EdgeInsets.symmetric(
-                    //             horizontal: wDimension.width30,
-                    //             vertical: wDimension.height15))),
-                    // SizedBox(height: wDimension.height10),
-
                     TextField(
                         keyboardType: TextInputType.number,
                         controller: controller.teleponC,
@@ -245,7 +222,42 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: wDimension.width30,
                                 vertical: wDimension.height15))),
-                    SizedBox(height: wDimension.height15)
+                    SizedBox(height: wDimension.height15),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        wSmallText(
+                            text: "Toko",
+                            color: Colors.black,
+                            size: wDimension.font16),
+                        SizedBox(
+                          width: wDimension.width10,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(left: 8, right: 8),
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Obx(() => DropdownButton(
+                                onChanged: (newValue) {
+                                  controller.selectedToko('${newValue!}');
+                                },
+                                value: controller.tokoC.value == ""
+                                    ? null
+                                    : controller.tokoC.value,
+                                items: controller.dataToko.map((selectedType) {
+                                  return DropdownMenuItem(
+                                    value: selectedType,
+                                    child: Text(
+                                      selectedType,
+                                    ),
+                                  );
+                                }).toList(),
+                              )),
+                        ),
+                      ],
+                    ),
                   ])),
 
           //Button

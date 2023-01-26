@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sikasir/app/models/product_model.dart';
+import 'package:sikasir/widgets/widgets.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class TransaksiPenjualanController extends GetxController
@@ -59,32 +61,45 @@ class TransaksiPenjualanController extends GetxController
   // }
 
   Future<void> addKeranjang(ProdukModel dataProduk) async {
-    final hargaM =
-        int.parse(dataProduk.hargaModal!.replaceAll(RegExp('[^0-9]'), ''));
-    final hargaJ =
-        int.parse(dataProduk.hargaJual!.replaceAll(RegExp('[^0-9]'), ''));
+    if (dataProduk.stok == 0) {
+      Get.snackbar("Peringatan", "Produk Habis!",
+          backgroundColor: Colors.white, duration: const Duration(seconds: 1));
+    } else if (dataProduk.stok! > 0) {
+      final hargaM =
+          int.parse(dataProduk.hargaModal!.replaceAll(RegExp('[^0-9]'), ''));
+      final hargaJ =
+          int.parse(dataProduk.hargaJual!.replaceAll(RegExp('[^0-9]'), ''));
 
-    var cekKeranjang = await firestore
-        .collection("keranjang")
-        .doc("$emailPegawai")
-        .collection('produk')
-        .doc(dataProduk.namaProduk!)
-        .get();
+      var cekKeranjang = await firestore
+          .collection("keranjang")
+          .doc("$emailPegawai")
+          .collection('produk')
+          .doc(dataProduk.namaProduk!)
+          .get();
 
-    if (cekKeranjang.exists) {
-      await updateKeranjang(dataProduk);
+      if (cekKeranjang.exists) {
+        await updateKeranjang(dataProduk);
+      } else {
+        await addKeranjangProduk(dataProduk, hargaJ);
+
+        await keranjangAdd(dataProduk);
+      }
+
+      await firestore
+          .collection("produk")
+          .doc(dataProduk.idProduk)
+          .update({"stok": dataProduk.stok! - 1});
+
+      totalHarga += hargaJ;
+      SUpanel.open();
+      update();
     } else {
-      await addKeranjangProduk(dataProduk, hargaJ);
-
-      await keranjangAdd(dataProduk);
+      Get.snackbar("Peringatan", "Produk Habis!",
+          backgroundColor: Colors.white, duration: const Duration(seconds: 1));
     }
-    totalHarga += hargaJ;
-    SUpanel.open();
-    update();
   }
 
   Future<void> updateKeranjang(ProdukModel dataProduk) async {
-
     await firestore
         .collection("keranjang")
         .doc("$emailPegawai")
@@ -97,7 +112,7 @@ class TransaksiPenjualanController extends GetxController
       final hjual =
           int.parse(cole["harga_jual"].replaceAll(RegExp('[^0-9]'), ''));
       var jumlahPlus1 = cole["jumlah"] + 1;
-      
+
       var harga = jumlahPlus1 * hjual;
 
       firestore
@@ -107,20 +122,21 @@ class TransaksiPenjualanController extends GetxController
           .doc(dataProduk.namaProduk!)
           .update({"total_harga": harga, "jumlah": jumlahPlus1});
     });
+  }
 
-    // firestore
-    //     .collection("keranjang")
-    //     .doc("$emailPegawai")
-    //     .update({"total": totalHarga});
+  Future<void> updateKeranjangLuar() async {
+    loading();
+    await firestore
+        .collection("keranjang")
+        .doc("$emailPegawai")
+        .update({"total": totalHarga.value});
+    Get.back();
   }
 
   Future<void> keranjangAdd(ProdukModel dataProduk) async {
     Future<Map<String, dynamic>> keranjang(Map<String, dynamic> data) async {
       try {
-        var dataKeranjangBaru = await firestore
-            .collection("keranjang")
-            .doc("$emailPegawai")
-            .set(data);
+        await firestore.collection("keranjang").doc("$emailPegawai").set(data);
 
         return {
           "error": false,
@@ -146,7 +162,7 @@ class TransaksiPenjualanController extends GetxController
       var emailPegawai = box.read('userEmail');
 
       try {
-        var dataKeranjangBaru = await firestore
+        await firestore
             .collection("keranjang")
             .doc(emailPegawai)
             .collection('produk')

@@ -7,7 +7,7 @@ String penjualanModelToJson(PenjualanModel data) => json.encode(data.toJson());
 
 class PenjualanModel {
   PenjualanModel({
-    required this.idPennjualan,
+    required this.idpenjualan,
     required this.detailTransaksi,
     required this.emailPegawai,
     required this.tanggal,
@@ -15,7 +15,7 @@ class PenjualanModel {
     required this.idToko,
   });
 
-  String idPennjualan;
+  String idpenjualan;
   String detailTransaksi;
   String emailPegawai;
   String tanggal;
@@ -23,7 +23,7 @@ class PenjualanModel {
   String idToko;
 
   factory PenjualanModel.fromJson(Map<String, dynamic> json) => PenjualanModel(
-        idPennjualan: json["id_pennjualan"],
+        idpenjualan: json["id_penjualan"],
         detailTransaksi: json["detail_transaksi"],
         emailPegawai: json["email_pegawai"],
         tanggal: json["tanggal"],
@@ -32,7 +32,7 @@ class PenjualanModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "id_pennjualan": idPennjualan,
+        "id_penjualan": idpenjualan,
         "detail_transaksi": detailTransaksi,
         "email_pegawai": emailPegawai,
         "tanggal": tanggal,

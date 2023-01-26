@@ -16,6 +16,7 @@ class HomePembelianController extends GetxController {
   var total = 0.obs;
   var ubahHarga = false.obs;
   var jumlah = 0.obs;
+  var date=DateTime.now().toIso8601String();
 
   increment() {
     jumlah.value += 1;
@@ -34,7 +35,7 @@ class HomePembelianController extends GetxController {
     loading();
     try {
       await firestore.collection("pembelian").add({
-        "tanggal": DateTime.now().toIso8601String(),
+        "tanggal": date,
         "jumlah": jumlah.value,
         "email_pegawai": emailPegawai,
         "total_pembelian": total.value,

@@ -11,6 +11,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sikasir/widgets/widgets.dart';
 
 class AddPegawaiController extends GetxController {
+  @override
+  void onInit() {
+    listToko();
+    super.onInit();
+  }
+
   RxBool isLoading = false.obs;
   RxBool isLoadingAddPegawai = false.obs;
 
@@ -27,17 +33,35 @@ class AddPegawaiController extends GetxController {
   TextEditingController pinC = TextEditingController();
 
   final jabatanC = "".obs;
+  final tokoC = "".obs;
 
   String? uid;
 
-  final List<String> items = [
+  final List<String> jabatan = [
     'Supervisor',
     'Kasir',
     'Admin Gudang',
   ].obs;
+  var dataToko = [].obs;
 
-  void setSelected(String value) {
+  void selectedJabatan(String value) {
     jabatanC.value = value;
+  }
+
+  void selectedToko(String value) {
+    tokoC.value = value;
+  }
+
+  listToko() async {
+    QuerySnapshot querySnapshot = await firestore.collection("toko").get();
+
+    for (var snapToko in querySnapshot.docs) {
+      final namaToko = snapToko["nama_toko"];
+      dataToko.add(namaToko);
+    }
+
+    Get.snackbar("Pemberitahuan", "Data toko berhasil diterima",
+        duration: const Duration(seconds: 1));
   }
 
   final ImagePicker picker = ImagePicker();
@@ -55,7 +79,6 @@ class AddPegawaiController extends GetxController {
       isLoading.value = true;
       await konfirmasiDialog();
     } else {
-      //matikan loading()
       Get.back();
       Get.snackbar("Error", "Semua Form dan Foto harap diisi terlebih dahulu");
     }
@@ -157,6 +180,7 @@ class AddPegawaiController extends GetxController {
             "email_pegawai": emailC.text,
             "nama_pegawai": nameC.text,
             "jabatan": jabatanC.value,
+            "toko": tokoC.value,
             "telepon": teleponC.text,
             "hak": hakC.text,
             "foto": urlImage,

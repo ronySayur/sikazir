@@ -104,7 +104,7 @@ class UpdateKeranjangView extends GetView<UpdateKeranjangController> {
                 backgroundColor: Colors.white,
                 onPressed: () {
                   if (controller.jumlah.value > 0) {
-                    controller.decrement();
+                    controller.decrement(datakeranjang["id_produk"]);
                   } else {
                     Get.snackbar(
                         "Peringatan", "Jumlah tidak boleh kurang dari 0",
@@ -120,7 +120,7 @@ class UpdateKeranjangView extends GetView<UpdateKeranjangController> {
                 child: Icon(Icons.add, color: Colors.black87),
                 backgroundColor: Colors.white,
                 onPressed: () {
-                  controller.increment();
+                  controller.increment(datakeranjang["id_produk"]);
                 },
               )
             ],
@@ -210,8 +210,12 @@ class UpdateKeranjangView extends GetView<UpdateKeranjangController> {
   InkWell buttonOk() {
     return InkWell(
       onTap: () {
-        controller.updateKeranjang();
-        Get.snackbar("Berhasil", "keranjang berhasil ter-update");
+        if (controller.jumlah.value == 0) {
+          controller.deleteKeranjang();
+        } else {
+          controller.updateKeranjang(datakeranjang["id_produk"]);
+          Get.snackbar("Berhasil", "keranjang berhasil ter-update");
+        }
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

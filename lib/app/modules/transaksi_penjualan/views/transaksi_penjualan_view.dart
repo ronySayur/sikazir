@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:sikasir/app/models/detailKeranjang_model.dart';
 import 'package:sikasir/app/models/product_model.dart';
 import 'package:sikasir/app/routes/app_pages.dart';
@@ -13,6 +14,7 @@ import '../controllers/transaksi_penjualan_controller.dart';
 
 class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
   final box = GetStorage();
+  final rpid = new NumberFormat("#,##0", "ID");
 
   TransaksiPenjualanView({Key? key}) : super(key: key);
   @override
@@ -136,7 +138,7 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
                                                 '${dataK["harga_jual"]} x ${dataK["jumlah"]}'),
                                         wSmallText(
                                             text:
-                                                'Rp. ${dataK["total_harga"]}'),
+                                                'Rp. ${rpid.format(dataK["total_harga"])}'),
                                       ],
                                     ),
                                     SizedBox(height: wDimension.height10),
@@ -147,24 +149,30 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
                             },
                           ),
                           const Spacer(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              wBigText(
-                                  text:
-                                      'Total harga: Rp. ${controller.totalHarga}')
-                            ],
+                          Padding(
+                            padding: const EdgeInsets.only(right: 12),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                wBigText(
+                                    text:
+                                        'Total harga: Rp.${rpid.format(controller.totalHarga.value)}')
+                              ],
+                            ),
                           ),
+                          const SizedBox(height: defaultPadding),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Expanded(
                                 child: TextButton(
-                                  onPressed: () => Get.toNamed(
-                                      Routes.DETAIL_TRANSAKSI,
-                                      arguments: controller.totalHarga.value),
+                                  onPressed: () async {
+                                    await controller.updateKeranjangLuar();
+                                    Get.toNamed(Routes.DETAIL_TRANSAKSI,
+                                        arguments: controller.totalHarga.value);
+                                  },
                                   child: Container(
                                     height: 48,
                                     decoration: BoxDecoration(
@@ -288,18 +296,16 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
                                     child: SizedBox(
                                       height: 280,
                                       child: InkWell(
-                                        splashColor: Colors.transparent,
-                                        onTap: () {
-                                          if (c.isLoading.isFalse) {
-                                            c.addKeranjang(
-                                              dataProdukJSON[index],
-                                            );
-                                          }
-                                          c.isLoading.isFalse;
-                                        },
-                                        child: doubleStackBoxItem(
-                                            dataProdukJSON, index),
-                                      ),
+                                          splashColor: Colors.transparent,
+                                          onTap: () {
+                                            if (c.isLoading.isFalse) {
+                                              c.addKeranjang(
+                                                  dataProdukJSON[index]);
+                                            }
+                                            c.isLoading.isFalse;
+                                          },
+                                          child: doubleStackBoxItem(
+                                              dataProdukJSON, index)),
                                     )),
                               );
                             },

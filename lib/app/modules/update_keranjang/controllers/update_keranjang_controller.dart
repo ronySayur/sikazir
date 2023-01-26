@@ -16,29 +16,74 @@ class UpdateKeranjangController extends GetxController {
   var namaProduk = "".obs;
   var hargaJual = "".obs;
 
+  var i = 0;
   var jumlah = 0.obs;
   var total = 0.obs;
   var subtotal = 0.obs;
   var diskonproduk = 0.obs;
 
-  increment() {
-    jumlah.value += 1;
-    final hargaJ = int.parse(hargaJual.replaceAll(RegExp('[^0-9]'), ''));
-    subtotal.value = jumlah.value * hargaJ;
-    total.value = subtotal.value - diskonproduk.value;
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamProduk() {
+    return firestore.collection("produk").snapshots();
   }
 
-  decrement() {
-    jumlah.value -= 1;
-    final hargaJ = int.parse(hargaJual.replaceAll(RegExp('[^0-9]'), ''));
-    subtotal.value = jumlah.value * hargaJ;
-    total.value = subtotal.value - diskonproduk.value;
+  increment(String idProduk) async {
+    loading();
+
+    await firestore
+        .collection("produk")
+        .doc(idProduk)
+        .get()
+        .then((DocumentSnapshot snapshot) {
+      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+
+      if (data["stok"] > 0) {
+        jumlah.value += 1;
+        final hargaJ = int.parse(hargaJual.replaceAll(RegExp('[^0-9]'), ''));
+        subtotal.value = jumlah.value * hargaJ;
+        total.value = subtotal.value - diskonproduk.value;
+
+        firestore
+            .collection("produk")
+            .doc(idProduk)
+            .update({"stok": data["stok"] - 1});
+      } else {
+        Get.snackbar("Peringatan", "Produk Habis!",
+            backgroundColor: Colors.white,
+            duration: const Duration(seconds: 1));
+      }
+    });
+
+    Get.back();
   }
 
-  Future<void> updateKeranjang() async {
+  decrement(String idProduk) async {
+    loading();
+
+    await firestore
+        .collection("produk")
+        .doc(idProduk)
+        .get()
+        .then((DocumentSnapshot snapshot) {
+      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+
+      jumlah.value -= 1;
+      final hargaJ = int.parse(hargaJual.replaceAll(RegExp('[^0-9]'), ''));
+      subtotal.value = jumlah.value * hargaJ;
+      total.value = subtotal.value - diskonproduk.value;
+
+      firestore
+          .collection("produk")
+          .doc(idProduk)
+          .update({"stok": data["stok"] + 1});
+
+      Get.back();
+    });
+  }
+
+  Future<void> updateKeranjang(String idProduk) async {
     loading();
     try {
-      firestore
+      await firestore
           .collection("keranjang")
           .doc("$emailPegawai")
           .collection('produk')
@@ -49,6 +94,7 @@ class UpdateKeranjangController extends GetxController {
         "diskon": diskon.text,
         "nama_diskon": namaDiskon.text,
       });
+
       Get.back();
       Get.back();
     } catch (e) {

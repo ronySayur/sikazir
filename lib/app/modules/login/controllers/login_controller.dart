@@ -56,6 +56,7 @@ class LoginController extends GetxController {
             } else {
               Get.offAllNamed(Routes.HOME);
               box.write('userEmail', emailC.text);
+      
             }
           } else {
             Get.defaultDialog(

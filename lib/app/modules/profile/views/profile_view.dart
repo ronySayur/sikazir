@@ -29,7 +29,6 @@ class ProfileView extends GetView<ProfileController> {
 
             //cek data
             if (snapshot.hasData) {
-              //data user
               Map<String, dynamic> user = snapshot.data!.data()!;
               String defaultImage =
                   "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";
