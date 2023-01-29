@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/detail_riwayat/bindings/detail_riwayat_binding.dart';
+import '../modules/detail_riwayat/views/detail_riwayat_view.dart';
 import '../modules/detail_supplier/bindings/detail_supplier_binding.dart';
 import '../modules/detail_supplier/views/detail_supplier_view.dart';
 import '../modules/detail_transaksi/bindings/detail_transaksi_binding.dart';
@@ -16,6 +18,18 @@ import '../modules/introduction/bindings/introduction_binding.dart';
 import '../modules/introduction/views/introduction_view.dart';
 import '../modules/laporan/bindings/laporan_binding.dart';
 import '../modules/laporan/views/laporan_view.dart';
+import '../modules/laporan_pegawai/bindings/laporan_pegawai_binding.dart';
+import '../modules/laporan_pegawai/views/laporan_pegawai_view.dart';
+import '../modules/laporan_pembelian/bindings/laporan_pembelian_binding.dart';
+import '../modules/laporan_pembelian/views/laporan_pembelian_view.dart';
+import '../modules/laporan_penjualan/bindings/laporan_penjualan_binding.dart';
+import '../modules/laporan_penjualan/views/laporan_penjualan_view.dart';
+import '../modules/laporan_produk/bindings/laporan_produk_binding.dart';
+import '../modules/laporan_produk/views/laporan_produk_view.dart';
+import '../modules/laporan_rangkuman/bindings/laporan_rangkuman_binding.dart';
+import '../modules/laporan_rangkuman/views/laporan_rangkuman_view.dart';
+import '../modules/laporan_ringkasan/bindings/laporan_ringkasan_binding.dart';
+import '../modules/laporan_ringkasan/views/laporan_ringkasan_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/new_password/bindings/new_password_binding.dart';
@@ -38,6 +52,10 @@ import '../modules/produk/update_product/bindings/update_product_binding.dart';
 import '../modules/produk/update_product/views/update_product_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/riwayat_transaksi/bindings/riwayat_transaksi_binding.dart';
+import '../modules/riwayat_transaksi/views/riwayat_transaksi_view.dart';
+import '../modules/settings/bindings/settings_binding.dart';
+import '../modules/settings/views/settings_view.dart';
 import '../modules/supplier/add_supplier/bindings/add_supplier_binding.dart';
 import '../modules/supplier/add_supplier/views/add_supplier_view.dart';
 import '../modules/supplier/home_supplier/bindings/home_supplier_binding.dart';
@@ -220,13 +238,63 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.HOME_PEMBELIAN,
+      transition: Transition.fadeIn,
       page: () => HomePembelianView(),
       binding: HomePembelianBinding(),
     ),
     GetPage(
       name: _Paths.TRANSAKSI_SELESAI,
+      transition: Transition.fadeIn,
       page: () => TransaksiSelesaiView(),
       binding: TransaksiSelesaiBinding(),
+    ),
+    GetPage(
+      transition: Transition.fadeIn,
+      name: _Paths.RIWAYAT_TRANSAKSI,
+      page: () => RiwayatTransaksiView(),
+      binding: RiwayatTransaksiBinding(),
+    ),
+    GetPage(
+      transition: Transition.fadeIn,
+      name: _Paths.SETTINGS,
+      page: () =>  SettingsView(),
+      binding: SettingsBinding(),
+    ),
+    GetPage(
+      transition: Transition.fadeIn,
+      name: _Paths.DETAIL_RIWAYAT,
+      page: () => DetailRiwayatView(),
+      binding: DetailRiwayatBinding(),
+    ),
+    GetPage(
+      name: _Paths.LAPORAN_RANGKUMAN,
+      page: () =>  LaporanRangkumanView(),
+      binding: LaporanRangkumanBinding(),
+    ),
+    GetPage(
+      name: _Paths.LAPORAN_RINGKASAN,
+      page: () =>  LaporanRingkasanView(),
+      binding: LaporanRingkasanBinding(),
+    ),
+    GetPage(
+      name: _Paths.LAPORAN_PRODUK,
+      page: () =>  LaporanProdukView(),
+      binding: LaporanProdukBinding(),
+    ),
+    GetPage(
+      name: _Paths.LAPORAN_PEMBELIAN,
+      page: () =>  LaporanPembelianView(),
+      binding: LaporanPembelianBinding(),
+    ),
+    GetPage(
+      name: _Paths.LAPORAN_PENJUALAN,
+      page: () =>  LaporanPenjualanView(),
+      binding: LaporanPenjualanBinding(),
+    ),
+    GetPage(
+      name: _Paths.LAPORAN_PEGAWAI,
+      page: () =>  LaporanPegawaiView(),
+      binding: LaporanPegawaiBinding(),
     ),
   ];
 }

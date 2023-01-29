@@ -83,7 +83,7 @@ class GridViewPegawai extends StatelessWidget {
                                                 CrossAxisAlignment.center,
                                             children: [
                                               Text(
-                                                dataPegawai.hak,
+                                                dataPegawai.jabatan,
                                                 textAlign: TextAlign.left,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w200,

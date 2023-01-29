@@ -4,21 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sikasir/app/models/product_model.dart';
-import 'package:sikasir/widgets/widgets.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class TransaksiPenjualanController extends GetxController
     with GetTickerProviderStateMixin {
   AnimationController? animationController;
   PanelController SUpanel = new PanelController();
-
+  final box = GetStorage();
   late TextEditingController searchC;
-  String? uid;
-  RxBool isLoading = false.obs;
 
+  String? uid;
+
+  var totalDiskon = 0.obs;
   var totalHarga = 0.obs;
 
-  final box = GetStorage();
   var emailPegawai = "";
 
   var ontap = false.obs;
@@ -39,58 +38,55 @@ class TransaksiPenjualanController extends GetxController
         .snapshots();
   }
 
-  // Future<void> addKeranjangStorage(
-  //     Map<String, dynamic> currentUser, ProdukModel dataProduk) async {
-
-  //   Map<String, dynamic> keranjangList = {
-  //     "id_produk": dataProduk.idProduk,
-  //     "nama_produk": dataProduk.namaProduk,
-  //     "harga_jual": dataProduk.hargaJual,
-  //     "harga_modal": dataProduk.hargaModal,
-  //     "jumlah": 1,
-  //     "total_harga": "hargaJ"
-  //   };
-
-  //   String jsonString = jsonEncode(keranjangList);
-  //   await box.write('keranjang', jsonString);
-  // }
-
-  // showKeranjang() async {
-  //   var result = box.read('keranjang');
-  //   Map<String, dynamic> jsonData = jsonDecode(result);
-  // }
-
-  Future<void> addKeranjang(ProdukModel dataProduk) async {
-    if (dataProduk.stok == 0) {
-      Get.snackbar("Peringatan", "Produk Habis!",
-          backgroundColor: Colors.white, duration: const Duration(seconds: 1));
-    } else if (dataProduk.stok! > 0) {
-      final hargaM =
-          int.parse(dataProduk.hargaModal!.replaceAll(RegExp('[^0-9]'), ''));
-      final hargaJ =
+  Future<void> tapKeranjangList(ProdukModel dataProduk) async {
+    if (dataProduk.stok! > 0) {
+      final hjual =
           int.parse(dataProduk.hargaJual!.replaceAll(RegExp('[^0-9]'), ''));
-
       var cekKeranjang = await firestore
           .collection("keranjang")
-          .doc("$emailPegawai")
+          .doc(emailPegawai)
           .collection('produk')
           .doc(dataProduk.namaProduk!)
           .get();
 
       if (cekKeranjang.exists) {
-        await updateKeranjang(dataProduk);
+        await firestore
+            .collection("keranjang")
+            .doc(emailPegawai)
+            .collection('produk')
+            .doc(dataProduk.namaProduk!)
+            .update({
+          "jumlah": FieldValue.increment(1),
+          "total_harga": (cekKeranjang.get("jumlah") + 1) * hjual
+        });
       } else {
-        await addKeranjangProduk(dataProduk, hargaJ);
-
-        await keranjangAdd(dataProduk);
+        await firestore.collection("keranjang").doc(emailPegawai).set({
+          "email_pegawai": emailPegawai,
+          "total_harga": 0,
+          "total_diskon": 0,
+        });
+        await firestore
+            .collection("keranjang")
+            .doc(emailPegawai)
+            .collection('produk')
+            .doc(dataProduk.namaProduk!)
+            .set(({
+              "id_produk": dataProduk.idProduk,
+              "nama_produk": dataProduk.namaProduk,
+              "harga_jual": dataProduk.hargaJual,
+              "harga_modal": dataProduk.hargaModal,
+              "jumlah": 1,
+              "total_harga": totalHarga.value + hjual,
+              "diskon": 0,
+              "nama_diskon": "",
+            }));
       }
 
       await firestore
           .collection("produk")
           .doc(dataProduk.idProduk)
-          .update({"stok": dataProduk.stok! - 1});
+          .update({"stok": FieldValue.increment(-1)});
 
-      totalHarga += hargaJ;
       SUpanel.open();
       update();
     } else {
@@ -99,111 +95,20 @@ class TransaksiPenjualanController extends GetxController
     }
   }
 
-  Future<void> updateKeranjang(ProdukModel dataProduk) async {
-    await firestore
-        .collection("keranjang")
-        .doc("$emailPegawai")
-        .collection('produk')
-        .doc(dataProduk.namaProduk!)
-        .get()
-        .then((DocumentSnapshot snapshot) {
-      Map<String, dynamic> cole = snapshot.data() as Map<String, dynamic>;
-
-      final hjual =
-          int.parse(cole["harga_jual"].replaceAll(RegExp('[^0-9]'), ''));
-      var jumlahPlus1 = cole["jumlah"] + 1;
-
-      var harga = jumlahPlus1 * hjual;
-
-      firestore
-          .collection("keranjang")
-          .doc("$emailPegawai")
-          .collection('produk')
-          .doc(dataProduk.namaProduk!)
-          .update({"total_harga": harga, "jumlah": jumlahPlus1});
-    });
-  }
-
-  Future<void> updateKeranjangLuar() async {
-    loading();
-    await firestore
-        .collection("keranjang")
-        .doc("$emailPegawai")
-        .update({"total": totalHarga.value});
-    Get.back();
-  }
-
-  Future<void> keranjangAdd(ProdukModel dataProduk) async {
-    Future<Map<String, dynamic>> keranjang(Map<String, dynamic> data) async {
-      try {
-        await firestore.collection("keranjang").doc("$emailPegawai").set(data);
-
-        return {
-          "error": false,
-          "message": "${dataProduk.namaProduk} ditambahkan ke keranjang",
-        };
-      } catch (e) {
-        return {
-          "error": true,
-          "message": "Gagal menambah product",
-        };
-      }
-    }
-
-    await keranjang({
-      "email_pegawai": emailPegawai,
-      "total": 0,
-    });
-  }
-
-  Future<void> addKeranjangProduk(ProdukModel dataProduk, int hargaJ) async {
-    Future<Map<String, dynamic>> keranjangProduk(
-        Map<String, dynamic> data) async {
-      var emailPegawai = box.read('userEmail');
-
-      try {
-        await firestore
-            .collection("keranjang")
-            .doc(emailPegawai)
-            .collection('produk')
-            .doc(dataProduk.namaProduk!)
-            .set(data);
-
-        return {
-          "error": false,
-          "message": "${dataProduk.namaProduk} ditambahkan ke keranjang",
-        };
-      } catch (e) {
-        return {
-          "error": true,
-          "message": "Gagal menambah product",
-        };
-      }
-    }
-
-    await keranjangProduk({
-      "id_produk": dataProduk.idProduk,
-      "nama_produk": dataProduk.namaProduk,
-      "harga_jual": dataProduk.hargaJual,
-      "harga_modal": dataProduk.hargaModal,
-      "jumlah": 1,
-      "total_harga": hargaJ,
-      "diskon": 0,
-      "nama_diskon": "",
+  Future<void> saveNextToDetail() async {
+    await firestore.collection("keranjang").doc(emailPegawai).update({
+      "total": totalHarga.value,
+      "total_diskon": totalDiskon.value,
     });
   }
 
   Future<void> searchProduk(String data) async {
-    //jika data kosong
-
     if (data.isEmpty) {
       queryAwal.value = [];
       tempSearch.value = [];
     } else {
-      //buat data jadi kapital
       var capitalized = data.substring(0, 1).toUpperCase() + data.substring(1);
       if (queryAwal.isEmpty && data.length == 1) {
-        //fungsi yang akan dijalankan pada 1 ketikan pertama
         CollectionReference products = firestore.collection("produk");
 
         final keyNameResult = await products

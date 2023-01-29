@@ -14,7 +14,7 @@ import '../controllers/transaksi_penjualan_controller.dart';
 
 class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
   final box = GetStorage();
-  final rpid = new NumberFormat("#,##0", "ID");
+  final rpid = NumberFormat("#,##0", "ID");
 
   TransaksiPenjualanView({Key? key}) : super(key: key);
   @override
@@ -75,13 +75,18 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
               for (var k in snapKeranjang.data!.docs) {
                 dataKeranjang.add(DetailKeranjangModel.fromJson(k.data()));
               }
-              var cek = 0.obs;
+              var cekTotalHarga = 0.obs;
+              var cekTotalDiskon = 0.obs;
               //total harga
               snapKeranjang.data!.docs.forEach((doc) {
-                cek += doc["total_harga"];
+                cekTotalHarga += doc["total_harga"];
+                cekTotalDiskon += doc["diskon"];
               });
-              final cekHargaAwal = cek;
+              final cekHargaAwal = cekTotalHarga;
               controller.totalHarga = cekHargaAwal;
+              final cekDiskonAwal = cekTotalDiskon;
+              controller.totalDiskon = cekDiskonAwal;
+
               return SlidingUpPanel(
                   controller: controller.SUpanel,
                   borderRadius: const BorderRadius.only(
@@ -155,9 +160,24 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                wBigText(
-                                    text:
-                                        'Total harga: Rp.${rpid.format(controller.totalHarga.value)}')
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    wBigText(
+                                        color: Colors.black87,
+                                        size: 16,
+                                        weight: FontWeight.w300,
+                                        text:
+                                            'Total diskon: Rp.${rpid.format(controller.totalDiskon.value)}'),
+                                    SizedBox(height: 5),
+                                    wBigText(
+                                        color: Colors.black87,
+                                        size: 16,
+                                        weight: FontWeight.w300,
+                                        text:
+                                            'Total harga: Rp.${rpid.format(controller.totalHarga.value)}'),
+                                  ],
+                                )
                               ],
                             ),
                           ),
@@ -169,9 +189,16 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
                               Expanded(
                                 child: TextButton(
                                   onPressed: () async {
-                                    await controller.updateKeranjangLuar();
-                                    Get.toNamed(Routes.DETAIL_TRANSAKSI,
-                                        arguments: controller.totalHarga.value);
+                                    if (snapKeranjang.data!.docs.isNotEmpty) {
+                                      await controller.saveNextToDetail();
+                                      Get.toNamed(Routes.DETAIL_TRANSAKSI,
+                                          arguments:
+                                              controller.totalHarga.value);
+                                    } else {
+                                      Get.snackbar("Peringatan",
+                                          "Isi keranjang terlebih dahulu!",
+                                          duration: Duration(seconds: 1));
+                                    }
                                   },
                                   child: Container(
                                     height: 48,
@@ -256,174 +283,250 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
                   for (var element in snapProduk.data!.docs) {
                     dataProdukJSON.add(ProdukModel.fromJson(element.data()));
                   }
-                  return GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 32.0,
-                      crossAxisSpacing: 32.0,
-                      childAspectRatio: 0.8,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: dataProdukJSON.length,
-                    itemBuilder: (context, index) {
-                      final int count = dataProdukJSON.length;
-                      final Animation<double> animation =
-                          Tween<double>(begin: 0.0, end: 1.0).animate(
-                        CurvedAnimation(
-                          parent: controller.animationController!,
-                          curve: Interval((1 / count) * index, 1.0,
-                              curve: Curves.fastOutSlowIn),
-                        ),
-                      );
-                      controller.animationController?.forward();
 
-                      return GetBuilder<TransaksiPenjualanController>(
-                        init: TransaksiPenjualanController(),
-                        initState: (_) {},
-                        builder: (c) {
-                          return AnimatedBuilder(
-                            animation: c.animationController!,
-                            builder: (BuildContext context, Widget? child) {
-                              return FadeTransition(
-                                opacity: animation,
-                                child: Transform(
-                                    transform: Matrix4.translationValues(
-                                        0.0, 50 * (1.0 - animation.value), 0.0),
-                                    child: SizedBox(
-                                      height: 280,
-                                      child: InkWell(
-                                          splashColor: Colors.transparent,
-                                          onTap: () {
-                                            if (c.isLoading.isFalse) {
-                                              c.addKeranjang(
-                                                  dataProdukJSON[index]);
-                                            }
-                                            c.isLoading.isFalse;
-                                          },
-                                          child: doubleStackBoxItem(
-                                              dataProdukJSON, index)),
-                                    )),
+                  return Obx(() => GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 32.0,
+                          crossAxisSpacing: 32.0,
+                          childAspectRatio: 0.8,
+                        ),
+                        padding: const EdgeInsets.all(8),
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: controller.tempSearch.isNotEmpty
+                            ? controller.tempSearch.length
+                            : dataProdukJSON.length,
+                        itemBuilder: (context, index) {
+                          final int count = controller.tempSearch.isNotEmpty
+                              ? controller.tempSearch.length
+                              : dataProdukJSON.length;
+                          final Animation<double> animation =
+                              Tween<double>(begin: 0.0, end: 1.0).animate(
+                            CurvedAnimation(
+                              parent: controller.animationController!,
+                              curve: Interval((1 / count) * index, 1.0,
+                                  curve: Curves.fastOutSlowIn),
+                            ),
+                          );
+                          controller.animationController?.forward();
+
+                          return GetBuilder<TransaksiPenjualanController>(
+                            init: TransaksiPenjualanController(),
+                            initState: (_) {},
+                            builder: (c) {
+                              return AnimatedBuilder(
+                                animation: c.animationController!,
+                                builder: (BuildContext context, Widget? child) {
+                                  return FadeTransition(
+                                    opacity: animation,
+                                    child: Transform(
+                                        transform: Matrix4.translationValues(
+                                            0.0,
+                                            50 * (1.0 - animation.value),
+                                            0.0),
+                                        child: SizedBox(
+                                          height: 280,
+                                          child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              onTap: () {
+                                                if (controller
+                                                    .searchC.text.isEmpty) {
+                                                  c.tapKeranjangList(
+                                                      dataProdukJSON[index]);
+                                                } else {
+                                                  List<ProdukModel> searchJSON =
+                                                      [];
+
+                                                  for (var element in controller
+                                                      .tempSearch) {
+                                                    searchJSON.add(
+                                                        ProdukModel.fromJson(
+                                                            element));
+                                                  }
+
+                                                  c.tapKeranjangList(
+                                                      searchJSON[index]);
+                                                }
+                                              },
+                                              child: Stack(
+                                                alignment: AlignmentDirectional
+                                                    .bottomCenter,
+                                                children: [
+                                                  Column(
+                                                    children: [
+                                                      Expanded(
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: DesignAppTheme
+                                                                .grey
+                                                                .withOpacity(
+                                                                    0.08),
+                                                            borderRadius:
+                                                                const BorderRadius
+                                                                        .all(
+                                                                    Radius.circular(
+                                                                        16.0)),
+                                                          ),
+                                                          child: Column(
+                                                            children: [
+                                                              Expanded(
+                                                                child: Column(
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: const EdgeInsets
+                                                                              .only(
+                                                                          top:
+                                                                              16,
+                                                                          left:
+                                                                              16,
+                                                                          right:
+                                                                              16),
+                                                                      child:
+                                                                          Text(
+                                                                        controller.tempSearch.isNotEmpty
+                                                                            ? controller.tempSearch[index]["nama_produk"].toUpperCase()
+                                                                            : dataProdukJSON[index].namaProduk!.toUpperCase(),
+                                                                        textAlign:
+                                                                            TextAlign.left,
+                                                                        style:
+                                                                            const TextStyle(
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          fontSize:
+                                                                              16,
+                                                                          letterSpacing:
+                                                                              0.27,
+                                                                          color:
+                                                                              DesignAppTheme.darkerText,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: const EdgeInsets
+                                                                              .only(
+                                                                          top:
+                                                                              8,
+                                                                          left:
+                                                                              16,
+                                                                          right:
+                                                                              16,
+                                                                          bottom:
+                                                                              8),
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Text(
+                                                                            '${dataProdukJSON[index].hargaJual} ',
+                                                                            textAlign:
+                                                                                TextAlign.left,
+                                                                            style:
+                                                                                const TextStyle(
+                                                                              fontWeight: FontWeight.w500,
+                                                                              fontSize: 12,
+                                                                              letterSpacing: 0.27,
+                                                                              color: DesignAppTheme.grey,
+                                                                            ),
+                                                                          ),
+                                                                          Text(
+                                                                            '${dataProdukJSON[index].stok!} tersisa',
+                                                                            textAlign:
+                                                                                TextAlign.left,
+                                                                            style:
+                                                                                const TextStyle(
+                                                                              fontWeight: FontWeight.w500,
+                                                                              fontSize: 12,
+                                                                              letterSpacing: 0.27,
+                                                                              color: DesignAppTheme.grey,
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                width: 48,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 48,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 24,
+                                                            right: 16,
+                                                            left: 16),
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            const BorderRadius
+                                                                    .all(
+                                                                Radius.circular(
+                                                                    16.0)),
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                              color: DesignAppTheme
+                                                                  .grey
+                                                                  .withOpacity(
+                                                                      0.2),
+                                                              offset:
+                                                                  const Offset(
+                                                                      0.0, 0.0),
+                                                              blurRadius: 6.0),
+                                                        ],
+                                                      ),
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            const BorderRadius
+                                                                    .all(
+                                                                Radius.circular(
+                                                                    16.0)),
+                                                        child: AspectRatio(
+                                                            aspectRatio: 1.28,
+                                                            child: dataProdukJSON[
+                                                                            index]
+                                                                        .fotoProduk ==
+                                                                    "noimage"
+                                                                ? Image.asset(
+                                                                    "assets/logo/noproduk.png",
+                                                                    fit: BoxFit
+                                                                        .cover)
+                                                                : Image.network(
+                                                                    "${dataProdukJSON[index].fotoProduk}",
+                                                                    fit: BoxFit
+                                                                        .fill)),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )),
+                                        )),
+                                  );
+                                },
                               );
                             },
                           );
                         },
-                      );
-                    },
-                  );
+                      ));
                 }),
           ),
         ],
       ),
-    );
-  }
-
-  Stack doubleStackBoxItem(List<ProdukModel> dataProdukJSON, int index) {
-    return Stack(
-      alignment: AlignmentDirectional.bottomCenter,
-      children: [
-        Column(
-          children: [
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: DesignAppTheme.grey.withOpacity(0.08),
-                  borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 16, left: 16, right: 16),
-                            child: Text(
-                              dataProdukJSON[index].namaProduk!.toUpperCase(),
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                letterSpacing: 0.27,
-                                color: DesignAppTheme.darkerText,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 8, left: 16, right: 16, bottom: 8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '${dataProdukJSON[index].hargaJual} ',
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w200,
-                                    fontSize: 12,
-                                    letterSpacing: 0.27,
-                                    color: DesignAppTheme.grey,
-                                  ),
-                                ),
-                                Text(
-                                  '${dataProdukJSON[index].stok} tersisa',
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w200,
-                                    fontSize: 12,
-                                    letterSpacing: 0.27,
-                                    color: DesignAppTheme.grey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 48,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 48,
-            ),
-          ],
-        ),
-        Container(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 24, right: 16, left: 16),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                boxShadow: [
-                  BoxShadow(
-                      color: DesignAppTheme.grey.withOpacity(0.2),
-                      offset: const Offset(0.0, 0.0),
-                      blurRadius: 6.0),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                child: AspectRatio(
-                    aspectRatio: 1.28,
-                    child: dataProdukJSON[index].fotoProduk == "noimage"
-                        ? Image.asset("assets/logo/noproduk.png",
-                            fit: BoxFit.cover)
-                        : Image.network("${dataProdukJSON[index].fotoProduk}",
-                            fit: BoxFit.fill)),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

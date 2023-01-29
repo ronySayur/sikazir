@@ -32,7 +32,6 @@ class UpdateProfileController extends GetxController {
 //             "nama_pegawai": nameC.text,
 //             "jabatan": jabatanC.value,
 //             "telepon": teleponC.text,
-//             "hak": hakC.text,
 //             "foto": urlImage,
 //             "pin": "111111",
 //             "uid": uid,

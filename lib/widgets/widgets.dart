@@ -283,7 +283,7 @@ Center dataKosong(String descData) {
     child: Column(
       children: [
         Lottie.asset("assets/lottie/empty.json"),
-        wBigText(text: "Data $descData kosong")
+        wBigText(text: "$descData kosong")
       ],
     ),
   );

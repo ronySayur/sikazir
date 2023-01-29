@@ -129,7 +129,7 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         wSmallText(
-                            text: "Hak akses",
+                            text: "Jabatan",
                             color: Colors.black,
                             size: wDimension.font16),
                         SizedBox(
@@ -142,6 +142,7 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Obx(() => DropdownButton(
+                            hint: const Text("Pilih jabatan"),
                                 onChanged: (newValue) {
                                   controller.selectedJabatan(newValue!);
                                 },
@@ -240,15 +241,19 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Obx(() => DropdownButton(
+                           
                                 onChanged: (newValue) {
                                   controller.selectedToko('${newValue!}');
                                 },
+                                 hint: const Text("Pilih Toko"),
                                 value: controller.tokoC.value == ""
                                     ? null
                                     : controller.tokoC.value,
                                 items: controller.dataToko.map((selectedType) {
+                                  
                                   return DropdownMenuItem(
                                     value: selectedType,
+                                    
                                     child: Text(
                                       selectedType,
                                     ),
@@ -277,7 +282,7 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
                           color: Colors.white,
                           weight: FontWeight.bold,
                         )
-                      : CircularProgressIndicator())))
+                      : const CircularProgressIndicator())))
         ]));
   }
 }

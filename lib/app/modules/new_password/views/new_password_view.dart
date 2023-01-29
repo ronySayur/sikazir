@@ -9,7 +9,7 @@ class NewPasswordView extends GetView<NewPasswordController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Password baru'), centerTitle: false),
+        appBar: AppBar(title: const Text('Password baru'), centerTitle: false,backgroundColor: Colors.red,),
         body: ListView(
           padding: EdgeInsets.symmetric(
               horizontal: wDimension.width10, vertical: wDimension.height20),

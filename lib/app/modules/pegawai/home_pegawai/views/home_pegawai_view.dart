@@ -167,7 +167,7 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
                               return InkWell(
                                 radius: wDimension.radius20,
                                 onTap: () => Get.toNamed(Routes.DETAIL_PEGAWAI,
-                                    arguments: pegawaiM),
+                                    arguments: pegawaiM[index]),
                                 borderRadius:
                                     BorderRadius.circular(wDimension.radius20),
                                 child: Card(
@@ -203,7 +203,7 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
                                                 text: pegawaiM[index]
                                                     .namaPegawai),
                                             subtitle: wSmallText(
-                                                text: pegawaiM[index].hak)),
+                                                text: pegawaiM[index].jabatan)),
                                       ),
                                       SizedBox(
                                         height: wDimension.height20,

@@ -24,7 +24,6 @@ class LoginController extends GetxController {
   //       "nama_pegawai": "cadangan",
   //       "jabatan": "admin",
   //       "telepon": "9128301274",
-  //       "hak": "hak",
   //       "foto":
   //           "https://firebasestorage.googleapis.com/v0/b/sikasir-rony.appspot.com/o/3yjYopVejKex0BgVzuykS0hxVkn2%2Fprofile.jpg?alt=media&token=05f3bf3c-ea4f-4203-ba93-755b050cc939",
   //       "pin": "111111",

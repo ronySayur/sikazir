@@ -25,6 +25,7 @@ class AllPegawaiController extends GetxController
       tempSearch.value = [];
     } else {
       var capitalized = data.substring(0, 1).toUpperCase() + data.substring(1);
+      
       if (queryAwal.isEmpty && data.length == 1) {
         CollectionReference products = firestore.collection("pegawai");
 

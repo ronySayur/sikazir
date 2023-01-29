@@ -11,7 +11,6 @@ class NewPasswordController extends GetxController {
   TextEditingController newPassC = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  
 
   Future<void> newPaswword() async {
     if (newPassC.text.isNotEmpty) {
@@ -29,13 +28,11 @@ class NewPasswordController extends GetxController {
 
           await auth.signOut();
 
-          auth.signInWithEmailAndPassword(
-            email: email,
-            password: newPassC.text,
-          );
+          Get.snackbar("Pemberitahuan",
+              "Silahkan login sekali lagi dengan password baru anda");
           Get.back();
 
-          Get.offAllNamed(Routes.HOME);
+          Get.offAllNamed(Routes.LOGIN);
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {
             Get.snackbar("Peringatan",

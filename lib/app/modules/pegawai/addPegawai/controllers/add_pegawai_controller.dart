@@ -29,7 +29,6 @@ class AddPegawaiController extends GetxController {
 
   TextEditingController nameC = TextEditingController();
   TextEditingController teleponC = TextEditingController();
-  TextEditingController hakC = TextEditingController();
   TextEditingController pinC = TextEditingController();
 
   final jabatanC = "".obs;
@@ -182,7 +181,6 @@ class AddPegawaiController extends GetxController {
             "jabatan": jabatanC.value,
             "toko": tokoC.value,
             "telepon": teleponC.text,
-            "hak": hakC.text,
             "foto": urlImage,
             "pin": "111111",
             "role": "pegawai",

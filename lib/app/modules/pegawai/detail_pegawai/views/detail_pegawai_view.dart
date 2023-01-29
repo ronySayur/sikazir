@@ -41,7 +41,6 @@ class DetailPegawaiView extends GetView<DetailPegawaiController> {
                   //"name": nameC.text,
                   // "jabatan": jabatanC.value,
                   // "telepon": teleponC.text,
-                  // "hak": hakC.text,
                   // "profile": urlImage,
                   // "password": "111111",
                   // "email": emailC.text,

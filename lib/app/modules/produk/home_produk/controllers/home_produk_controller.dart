@@ -7,7 +7,6 @@ class HomeProdukController extends GetxController
   AnimationController? animationController;
   late TextEditingController searchC;
 
-  var ontap = false.obs;
   var queryAwal = [].obs;
   var tempSearch = [].obs;
 

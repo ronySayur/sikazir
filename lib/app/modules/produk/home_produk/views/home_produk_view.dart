@@ -31,7 +31,6 @@ class HomeProdukView extends GetView<HomeProdukController> {
                   child: TextField(
                       onChanged: (value) {
                         controller.searchProduk(value);
-                        controller.ontap.toggle();
                       },
                       controller: controller.searchC,
                       cursorColor: Colors.red[900],

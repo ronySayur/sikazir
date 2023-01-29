@@ -35,7 +35,7 @@ class GridViewS extends StatelessWidget {
               onTap: () => Get.toNamed(Routes.DETAIL_SUPPLIER,
                   arguments: dataSupplierModel),
               child: SizedBox(
-                height: 280,
+                height: 300,
                 child: Stack(
                   alignment: AlignmentDirectional.bottomCenter,
                   children: [
@@ -58,15 +58,11 @@ class GridViewS extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(30),
                                       child: Image.network(defaultImage)),
                                 ),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 16,
-                                            left: 16,
-                                            right: 16,
-                                            bottom: 8),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(20),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -84,15 +80,16 @@ class GridViewS extends StatelessWidget {
                                             SizedBox(
                                               height: 10,
                                             ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                            Wrap(
+                                              spacing:
+                                                  4, // gap between adjacent chips
+                                              runSpacing:
+                                                  2, // gap between lines
+                                              direction: Axis
+                                                  .horizontal, // main axis (rows or columns)
                                               children: [
                                                 Text(
-                                                  '${dataSupplierModel.emailVendor}\n${dataSupplierModel.alamatVendor}',
+                                                  dataSupplierModel.emailVendor,
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w500,
@@ -102,7 +99,8 @@ class GridViewS extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${dataSupplierModel.jabatanPic}\n${dataSupplierModel.namaPic}\n${dataSupplierModel.noPic}',
+                                                  dataSupplierModel
+                                                      .alamatVendor,
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w500,
@@ -110,14 +108,48 @@ class GridViewS extends StatelessWidget {
                                                     letterSpacing: 0.27,
                                                     color: DesignAppTheme.grey,
                                                   ),
+                                                ),
+                                                SizedBox(height: 10),
+                                                Row(
+                                                  children: [
+                                                    Chip(
+                                                      label: Text(
+                                                        dataSupplierModel
+                                                            .namaPic,
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 16,
+                                                          letterSpacing: 0.27,
+                                                          color: DesignAppTheme
+                                                              .grey,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                    Text(
+                                                      '${dataSupplierModel.jabatanPic}\n${dataSupplierModel.noPic}',
+                                                      textAlign: TextAlign.left,
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 16,
+                                                        letterSpacing: 0.27,
+                                                        color:
+                                                            DesignAppTheme.grey,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
                                           ],
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                                 const SizedBox(
                                   width: 48,

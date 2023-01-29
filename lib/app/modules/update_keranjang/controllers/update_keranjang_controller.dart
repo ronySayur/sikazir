@@ -16,10 +16,9 @@ class UpdateKeranjangController extends GetxController {
   var namaProduk = "".obs;
   var hargaJual = "".obs;
 
-  var i = 0;
+  var jumlahAwal = 0.obs;
   var jumlah = 0.obs;
   var total = 0.obs;
-  var subtotal = 0.obs;
   var diskonproduk = 0.obs;
 
   Stream<QuerySnapshot<Map<String, dynamic>>> streamProduk() {
@@ -27,105 +26,75 @@ class UpdateKeranjangController extends GetxController {
   }
 
   increment(String idProduk) async {
-    loading();
+    var dataProduk = await firestore.collection("produk").doc(idProduk).get();
 
+    if (dataProduk.get("stok") > 0) {
+      jumlah.value += 1;
+      await firestore
+          .collection("produk")
+          .doc(idProduk)
+          .update({"stok": FieldValue.increment(-1)});
+    } else {
+      Get.snackbar("Peringatan", "Produk Habis!",
+          backgroundColor: Colors.white, duration: const Duration(seconds: 1));
+    }
+  }
+
+  willpop(String idProduk) async {
     await firestore
         .collection("produk")
         .doc(idProduk)
-        .get()
-        .then((DocumentSnapshot snapshot) {
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+        .update({"stok": jumlahAwal.value});
 
-      if (data["stok"] > 0) {
-        jumlah.value += 1;
-        final hargaJ = int.parse(hargaJual.replaceAll(RegExp('[^0-9]'), ''));
-        subtotal.value = jumlah.value * hargaJ;
-        total.value = subtotal.value - diskonproduk.value;
-
-        firestore
-            .collection("produk")
-            .doc(idProduk)
-            .update({"stok": data["stok"] - 1});
-      } else {
-        Get.snackbar("Peringatan", "Produk Habis!",
-            backgroundColor: Colors.white,
-            duration: const Duration(seconds: 1));
-      }
-    });
-
-    Get.back();
+    Get.snackbar("Pemberitahuan", "Data produk berhasil dikembalikan!",
+        backgroundColor: Colors.white, duration: const Duration(seconds: 1));
   }
 
   decrement(String idProduk) async {
+    if (jumlah.value > 1) {
+      jumlah.value -= 1;
+      await firestore
+          .collection("produk")
+          .doc(idProduk)
+          .update({"stok": FieldValue.increment(-1)});
+    }
+  }
+
+  Future<void> updateKeranjang(String idProduk) async {
+    await firestore
+        .collection("keranjang")
+        .doc("$emailPegawai")
+        .collection('produk')
+        .doc(namaProduk.value)
+        .update({
+      "total_harga": total.value,
+      "jumlah": jumlah.value,
+      "diskon": int.parse(diskon.text),
+      "nama_diskon": namaDiskon.text,
+    });
+  }
+
+  Future<void> deleteKeranjang(String idProduk, int jumlahawal) async {
     loading();
+    var dataProduk = await firestore.collection("produk").doc(idProduk).get();
 
     await firestore
         .collection("produk")
         .doc(idProduk)
-        .get()
-        .then((DocumentSnapshot snapshot) {
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+        .update({"stok": dataProduk.get("stok") + jumlahawal});
 
-      jumlah.value -= 1;
-      final hargaJ = int.parse(hargaJual.replaceAll(RegExp('[^0-9]'), ''));
-      subtotal.value = jumlah.value * hargaJ;
-      total.value = subtotal.value - diskonproduk.value;
+    await firestore
+        .collection("keranjang")
+        .doc("$emailPegawai")
+        .collection('produk')
+        .doc(namaProduk.value)
+        .delete();
 
-      firestore
-          .collection("produk")
-          .doc(idProduk)
-          .update({"stok": data["stok"] + 1});
-
-      Get.back();
-    });
-  }
-
-  Future<void> updateKeranjang(String idProduk) async {
-    loading();
-    try {
-      await firestore
-          .collection("keranjang")
-          .doc("$emailPegawai")
-          .collection('produk')
-          .doc(namaProduk.value)
-          .update({
-        "total_harga": total.value,
-        "jumlah": jumlah.value,
-        "diskon": diskon.text,
-        "nama_diskon": namaDiskon.text,
-      });
-
-      Get.back();
-      Get.back();
-    } catch (e) {
-      Get.back();
-
-      Get.snackbar("Terjadi Kesalahan", "Tidak dapat update keranjang($e)");
-    }
-  }
-
-  Future<Map<String, dynamic>> deleteKeranjang() async {
-    loading();
-    try {
-      await firestore
-          .collection("keranjang")
-          .doc("$emailPegawai")
-          .collection('produk')
-          .doc(namaProduk.value)
-          .delete();
-      Get.back();
-      Get.back();
-      return {
-        "error": false,
-        "message": "Produk berhasil dihapus.",
-      };
-    } catch (e) {
-      Get.back();
-
-      return {
-        "error": true,
-        "message": "Produk gagal dihapus.",
-      };
-    }
+    //close loading
+    Get.back();
+    //close confirm
+    Get.back();
+    //back to transaksi
+    Get.back();
   }
 }

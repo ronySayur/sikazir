@@ -11,7 +11,7 @@ import '../controllers/home_pembelian_controller.dart';
 
 class HomePembelianView extends GetView<HomePembelianController> {
   final ProdukModel dataprod = Get.arguments;
-  final rpid = new NumberFormat("#,##0", "ID");
+  final rpid =  NumberFormat("#,##0", "ID");
 
   @override
   Widget build(BuildContext context) {

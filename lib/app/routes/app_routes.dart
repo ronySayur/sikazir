@@ -36,6 +36,15 @@ abstract class Routes {
   static const HOME_PEMBELIAN = _Paths.HOME_PEMBELIAN;
   static const ADD_PEMBELIAN = _Paths.ADD_PEMBELIAN;
   static const TRANSAKSI_SELESAI = _Paths.TRANSAKSI_SELESAI;
+  static const RIWAYAT_TRANSAKSI = _Paths.RIWAYAT_TRANSAKSI;
+  static const SETTINGS = _Paths.SETTINGS;
+  static const DETAIL_RIWAYAT = _Paths.DETAIL_RIWAYAT;
+  static const LAPORAN_RANGKUMAN = _Paths.LAPORAN_RANGKUMAN;
+  static const LAPORAN_RINGKASAN = _Paths.LAPORAN_RINGKASAN;
+  static const LAPORAN_PRODUK = _Paths.LAPORAN_PRODUK;
+  static const LAPORAN_PEMBELIAN = _Paths.LAPORAN_PEMBELIAN;
+  static const LAPORAN_PENJUALAN = _Paths.LAPORAN_PENJUALAN;
+  static const LAPORAN_PEGAWAI = _Paths.LAPORAN_PEGAWAI;
 }
 
 abstract class _Paths {
@@ -73,4 +82,13 @@ abstract class _Paths {
   static const HOME_PEMBELIAN = '/home-pembelian';
   static const ADD_PEMBELIAN = '/add-pembelian';
   static const TRANSAKSI_SELESAI = '/transaksi-selesai';
+  static const RIWAYAT_TRANSAKSI = '/riwayat-transaksi';
+  static const SETTINGS = '/settings';
+  static const DETAIL_RIWAYAT = '/detail-riwayat';
+  static const LAPORAN_RANGKUMAN = '/laporan-rangkuman';
+  static const LAPORAN_RINGKASAN = '/laporan-ringkasan';
+  static const LAPORAN_PRODUK = '/laporan-produk';
+  static const LAPORAN_PEMBELIAN = '/laporan-pembelian';
+  static const LAPORAN_PENJUALAN = '/laporan-penjualan';
+  static const LAPORAN_PEGAWAI = '/laporan-pegawai';
 }

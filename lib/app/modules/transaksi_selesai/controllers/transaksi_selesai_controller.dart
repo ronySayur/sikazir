@@ -1,23 +1,27 @@
+import 'package:blue_thermal_printer/blue_thermal_printer.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TransaksiSelesaiController extends GetxController {
-  //TODO: Implement TransaksiSelesaiController
+  @override
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  List<BluetoothDevice> devices = [];
+  BluetoothDevice? selectedDevice;
+  BlueThermalPrinter printer = BlueThermalPrinter.instance;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    getDevices();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void getDevices() async {
+    devices = await printer.getBondedDevices();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamTransksi(
+      String date) async* {
+    yield* firestore.collection("penjualan").doc(date).snapshots();
   }
-
-  void increment() => count.value++;
 }

@@ -28,19 +28,24 @@ class SideBar extends StatelessWidget {
             press: () => Get.toNamed(Routes.TRANSAKSI_PENJUALAN),
           ),
           DrawerListTile(
+            title: "Riwayat Transaksi",
+            svgSrc: "assets/icons/history.svg",
+            press: () => Get.toNamed(Routes.RIWAYAT_TRANSAKSI),
+          ),
+          DrawerListTile(
             title: "Produk",
             svgSrc: "assets/icons/product.svg",
-            press: () {},
+            press: () => Get.toNamed(Routes.HOME_PRODUK),
           ),
           DrawerListTile(
             title: "Supplier",
             svgSrc: "assets/icons/supplier.svg",
-            press: () {},
+            press: () => Get.toNamed(Routes.HOME_SUPPLIER),
           ),
           DrawerListTile(
             title: "Toko",
             svgSrc: "assets/icons/toko.svg",
-            press: () {},
+            press: () => Get.toNamed(Routes.HOME_TOKO),
           ),
           DrawerListTile(
             title: "Pegawai",
@@ -50,12 +55,12 @@ class SideBar extends StatelessWidget {
           DrawerListTile(
             title: "Laporan",
             svgSrc: "assets/icons/reports.svg",
-            press: () {},
+            press: () => Get.toNamed(Routes.HOME_LAPORAN),
           ),
           DrawerListTile(
             title: "Settings",
             svgSrc: "assets/icons/menu_setting.svg",
-            press: () {},
+            press: () => Get.toNamed(Routes.SETTINGS),
           ),
         ],
       ),

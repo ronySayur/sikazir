@@ -48,7 +48,7 @@ class AddSupplierView extends GetView<AddSupplierController> {
                 ))
           ],
         ),
-        body: Column(children: [
+        body: ListView(children: [
           Container(
               padding: EdgeInsets.fromLTRB(wDimension.width10,
                   wDimension.height20, wDimension.width10, wDimension.height10),
@@ -279,9 +279,7 @@ class AddSupplierView extends GetView<AddSupplierController> {
                           : "Loading...",
                       weight: FontWeight.bold,
                       color: Colors.white)))),
-          SizedBox(
-            height: MediaQuery.of(context).padding.bottom
-          )
+          SizedBox(height: MediaQuery.of(context).padding.bottom)
         ]));
   }
 }

@@ -8,6 +8,7 @@ environment:
 dependencies:
   animations: ^2.0.7
   avatar_glow: 2.0.2
+  blue_thermal_printer: ^1.2.3
   card_swiper: ^2.0.4
   cloud_firestore: ^4.3.1
   convex_bottom_bar: ^3.1.0+1
