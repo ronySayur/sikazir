@@ -91,6 +91,7 @@ class HomeView extends GetView<HomeController> {
                                       radius: wDimension.radius15,
                                       onCancel: () => Get.back(),
                                       onConfirm: () async {
+                                        await box.remove('jabatan');
                                         await box.remove('userEmail');
                                         await authC.signOut();
                                         Get.offAllNamed(Routes.LOGIN);

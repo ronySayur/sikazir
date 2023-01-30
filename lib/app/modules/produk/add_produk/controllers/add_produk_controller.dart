@@ -79,9 +79,8 @@ class AddProdukController extends GetxController {
           "merek": merkC.text,
           "email_pegawai": user["email"],
           "stok": int.tryParse(stokC.text) ?? 0,
+          "email_vendor": supplierC.value,
 
-          // "email_vendor": emailVendor,
-          // "id_toko": idToko,
         });
 
         isLoading(false);

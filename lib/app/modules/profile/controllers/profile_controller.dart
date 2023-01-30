@@ -21,6 +21,7 @@ class ProfileController extends GetxController {
 
   //Controller Logout
   Future<void> logout() async {
+    await box.remove('jabatan');
     await box.remove('userEmail');
     await auth.signOut();
     Get.offAllNamed(Routes.LOGIN);
