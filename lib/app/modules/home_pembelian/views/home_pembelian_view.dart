@@ -6,12 +6,11 @@ import 'package:sikasir/app/models/product_model.dart';
 import 'package:sikasir/widgets/widgets.dart';
 
 import '../../../../widgets/theme.dart';
-import '../../../routes/app_pages.dart';
 import '../controllers/home_pembelian_controller.dart';
 
 class HomePembelianView extends GetView<HomePembelianController> {
   final ProdukModel dataprod = Get.arguments;
-  final rpid =  NumberFormat("#,##0", "ID");
+  final rpid = NumberFormat("#,##0", "ID");
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +42,6 @@ class HomePembelianView extends GetView<HomePembelianController> {
               const SizedBox(height: defaultPadding),
               Obx(() {
                 if (controller.ubahHarga.isTrue) {
-                  controller.hargaModal.text = '0';
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -106,7 +104,6 @@ class HomePembelianView extends GetView<HomePembelianController> {
                       children: [
                         FloatingActionButton(
                           heroTag: "decrement",
-                          child: const Icon(Icons.add, color: Colors.black87),
                           backgroundColor: Colors.white,
                           onPressed: () {
                             if (controller.jumlah.value > 0) {
@@ -117,17 +114,16 @@ class HomePembelianView extends GetView<HomePembelianController> {
                                   duration: const Duration(seconds: 1));
                             }
                           },
+                          child: const Icon(Icons.remove, color: Colors.black87),
                         ),
                         SizedBox(width: wDimension.width20),
                         Obx(() => Text('${controller.jumlah.value}')),
                         SizedBox(width: wDimension.width20),
                         FloatingActionButton(
                           heroTag: "increment",
-                          child: const Icon(Icons.add, color: Colors.black87),
                           backgroundColor: Colors.white,
-                          onPressed: () {
-                            controller.increment();
-                          },
+                          onPressed: () => controller.increment(),
+                          child: const Icon(Icons.add, color: Colors.black87),
                         )
                       ],
                     ),
@@ -193,7 +189,8 @@ class HomePembelianView extends GetView<HomePembelianController> {
                   Expanded(
                     child: TextButton(
                       onPressed: () {
-                        controller.pembelianProduk('${dataprod.idProduk}');
+                        controller.pembelianProduk(
+                            '${dataprod.idProduk}', dataprod.stok!);
                       },
                       child: Container(
                         height: 48,

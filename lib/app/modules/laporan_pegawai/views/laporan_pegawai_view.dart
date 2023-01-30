@@ -80,11 +80,13 @@ class LaporanPegawaiView extends GetView<LaporanPegawaiController> {
                               size: 12,
                               color: Colors.grey,
                             ),
-                            wSmallText(
-                              text: "2000",
-                              size: 18,
-                              color: Colors.lightBlue,
-                            ),
+                            Obx(() => Text(
+                                  "Rp. ${rpid.format(controller.totalPenjualan.value)}",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Colors.lightBlue),
+                                )),
                           ],
                         ),
                       ),
@@ -97,11 +99,13 @@ class LaporanPegawaiView extends GetView<LaporanPegawaiController> {
                               size: 12,
                               color: Colors.grey,
                             ),
-                            wSmallText(
-                              text: "2000",
-                              size: 18,
-                              color: Colors.lightBlue,
-                            ),
+                            Obx(() => Text(
+                                  '${rpid.format(controller.jumlahPenjualan.value)} transaksi',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Colors.lightBlue),
+                                )),
                           ],
                         ),
                       ),
@@ -138,97 +142,38 @@ class LaporanPegawaiView extends GetView<LaporanPegawaiController> {
                           }
                           if (snapshot.connectionState ==
                               ConnectionState.none) {
-                            return dataKosong("transaksi pegawai");
+                            return dataKosong("Detail Pegawai");
                           }
-                          var alldata = snapshot.data!.docs;
+                          var dataPegawai = snapshot.data!.docs;
 
                           return Container(
                               height: wDimension.heightSetengah / 2,
                               child: ListView.builder(
-                                  itemCount: alldata.length,
+                                  itemCount: dataPegawai.length,
                                   itemBuilder: (context, index) {
                                     final email =
-                                        alldata[index]["email_pegawai"];
+                                        dataPegawai[index]["email_pegawai"];
+                                    int jumlahTransaksi = 0;
+                                    //return tanpa kolom
+                                    if (email == email) {
+                                      jumlahTransaksi = jumlahTransaksi + 1;
 
-if (email==email) {
-  
-}
-
-
-                                    if (index == 0) {
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          wSmallText(
-                                              weight: FontWeight.bold,
-                                              text:
-                                                  "${alldata[index]["groupTanggal"]}"),
-                                          ListTile(
-                                            onTap: () => Get.toNamed(
-                                                Routes.HOME_PEGAWAI),
-                                            leading:
-                                                const Icon(Icons.receipt_long),
-                                            title: wSmallText(
-                                              text: "$email",
-                                              size: 12,
-                                              color: Colors.black,
-                                              weight: FontWeight.bold,
-                                            ),
-                                            // subtitle: Text(
-                                            //     "${alldata[index]["jabatan"]}"),
-                                            trailing:
-                                                const Icon(Icons.navigate_next),
-                                          )
-                                        ],
+                                      return ListTile(
+                                        leading: const Icon(Icons.receipt_long),
+                                        title: wSmallText(
+                                          text: "$email",
+                                          size: 12,
+                                          color: Colors.black,
+                                          weight: FontWeight.bold,
+                                        ),
+                                        // subtitle: Text(
+                                        //     "${alldata[index]["jabatan"]}"),
+                                        trailing:
+                                            const Icon(Icons.navigate_next),
                                       );
-                                    } else {
-                                      //return tanpa kolom
-                                      if (email ==
-                                          alldata[index - 1]["email_pegawai"]) {
-                                        return ListTile(
-                                          leading:
-                                              const Icon(Icons.receipt_long),
-                                          title: wSmallText(
-                                            text: "$email",
-                                            size: 18,
-                                            color: Colors.black,
-                                            weight: FontWeight.bold,
-                                          ),
-                                          // subtitle: Text(dpid.format(
-                                          //     DateTime.parse(alldata[index]["tanggal"]))),
-                                          trailing:
-                                              const Icon(Icons.navigate_next),
-                                        );
-                                      } else {
-                                        //return kolom
-                                        return Column(
-                                          children: [
-                                            wSmallText(
-                                                weight: FontWeight.bold,
-                                                text: "$email"),
-                                            ListTile(
-                                              leading: const Icon(
-                                                  Icons.receipt_long),
-                                              title: wSmallText(
-                                                text: "$email",
-                                                size: 18,
-                                                color: Colors.black,
-                                                weight: FontWeight.bold,
-                                              ),
-                                              // subtitle: Text(dpid.format(
-                                              //     DateTime.parse(alldata[index]["tanggal"]))),
-                                              trailing: const Icon(
-                                                  Icons.navigate_next),
-                                            )
-                                          ],
-                                        );
-                                      }
                                     }
-                                  
-                                  
-                                  
-                                  
+
+                                    print(jumlahTransaksi);
                                   }));
                         }),
                     InkWell(

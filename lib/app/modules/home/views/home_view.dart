@@ -28,6 +28,7 @@ class HomeView extends GetView<HomeController> {
           if (snapshot.hasData) {
             Map<String, dynamic> user = snapshot.data!.data()!;
 
+            box.write("jabatan", user['jabatan']);
             box.write("toko", user['toko']);
 
             String defaultImage =

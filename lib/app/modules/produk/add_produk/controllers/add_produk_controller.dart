@@ -14,6 +14,22 @@ class AddProdukController extends GetxController {
   String? uid;
   XFile? image;
   RxBool isLoading = false.obs;
+  final supplierC = "".obs;
+  var dataSupplier = [].obs;
+  @override
+  void onInit() {
+    listSupplier();
+    super.onInit();
+  }
+
+  listSupplier() async {
+    QuerySnapshot querySnapshot = await firestore.collection("supplier").get();
+
+    for (var snapToko in querySnapshot.docs) {
+      final namaSupplier = snapToko["nama_vendor"];
+      dataSupplier.add(namaSupplier);
+    }
+  }
 
   final TextEditingController hargaJual = TextEditingController();
   final TextEditingController hargaModal = TextEditingController();
@@ -35,6 +51,10 @@ class AddProdukController extends GetxController {
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> streamProduk() async* {
     yield* firestore.collection("produk").doc().snapshots();
+  }
+
+  void selectedSupplier(String value) {
+    supplierC.value = value;
   }
 
   Future<void> addProduct(Map<String, dynamic> user) async {
@@ -217,7 +237,6 @@ class AddProdukController extends GetxController {
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (BuildContext context, int index) {
-                            
                             Map<String, dynamic> data =
                                 snapshot.data!.docs[index].data();
 
@@ -295,7 +314,6 @@ class AddProdukController extends GetxController {
 
           isLoading(false);
         } else {
-          
           Map<String, dynamic> kategori =
               await afterAddKategori({"kategori": tambahKategoriC.text});
 

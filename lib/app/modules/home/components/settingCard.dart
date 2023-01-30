@@ -1,87 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sikasir/app/modules/home/components/dataCard.dart';
 import 'package:sikasir/widgets/widgets.dart';
-
-class FileInfoCard extends StatelessWidget {
-  const FileInfoCard({
-    Key? key,
-    required this.info,
-  }) : super(key: key);
-
-  final CloudStorageInfo info;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: info.press,
-      child: Card(
-        elevation: 2,
-        child: Container(
-          padding: EdgeInsets.all(defaultPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(defaultPadding * 0.75),
-                    height: 45,
-                    width: 45,
-                    decoration: BoxDecoration(
-                      color: info.color!.withOpacity(0.1),
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    ),
-                    child: SvgPicture.asset(
-                      info.svgSrc!,
-                      color: info.color,
-                    ),
-                  ),
-                  // Icon(Icons.more_vert, color: Colors.white54)
-                ],
-              ),
-              wBigText(
-                text: info.title!,
-                weight: FontWeight.w500,
-                color: primaryColor,
-              ),
-              // Text(
-              //   info.title!,
-              //   maxLines: 1,
-              //   overflow: TextOverflow.ellipsis,
-              // ),
-              // ProgressLine(
-              //   color: info.color,
-              //   percentage: info.percentage,
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Text(
-              //       "${info.numOfFiles} Files",
-              //       style: Theme.of(context)
-              //           .textTheme
-              //           .caption!
-              //           .copyWith(color: Colors.white70),
-              //     ),
-              //     Text(
-              //       info.totalStorage!,
-              //       style: Theme.of(context)
-              //           .textTheme
-              //           .caption!
-              //           .copyWith(color: Colors.white),
-              //     ),
-              //   ],
-              // )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class ProgressLine extends StatelessWidget {
   const ProgressLine({
@@ -102,7 +23,7 @@ class ProgressLine extends StatelessWidget {
           height: 5,
           decoration: BoxDecoration(
             color: color!.withOpacity(0.1),
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
         ),
         LayoutBuilder(
@@ -111,7 +32,7 @@ class ProgressLine extends StatelessWidget {
             height: 5,
             decoration: BoxDecoration(
               color: color,
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
           ),
         ),
@@ -132,17 +53,70 @@ class gridCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GetStorage box = GetStorage();
+    final jabatan = box.read("jabatan");
+
+    List<dynamic> menu = [];
+
+    if (jabatan == "admin") {
+      menu = menuAdmin;
+    } else if (jabatan == "kasir") {
+      menu == menuKasir;
+    }else if(jabatan=="Admin Gudang"){
+      
+    }
+
     return GridView.builder(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: dataMenu.length,
+      itemCount: menu.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
         crossAxisSpacing: defaultPadding,
         mainAxisSpacing: defaultPadding,
         childAspectRatio: childAspectRatio,
       ),
-      itemBuilder: (context, index) => FileInfoCard(info: dataMenu[index]),
+      itemBuilder: (context, index) {
+        return InkWell(
+          onTap: menu[index].press,
+          child: Card(
+            elevation: 2,
+            child: Container(
+              padding: const EdgeInsets.all(defaultPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(defaultPadding * 0.75),
+                        height: 45,
+                        width: 45,
+                        decoration: BoxDecoration(
+                          color: menu[index].color!.withOpacity(0.1),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: SvgPicture.asset(
+                          menu[index].svgSrc!,
+                          color: menu[index].color,
+                        ),
+                      ),
+                    ],
+                  ),
+                  wBigText(
+                    text: menu[index].title!,
+                    weight: FontWeight.w500,
+                    color: primaryColor,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

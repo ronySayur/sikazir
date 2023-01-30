@@ -126,8 +126,6 @@ class DetailProdukView extends GetView<DetailProdukController> {
                                       const EdgeInsets.fromLTRB(8, 4, 8, 4),
                                   child: Row(
                                     children: [
-                                      wTimeBoxUI(
-                                          'Harga Modal', '${dataProduk.hargaJual} '),
                                       wTimeBoxUI('Sisa Stok',
                                           '${dataProduk.stok} tersisa'),
                                     ],

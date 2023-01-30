@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sikasir/widgets/widgets.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/transaksi_selesai_controller.dart';
 
 class TransaksiSelesaiView extends GetView<TransaksiSelesaiController> {
@@ -116,7 +117,10 @@ class TransaksiSelesaiView extends GetView<TransaksiSelesaiController> {
                       SizedBox(width: wDimension.width20),
                       Expanded(
                         child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              int times = 2;
+                              Get.close(times);
+                            },
                             child: const Text("Transaksi Baru")),
                       ),
                     ],

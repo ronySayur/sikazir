@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sikasir/app/modules/home/components/responsive.dart';
 import 'package:sikasir/app/modules/home/components/settingCard.dart';
 
 import '../../../../widgets/widgets.dart';
-import '../../../routes/app_pages.dart';
 
 class bodyDashboard extends StatelessWidget {
   const bodyDashboard({
@@ -65,14 +63,14 @@ class bodyDashboard extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: defaultPadding),
+                                  const SizedBox(height: defaultPadding),
                                   Responsive(
                                     mobile: gridCard(
                                       crossAxisCount: _size.width < 650 ? 2 : 4,
                                       childAspectRatio:
                                           _size.width < 650 ? 1.3 : 1,
                                     ),
-                                    tablet: gridCard(),
+                                    tablet: const gridCard(),
                                     desktop: gridCard(
                                       childAspectRatio:
                                           _size.width < 1400 ? 1.1 : 1.4,

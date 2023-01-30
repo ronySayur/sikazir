@@ -13,6 +13,7 @@ class DetailTransaksiController extends GetxController {
   final TextEditingController uangDiterima = TextEditingController();
 
   var tagihan = 0.obs;
+  var diskon = 0.obs;
   var kembalian = 0.obs;
   final date = DateTime.now().toIso8601String();
 
@@ -41,6 +42,28 @@ class DetailTransaksiController extends GetxController {
     } else {
       Get.snackbar("Peringatan", "Isi pembayaran terlebih dahulu !",
           duration: const Duration(seconds: 1));
+    }
+  }
+
+  Future<void> add() async {
+    if (uangDiterima.text.isNotEmpty) {
+      var emailPegawai = box.read("userEmail");
+      var toko = box.read("toko");
+
+      firestore.collection("penjualan").doc(date).set({
+        "id_penjualan": date,
+        "total_diskon": diskon.value,
+        "email_pegawai": emailPegawai,
+        "tanggal": date,
+        'groupTanggal': DateFormat.yMMMd('en_us').format(DateTime.parse(date)),
+        "total": tagihan.value,
+        "diterima": uangDiterima.text,
+        "kembalian": kembalian.value,
+        "id_toko": toko,
+      });
+      await penjualanDetail();
+    } else {
+      Get.snackbar("Error", "Semua data wajib diisi.");
     }
   }
 
@@ -89,6 +112,7 @@ class DetailTransaksiController extends GetxController {
         .doc(emailPegawai)
         .collection("produk")
         .get();
+        
     keranjangDeleteBatch.then((value) {
       value.docs.forEach((element) {
         firestore
@@ -99,26 +123,5 @@ class DetailTransaksiController extends GetxController {
             .delete();
       });
     });
-  }
-
-  Future<void> add() async {
-    if (uangDiterima.text.isNotEmpty) {
-      var emailPegawai = box.read("userEmail");
-      var toko = box.read("toko");
-
-      firestore.collection("penjualan").doc(date).set({
-        "id_penjualan": date,
-        "email_pegawai": emailPegawai,
-        "tanggal": date,
-        'groupTanggal': DateFormat.yMMMd('en_us').format(DateTime.parse(date)),
-        "total": tagihan.value,
-        "diterima": uangDiterima.text,
-        "kembalian": kembalian.value,
-        "id_toko": toko,
-      });
-      await penjualanDetail();
-    } else {
-      Get.snackbar("Error", "Semua data wajib diisi.");
-    }
   }
 }

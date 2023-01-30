@@ -192,8 +192,10 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
                                     if (snapKeranjang.data!.docs.isNotEmpty) {
                                       await controller.saveNextToDetail();
                                       Get.toNamed(Routes.DETAIL_TRANSAKSI,
-                                          arguments:
-                                              controller.totalHarga.value);
+                                          arguments: [
+                                            controller.totalHarga.value,
+                                            controller.totalDiskon.value
+                                          ]);
                                     } else {
                                       Get.snackbar("Peringatan",
                                           "Isi keranjang terlebih dahulu!",

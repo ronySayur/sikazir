@@ -142,7 +142,7 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Obx(() => DropdownButton(
-                            hint: const Text("Pilih jabatan"),
+                                hint: const Text("Pilih jabatan"),
                                 onChanged: (newValue) {
                                   controller.selectedJabatan(newValue!);
                                 },
@@ -235,34 +235,27 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
                           width: wDimension.width10,
                         ),
                         Container(
-                          padding: const EdgeInsets.only(left: 8, right: 8),
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Obx(() => DropdownButton(
-                           
+                            padding: const EdgeInsets.only(left: 8, right: 8),
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Obx(() => DropdownButton(
                                 onChanged: (newValue) {
                                   controller.selectedToko('${newValue!}');
                                 },
-                                 hint: const Text("Pilih Toko"),
+                                hint: const Text("Pilih Toko"),
                                 value: controller.tokoC.value == ""
                                     ? null
                                     : controller.tokoC.value,
                                 items: controller.dataToko.map((selectedType) {
-                                  
                                   return DropdownMenuItem(
                                     value: selectedType,
-                                    
-                                    child: Text(
-                                      selectedType,
-                                    ),
+                                    child: Text(selectedType),
                                   );
-                                }).toList(),
-                              )),
-                        ),
+                                }).toList())))
                       ],
-                    ),
+                    )
                   ])),
 
           //Button

@@ -16,7 +16,7 @@ class HomePembelianController extends GetxController {
   var total = 0.obs;
   var ubahHarga = false.obs;
   var jumlah = 0.obs;
-  var date=DateTime.now().toIso8601String();
+  var date = DateTime.now().toIso8601String();
 
   increment() {
     jumlah.value += 1;
@@ -30,7 +30,7 @@ class HomePembelianController extends GetxController {
     total.value = jumlah.value * hargaM;
   }
 
-  Future<void> pembelianProduk(String idProduk) async {
+  Future<void> pembelianProduk(String idProduk, int stokAwal) async {
     var emailPegawai = box.read('userEmail');
     loading();
     try {
@@ -44,7 +44,7 @@ class HomePembelianController extends GetxController {
       });
 
       await firestore.collection("produk").doc(idProduk).update({
-        "stok": jumlah.value,
+        "stok": stokAwal + jumlah.value,
         "harga_modal": hargaModal.text,
       });
 

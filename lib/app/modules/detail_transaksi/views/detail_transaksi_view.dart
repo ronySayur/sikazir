@@ -8,12 +8,13 @@ import '../../../../widgets/theme.dart';
 import '../controllers/detail_transaksi_controller.dart';
 
 class DetailTransaksiView extends GetView<DetailTransaksiController> {
-  final int totalTagihhan = Get.arguments;
+  var data = Get.arguments;
   final rpid = NumberFormat("#,##0", "ID");
 
   @override
   Widget build(BuildContext context) {
-    controller.tagihan.value = totalTagihhan;
+    controller.tagihan.value = data[0];
+    controller.diskon.value = data[1];
     return Scaffold(
         backgroundColor: Colors.grey[200],
         appBar: AppBar(
@@ -41,7 +42,7 @@ class DetailTransaksiView extends GetView<DetailTransaksiController> {
                           weight: FontWeight.w900,
                         ),
                         wBigText(
-                          text: "Rp. ${rpid.format(totalTagihhan)}",
+                          text: "Rp. ${rpid.format(data[0])}",
                           size: 28,
                           weight: FontWeight.w400,
                           color: Colors.red,

@@ -293,6 +293,41 @@ class AddProdukView extends GetView<AddProdukController> {
                                     ));
                               },
                             ),
+                            SizedBox(height: wDimension.height10),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                wSmallText(
+                                    text: "Supplier",
+                                    color: Colors.black,
+                                    size: wDimension.font16),
+                                SizedBox(
+                                  width: wDimension.width10,
+                                ),
+                                Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 8, right: 8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Obx(() => DropdownButton(
+                                        onChanged: (newValue) {
+                                          controller
+                                              .selectedSupplier('${newValue!}');
+                                        },
+                                        hint: const Text("Pilih Supplier"),
+                                        value: controller.supplierC.value == ""
+                                            ? null
+                                            : controller.supplierC.value,
+                                        items: controller.dataSupplier
+                                            .map((selectedType) {
+                                          return DropdownMenuItem(
+                                            value: selectedType,
+                                            child: Text(selectedType),
+                                          );
+                                        }).toList())))
+                              ],
+                            ),
                           ]),
 
                       //Button
@@ -311,7 +346,7 @@ class AddProdukView extends GetView<AddProdukController> {
                                         vertical: wDimension.height15)),
                                 onPressed: () async {
                                   if (controller.isLoading.isFalse) {
-loading();
+                                    loading();
 
                                     await controller.addProduct(user);
 

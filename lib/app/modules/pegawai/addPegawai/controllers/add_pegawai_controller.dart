@@ -59,8 +59,6 @@ class AddPegawaiController extends GetxController {
       dataToko.add(namaToko);
     }
 
-    Get.snackbar("Pemberitahuan", "Data toko berhasil diterima",
-        duration: const Duration(seconds: 1));
   }
 
   final ImagePicker picker = ImagePicker();

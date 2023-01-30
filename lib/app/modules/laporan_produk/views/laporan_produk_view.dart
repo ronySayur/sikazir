@@ -36,7 +36,7 @@ class LaporanProdukView extends GetView<LaporanProdukController> {
                       readOnly: true,
                       onTap: () => controller.dateRangePicker(),
                       decoration: InputDecoration(
-                        icon: wAppIcon(icon: Icons.edit_calendar),
+                        icon: const wAppIcon(icon: Icons.edit_calendar),
                         fillColor: Colors.white,
                         filled: true,
                         focusedBorder: OutlineInputBorder(
@@ -61,7 +61,7 @@ class LaporanProdukView extends GetView<LaporanProdukController> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          children: [produkterjual(), SizedBox(height: 10), listProduk()],
+          children: [produkterjual(), const SizedBox(height: 10), listProduk()],
         ),
       ),
     );
@@ -72,7 +72,7 @@ class LaporanProdukView extends GetView<LaporanProdukController> {
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
           color: Colors.grey[200],
-          borderRadius: BorderRadius.all(Radius.circular(5))),
+          borderRadius: const BorderRadius.all(Radius.circular(5))),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +101,7 @@ class LaporanProdukView extends GetView<LaporanProdukController> {
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
           color: Colors.grey[200],
-          borderRadius: BorderRadius.all(Radius.circular(5))),
+          borderRadius: const BorderRadius.all(Radius.circular(5))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -145,7 +145,7 @@ class LaporanProdukView extends GetView<LaporanProdukController> {
                               ),
                               subtitle:
                                   Text("${alldata[index]["stok"]} Tersisa"),
-                              trailing: Icon(Icons.navigate_next),
+                              trailing: const Icon(Icons.navigate_next),
                             )
                           ],
                         );

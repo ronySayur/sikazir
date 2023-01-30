@@ -5,18 +5,19 @@ import 'package:get_storage/get_storage.dart';
 import 'package:sikasir/widgets/widgets.dart';
 
 class UpdateKeranjangController extends GetxController {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   final TextEditingController namaDiskon = TextEditingController();
   final TextEditingController diskon = TextEditingController();
-  RxBool isLoading = false.obs;
+
   var pakaiDiskon = false.obs;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   final box = GetStorage();
 
   var emailPegawai = "".obs;
   var namaProduk = "".obs;
   var hargaJual = "".obs;
 
-  var jumlahAwal = 0.obs;
   var jumlah = 0.obs;
   var total = 0.obs;
   var diskonproduk = 0.obs;
@@ -27,36 +28,69 @@ class UpdateKeranjangController extends GetxController {
 
   increment(String idProduk) async {
     var dataProduk = await firestore.collection("produk").doc(idProduk).get();
+    final hjual = int.parse(hargaJual.value.replaceAll(RegExp('[^0-9]'), ''));
+    var diskonparse = diskon.text.isEmpty
+        ? 0
+        : int.parse(diskon.text.replaceAll(RegExp('[^0-9]'), ''));
 
     if (dataProduk.get("stok") > 0) {
+      diskonproduk.value = diskonparse;
       jumlah.value += 1;
+      total.value = (hjual * jumlah.value) - diskonproduk.value;
+
+      loading();
       await firestore
           .collection("produk")
           .doc(idProduk)
           .update({"stok": FieldValue.increment(-1)});
+
+      await firestore
+          .collection("keranjang")
+          .doc("$emailPegawai")
+          .collection('produk')
+          .doc(namaProduk.value)
+          .update({
+        "total_harga": FieldValue.increment(hjual),
+        "jumlah": FieldValue.increment(1),
+        "diskon": diskon.text.isEmpty ? 0 : diskonparse,
+        "nama_diskon": namaDiskon.text.isEmpty ? "nodiskon" : namaDiskon.text,
+      });
+      Get.back();
     } else {
       Get.snackbar("Peringatan", "Produk Habis!",
           backgroundColor: Colors.white, duration: const Duration(seconds: 1));
     }
   }
 
-  willpop(String idProduk) async {
-    await firestore
-        .collection("produk")
-        .doc(idProduk)
-        .update({"stok": jumlahAwal.value});
-
-    Get.snackbar("Pemberitahuan", "Data produk berhasil dikembalikan!",
-        backgroundColor: Colors.white, duration: const Duration(seconds: 1));
-  }
-
   decrement(String idProduk) async {
+    final hjual = int.parse(hargaJual.value.replaceAll(RegExp('[^0-9]'), ''));
+    var diskonparse = diskon.text.isEmpty
+        ? 0
+        : int.parse(diskon.text.replaceAll(RegExp('[^0-9]'), ''));
+
     if (jumlah.value > 1) {
       jumlah.value -= 1;
+      diskonproduk.value = diskonparse;
+      total.value = (hjual * jumlah.value) - diskonproduk.value;
+
+      loading();
       await firestore
           .collection("produk")
           .doc(idProduk)
-          .update({"stok": FieldValue.increment(-1)});
+          .update({"stok": FieldValue.increment(1)});
+
+      await firestore
+          .collection("keranjang")
+          .doc("$emailPegawai")
+          .collection('produk')
+          .doc(namaProduk.value)
+          .update({
+        "total_harga": FieldValue.increment(hjual * -1),
+        "jumlah": FieldValue.increment(-1),
+        "diskon": diskon.text.isEmpty ? 0 : diskonparse,
+        "nama_diskon": namaDiskon.text.isEmpty ? "nodiskon" : namaDiskon.text,
+      });
+      Get.back();
     }
   }
 
@@ -69,19 +103,20 @@ class UpdateKeranjangController extends GetxController {
         .update({
       "total_harga": total.value,
       "jumlah": jumlah.value,
-      "diskon": int.parse(diskon.text),
-      "nama_diskon": namaDiskon.text,
+      "diskon": diskon.text.isEmpty
+          ? 0
+          : int.parse(diskon.text.replaceAll(RegExp('[^0-9]'), '')),
+      "nama_diskon": namaDiskon.text.isEmpty ? "nodiskon" : namaDiskon.text,
     });
   }
 
-  Future<void> deleteKeranjang(String idProduk, int jumlahawal) async {
+  Future<void> deleteKeranjang(String idProduk) async {
     loading();
-    var dataProduk = await firestore.collection("produk").doc(idProduk).get();
 
     await firestore
         .collection("produk")
         .doc(idProduk)
-        .update({"stok": dataProduk.get("stok") + jumlahawal});
+        .update({"stok": FieldValue.increment(jumlah.value)});
 
     await firestore
         .collection("keranjang")

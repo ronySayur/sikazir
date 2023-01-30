@@ -42,6 +42,7 @@ class TransaksiPenjualanController extends GetxController
     if (dataProduk.stok! > 0) {
       final hjual =
           int.parse(dataProduk.hargaJual!.replaceAll(RegExp('[^0-9]'), ''));
+          
       var cekKeranjang = await firestore
           .collection("keranjang")
           .doc(emailPegawai)
