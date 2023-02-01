@@ -8,10 +8,17 @@ class LaporanPegawaiController extends GetxController {
 
   var jumlahPenjualan = 0.obs;
   var totalPenjualan = 0.obs;
+  var detailtotal = 0.obs;
+  var detailjumlah = 0.obs;
 
   TextEditingController textFieldTanggal = TextEditingController();
+
   Stream<QuerySnapshot<Map<String, dynamic>>> streamPenjualan() {
     return firestore.collection("penjualan").snapshots();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamPegawai() {
+    return firestore.collection("pegawai").snapshots();
   }
 
   @override
@@ -28,6 +35,19 @@ class LaporanPegawaiController extends GetxController {
       totalPenjualan += doc["total"];
     });
     jumlahPenjualan.value = cekPenjualan.length;
+  }
+
+  countDetail(String email) async {
+    QuerySnapshot penjualanSnap = await firestore
+        .collection('penjualan')
+        .where("email_pegawai", isEqualTo: email)
+        .get();
+    List<DocumentSnapshot> cekPenjualan = penjualanSnap.docs;
+
+      penjualanSnap.docs.forEach((doc) {
+        detailtotal += doc["total"];
+      });
+      detailjumlah.value = cekPenjualan.length;
   }
 
   var dateRange = DateTimeRange(

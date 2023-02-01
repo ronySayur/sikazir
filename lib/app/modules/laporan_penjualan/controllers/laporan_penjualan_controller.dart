@@ -11,7 +11,10 @@ class LaporanPenjualanController extends GetxController {
   var totalPenjualan = 0.obs;
 
   Stream<QuerySnapshot<Map<String, dynamic>>> streamPenjualan() {
-    return firestore.collection("penjualan").snapshots();
+    return firestore
+        .collection("penjualan")
+        .orderBy("groupTanggal")
+        .snapshots();
   }
 
   @override

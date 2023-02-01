@@ -133,7 +133,7 @@ class LaporanPembelianView extends GetView<LaporanPembelianController> {
                     ),
                     const SizedBox(height: 10),
                     StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                        stream: controller.streamPenjualan(),
+                        stream: controller.streamPembelian(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -153,36 +153,24 @@ class LaporanPembelianView extends GetView<LaporanPembelianController> {
                                   itemBuilder: (context, index) {
                                     final email =
                                         dataPegawai[index]["email_pegawai"];
+                                    final nama =
+                                        dataPegawai[index]["nama_produk"];
 
-
-                                    //return tanpa kolom
-                                    if (email == email) {
-
-                                      return ListTile(
-                                        leading: const Icon(Icons.receipt_long),
-                                        title: wSmallText(
-                                          text: "$email",
-                                          size: 12,
-                                          color: Colors.black,
-                                          weight: FontWeight.bold,
-                                        ),
-                                        // subtitle: Text(
-                                        //     "${alldata[index]["jabatan"]}"),
-                                        trailing:
-                                            const Icon(Icons.navigate_next),
-                                      );
-                                    }
-
+                                    return ListTile(
+                                      leading: const Icon(Icons.receipt_long),
+                                      title: wSmallText(
+                                        text: "$nama",
+                                        size: 12,
+                                        color: Colors.black,
+                                        weight: FontWeight.bold,
+                                      ),
+                                      subtitle: Text(
+                                          "${dataPegawai[index]["jumlah"]} barang x ${dataPegawai[index]["harga_modal"]}"),
+                                      trailing: Text(
+                                          "Rp. ${rpid.format(dataPegawai[index]["total_pembelian"])}"),
+                                    );
                                   }));
                         }),
-                    InkWell(
-                      onTap: () => Get.toNamed(Routes.RIWAYAT_TRANSAKSI),
-                      child: wSmallText(
-                        text: "Lihat detail",
-                        size: 12,
-                        color: Colors.red,
-                      ),
-                    )
                   ],
                 ),
               ),

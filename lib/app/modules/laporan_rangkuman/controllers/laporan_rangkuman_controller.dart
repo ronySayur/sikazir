@@ -14,9 +14,15 @@ class LaporanRangkumanController extends GetxController {
     return firestore
         .collection("penjualan")
         .orderBy("groupTanggal", descending: true)
+        .where("groupTanggal",
+            isGreaterThanOrEqualTo:
+                DateFormat("yMMMd").format(dateRange.value.start).toString())
+        .where("groupTanggal",
+            isLessThanOrEqualTo:
+                DateFormat("yMMMd").format(dateRange.value.end).toString())
         .snapshots();
   }
-  
+
   TextEditingController textFieldTanggal = TextEditingController();
 
   var dateRange = DateTimeRange(
@@ -39,7 +45,7 @@ class LaporanRangkumanController extends GetxController {
     if (picked != null && picked != dateRange.value) {
       dateRange.value = picked;
       textFieldTanggal.text =
-          '${DateFormat("dd MMM").format(dateRange.value.start).toString()} - ${DateFormat("dd MMM yyyy").format(dateRange.value.end).toString()}';
+          '${DateFormat("yMMMd").format(dateRange.value.start).toString()} - ${DateFormat("yMMMd").format(dateRange.value.end).toString()}';
     }
   }
 

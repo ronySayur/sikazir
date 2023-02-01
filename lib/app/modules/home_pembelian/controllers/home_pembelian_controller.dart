@@ -30,11 +30,13 @@ class HomePembelianController extends GetxController {
     total.value = jumlah.value * hargaM;
   }
 
-  Future<void> pembelianProduk(String idProduk, int stokAwal) async {
+  Future<void> pembelianProduk(
+      String idProduk, String namaProduk, int stokAwal) async {
     var emailPegawai = box.read('userEmail');
     loading();
     try {
       await firestore.collection("pembelian").add({
+        "nama_produk": namaProduk,
         "tanggal": date,
         "jumlah": jumlah.value,
         "email_pegawai": emailPegawai,

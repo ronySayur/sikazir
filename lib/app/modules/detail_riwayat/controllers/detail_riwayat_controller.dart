@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class DetailRiwayatController extends GetxController {
+FirebaseFirestore firestore=FirebaseFirestore.instance;
+
 List<BluetoothDevice> devices = [];
   BluetoothDevice? selectedDevice;
   BlueThermalPrinter printer = BlueThermalPrinter.instance;
@@ -15,5 +17,12 @@ List<BluetoothDevice> devices = [];
 
   void getDevices() async {
     devices = await printer.getBondedDevices();
+  }
+
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamPenjualan(String idPenjualan) {
+    return firestore
+        .collection("penjualan").doc(idPenjualan).collection("produk")
+        .snapshots();
   }
 }

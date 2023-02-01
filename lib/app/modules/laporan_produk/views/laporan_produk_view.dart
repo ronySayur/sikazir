@@ -83,6 +83,10 @@ class LaporanProdukView extends GetView<LaporanProdukController> {
               color: Colors.black,
               weight: FontWeight.bold,
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            const CircularProgressIndicator()
             // Obx(() => Text(
             //       "${controller.jumlahPenjualan.value} Produk",
             //       style: TextStyle(

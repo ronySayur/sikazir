@@ -70,7 +70,6 @@ class RiwayatTransaksiView extends GetView<RiwayatTransaksiController> {
               var alldata = snapshot.data!.docs;
 
               return ListView.builder(
-                  // controller: controller.scrollC,
                   itemCount: alldata.length,
                   itemBuilder: (context, index) {
                     if (index == 0) {

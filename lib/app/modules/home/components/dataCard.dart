@@ -76,6 +76,47 @@ List menuAdmin = [
     percentage: 78,
   ),
 ];
+List menuSPV = [
+  CloudStorageInfo(
+    press: () => Get.toNamed(Routes.HOME_PEGAWAI),
+    title: "Pegawai",
+    svgSrc: "assets/icons/employee.svg",
+    numOfFiles: 8,
+    totalStorage: "7.3GB",
+    color: Colors.lightBlue,
+    percentage: 78,
+  ),
+  CloudStorageInfo(
+    press: () => Get.toNamed(Routes.HOME_LAPORAN),
+    title: "Laporan",
+    svgSrc: "assets/icons/reports.svg",
+    numOfFiles: 5328,
+    totalStorage: "7.3GB",
+    color: Colors.orange,
+    percentage: 78,
+  ),
+];
+
+List menuGudang = [
+  CloudStorageInfo(
+    press: () => Get.toNamed(Routes.HOME_PRODUK),
+    title: "Produk",
+    svgSrc: "assets/icons/product.svg",
+    numOfFiles: 1328,
+    totalStorage: "2.9GB",
+    color: Colors.amber,
+    percentage: 35,
+  ),
+  CloudStorageInfo(
+    press: () => Get.toNamed(Routes.HOME_SUPPLIER),
+    title: "Supplier",
+    svgSrc: "assets/icons/supplier.svg",
+    numOfFiles: 1328,
+    totalStorage: "1GB",
+    color: Colors.grey,
+    percentage: 10,
+  ),
+];
 
 List menuKasir = [
   CloudStorageInfo(
@@ -95,14 +136,5 @@ List menuKasir = [
     totalStorage: "2.9GB",
     color: Colors.amber,
     percentage: 35,
-  ),
-  CloudStorageInfo(
-    press: () => Get.toNamed(Routes.HOME_TOKO),
-    title: "Toko",
-    svgSrc: "assets/icons/toko.svg",
-    numOfFiles: 5328,
-    totalStorage: "7.3GB",
-    color: Colors.green,
-    percentage: 78,
   ),
 ];

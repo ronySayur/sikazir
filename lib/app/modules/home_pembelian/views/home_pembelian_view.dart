@@ -114,7 +114,8 @@ class HomePembelianView extends GetView<HomePembelianController> {
                                   duration: const Duration(seconds: 1));
                             }
                           },
-                          child: const Icon(Icons.remove, color: Colors.black87),
+                          child:
+                              const Icon(Icons.remove, color: Colors.black87),
                         ),
                         SizedBox(width: wDimension.width20),
                         Obx(() => Text('${controller.jumlah.value}')),
@@ -189,8 +190,8 @@ class HomePembelianView extends GetView<HomePembelianController> {
                   Expanded(
                     child: TextButton(
                       onPressed: () {
-                        controller.pembelianProduk(
-                            '${dataprod.idProduk}', dataprod.stok!);
+                        controller.pembelianProduk('${dataprod.idProduk}',
+                            dataprod.namaProduk!, dataprod.stok!);
                       },
                       child: Container(
                         height: 48,

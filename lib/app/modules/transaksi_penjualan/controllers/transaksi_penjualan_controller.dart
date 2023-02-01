@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -9,7 +8,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class TransaksiPenjualanController extends GetxController
     with GetTickerProviderStateMixin {
   AnimationController? animationController;
-  PanelController SUpanel = new PanelController();
+  PanelController SUpanel =  PanelController();
   final box = GetStorage();
   late TextEditingController searchC;
 

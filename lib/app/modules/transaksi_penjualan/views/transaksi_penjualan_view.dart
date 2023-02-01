@@ -169,7 +169,7 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
                                         weight: FontWeight.w300,
                                         text:
                                             'Total diskon: Rp.${rpid.format(controller.totalDiskon.value)}'),
-                                    SizedBox(height: 5),
+                                    const SizedBox(height: 5),
                                     wBigText(
                                         color: Colors.black87,
                                         size: 16,
@@ -199,7 +199,7 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
                                     } else {
                                       Get.snackbar("Peringatan",
                                           "Isi keranjang terlebih dahulu!",
-                                          duration: Duration(seconds: 1));
+                                          duration: const Duration(seconds: 1));
                                     }
                                   },
                                   child: Container(

@@ -55,14 +55,17 @@ class gridCard extends StatelessWidget {
   Widget build(BuildContext context) {
     GetStorage box = GetStorage();
     final jabatan = box.read("jabatan");
-    print(jabatan);
 
     List<dynamic> menu = [];
 
-    if (jabatan == "admin") {
+    if (jabatan == "Admin") {
       menu = menuAdmin;
-    } else if (jabatan == "kasir") {
+    } else if (jabatan == "Kasir") {
       menu = menuKasir;
+    } else if (jabatan == "Gudang") {
+      menu = menuGudang;
+    } else if (jabatan == "Supervisor") {
+      menu = menuSPV;
     }
 
     return GridView.builder(

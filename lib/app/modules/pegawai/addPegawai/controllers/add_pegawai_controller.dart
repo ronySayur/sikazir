@@ -39,7 +39,7 @@ class AddPegawaiController extends GetxController {
   final List<String> jabatan = [
     'Supervisor',
     'Kasir',
-    'Admin Gudang',
+    'Gudang',
   ].obs;
   var dataToko = [].obs;
 

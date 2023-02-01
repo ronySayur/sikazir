@@ -126,14 +126,14 @@ class LaporanPegawaiView extends GetView<LaporanPegawaiController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     wBigText(
-                      text: "Detail Laporan",
+                      text: "Detail Pegawai",
                       color: Colors.black,
                       weight: FontWeight.bold,
                       size: 14,
                     ),
                     const SizedBox(height: 10),
                     StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                        stream: controller.streamPenjualan(),
+                        stream: controller.streamPegawai(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -151,29 +151,29 @@ class LaporanPegawaiView extends GetView<LaporanPegawaiController> {
                               child: ListView.builder(
                                   itemCount: dataPegawai.length,
                                   itemBuilder: (context, index) {
-                                    final email =
-                                        dataPegawai[index]["email_pegawai"];
-                                    int jumlahTransaksi = 0;
+                                    final namaPegawai =
+                                        dataPegawai[index]["nama_pegawai"];
+                                        
+                                    controller.countDetail(
+                                        dataPegawai[index]["email_pegawai"]);
                                     //return tanpa kolom
-                                    if (email == email) {
-                                      jumlahTransaksi = jumlahTransaksi + 1;
-
-                                      return ListTile(
-                                        leading: const Icon(Icons.receipt_long),
-                                        title: wSmallText(
-                                          text: "$email",
-                                          size: 12,
-                                          color: Colors.black,
-                                          weight: FontWeight.bold,
-                                        ),
-                                        // subtitle: Text(
-                                        //     "${alldata[index]["jabatan"]}"),
-                                        trailing:
-                                            const Icon(Icons.navigate_next),
-                                      );
-                                    }
-
-                                    print(jumlahTransaksi);
+                                    return ListTile(
+                                      leading: const Icon(Icons.receipt_long),
+                                      title: wSmallText(
+                                        text: "$namaPegawai",
+                                        size: 14,
+                                        color: Colors.black,
+                                        weight: FontWeight.bold,
+                                      ),
+                                      // subtitle: Obx(() => Text(
+                                      //       "Rp. ${rpid.format(controller.detailtotal.value)}",
+                                      //       style: TextStyle(
+                                      //           fontWeight: FontWeight.bold,
+                                      //           fontSize: 12,
+                                      //           color: Colors.lightBlue),
+                                      //     )),
+                                      trailing: const Icon(Icons.navigate_next),
+                                    );
                                   }));
                         }),
                     InkWell(

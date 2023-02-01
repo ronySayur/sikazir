@@ -142,34 +142,36 @@ class LaporanPenjualanView extends GetView<LaporanPenjualanController> {
                           }
                           if (snapshot.connectionState ==
                               ConnectionState.none) {
-                            return dataKosong("Detail Pegawai");
+                            return dataKosong("Riwayat trransaksi");
                           }
-                          var dataPegawai = snapshot.data!.docs;
+                          var alldata = snapshot.data!.docs;
 
                           return Container(
                               height: wDimension.heightSetengah / 2,
                               child: ListView.builder(
-                                  itemCount: dataPegawai.length,
+                                  itemCount: alldata.length,
                                   itemBuilder: (context, index) {
                                     final email =
-                                        dataPegawai[index]["email_pegawai"];
+                                        alldata[index]["email_pegawai"];
 
                                     //return tanpa kolom
-                                    if (email == email) {
-                                      return ListTile(
-                                        leading: const Icon(Icons.receipt_long),
-                                        title: wSmallText(
-                                          text: "$email",
-                                          size: 12,
-                                          color: Colors.black,
-                                          weight: FontWeight.bold,
-                                        ),
-                                        // subtitle: Text(
-                                        //     "${alldata[index]["jabatan"]}"),
-                                        trailing:
-                                            const Icon(Icons.navigate_next),
-                                      );
-                                    }
+                                    return ListTile(
+                                      onTap: () => Get.toNamed(
+                                          Routes.DETAIL_RIWAYAT,
+                                          arguments: alldata[index]
+                                              ["id_penjualan"]),
+                                      leading: const Icon(Icons.receipt_long),
+                                      title: wSmallText(
+                                        text:
+                                            "#${alldata[index]["id_penjualan"]}",
+                                        size: 18,
+                                        color: Colors.black,
+                                        weight: FontWeight.bold,
+                                      ),
+                                      subtitle: Text(dpid.format(DateTime.parse(
+                                          alldata[index]["tanggal"]))),
+                                      trailing: Icon(Icons.navigate_next),
+                                    );
                                   }));
                         }),
                     InkWell(

@@ -10,7 +10,7 @@ class LaporanPembelianController extends GetxController {
   var jumlahPembelian = 0.obs;
   var totalPembelian = 0.obs;
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> streamPenjualan() {
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamPembelian() {
     return firestore.collection("pembelian").snapshots();
   }
 
