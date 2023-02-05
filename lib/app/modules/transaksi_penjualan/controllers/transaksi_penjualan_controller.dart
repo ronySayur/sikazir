@@ -8,7 +8,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class TransaksiPenjualanController extends GetxController
     with GetTickerProviderStateMixin {
   AnimationController? animationController;
-  PanelController SUpanel =  PanelController();
+  PanelController SUpanel = PanelController();
   final box = GetStorage();
   late TextEditingController searchC;
 
@@ -41,7 +41,7 @@ class TransaksiPenjualanController extends GetxController
     if (dataProduk.stok! > 0) {
       final hjual =
           int.parse(dataProduk.hargaJual!.replaceAll(RegExp('[^0-9]'), ''));
-          
+
       var cekKeranjang = await firestore
           .collection("keranjang")
           .doc(emailPegawai)
@@ -49,7 +49,11 @@ class TransaksiPenjualanController extends GetxController
           .doc(dataProduk.namaProduk!)
           .get();
 
+
+      //Cek keranjang
       if (cekKeranjang.exists) {
+
+        //Jika Keranjang ada update jumlah dan total harga
         await firestore
             .collection("keranjang")
             .doc(emailPegawai)
@@ -60,6 +64,8 @@ class TransaksiPenjualanController extends GetxController
           "total_harga": (cekKeranjang.get("jumlah") + 1) * hjual
         });
       } else {
+
+        //jika tidak
         await firestore.collection("keranjang").doc(emailPegawai).set({
           "email_pegawai": emailPegawai,
           "total_harga": 0,

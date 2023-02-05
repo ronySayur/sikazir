@@ -14,7 +14,6 @@ class LaporanRangkumanView extends GetView<LaporanRangkumanController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.count();
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(wDimension.height30 * 4.25),
@@ -34,9 +33,12 @@ class LaporanRangkumanView extends GetView<LaporanRangkumanController> {
                         controller: controller.textFieldTanggal,
                         cursorColor: Colors.red[900],
                         readOnly: true,
-                        onTap: () => controller.dateRangePicker(),
+                        onTap: () {
+                          controller.dateRangePicker();
+                          controller.count();
+                        },
                         decoration: InputDecoration(
-                          icon: wAppIcon(icon: Icons.edit_calendar),
+                          icon: const wAppIcon(icon: Icons.edit_calendar),
                           fillColor: Colors.white,
                           filled: true,
                           focusedBorder: OutlineInputBorder(
@@ -63,13 +65,7 @@ class LaporanRangkumanView extends GetView<LaporanRangkumanController> {
           child: Column(
             children: [
               const SizedBox(height: 5),
-              Container(
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
-                child: transaksiPenjualanPembelian(),
-              ),
+              jumlahPenjualanPembelian(),
               const SizedBox(height: 20),
               totalPenjualanPembelian(),
               const SizedBox(height: 20),
@@ -79,12 +75,60 @@ class LaporanRangkumanView extends GetView<LaporanRangkumanController> {
         ));
   }
 
+  Container jumlahPenjualanPembelian() {
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: const BorderRadius.all(Radius.circular(5))),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+                  "Transaksi penjualan",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                      color: Colors.black87),
+                ),
+            Obx(() => Text(
+                  "${controller.jumlahPenjualan.value} Transaksi",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      color: Colors.lightBlue),
+                )),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            wSmallText(
+              text: "Transaksi pembelian",
+              size: 17,
+              color: Colors.black,
+              weight: FontWeight.bold,
+            ),
+            Obx(() => Text(
+                  "${controller.jumlahPembelian.value} Transaksi",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      color: Colors.orange),
+                )),
+          ],
+        ),
+      ]),
+    );
+  }
+
   Container listriwayat() {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
           color: Colors.grey[200],
-          borderRadius: BorderRadius.all(Radius.circular(5))),
+          borderRadius: const BorderRadius.all(Radius.circular(5))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -129,7 +173,7 @@ class LaporanRangkumanView extends GetView<LaporanRangkumanController> {
                               ),
                               subtitle: Text(dpid.format(
                                   DateTime.parse(alldata[index]["tanggal"]))),
-                              trailing: Icon(Icons.navigate_next),
+                              trailing: const Icon(Icons.navigate_next),
                             )
                           ],
                         );
@@ -154,7 +198,7 @@ class LaporanRangkumanView extends GetView<LaporanRangkumanController> {
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
           color: Colors.grey[200],
-          borderRadius: BorderRadius.all(Radius.circular(5))),
+          borderRadius: const BorderRadius.all(Radius.circular(5))),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,7 +211,7 @@ class LaporanRangkumanView extends GetView<LaporanRangkumanController> {
             ),
             Obx(() => Text(
                   "Rp. ${rpid.format(controller.totalPenjualan.value)}",
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
                       color: Colors.lightBlue),
@@ -185,7 +229,7 @@ class LaporanRangkumanView extends GetView<LaporanRangkumanController> {
             ),
             Obx(() => Text(
                   "Rp. ${rpid.format(controller.totalPembelian.value)}",
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
                       color: Colors.orange),
@@ -194,46 +238,5 @@ class LaporanRangkumanView extends GetView<LaporanRangkumanController> {
         ),
       ]),
     );
-  }
-
-  Row transaksiPenjualanPembelian() {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          wSmallText(
-            text: "Transaksi penjualan",
-            size: 17,
-            color: Colors.black,
-            weight: FontWeight.bold,
-          ),
-          Obx(() => Text(
-                "${controller.jumlahPenjualan.value} Transaksi",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22,
-                    color: Colors.lightBlue),
-              )),
-        ],
-      ),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          wSmallText(
-            text: "Transaksi pembelian",
-            size: 17,
-            color: Colors.black,
-            weight: FontWeight.bold,
-          ),
-          Obx(() => Text(
-                "${controller.jumlahPembelian.value} Transaksi",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22,
-                    color: Colors.orange),
-              )),
-        ],
-      ),
-    ]);
   }
 }

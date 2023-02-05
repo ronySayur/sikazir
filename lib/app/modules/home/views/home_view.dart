@@ -15,7 +15,7 @@ import '../controllers/home_controller.dart';
 class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
-    final dpid = DateFormat('dd-MM-yyyy HH:mm');
+    final dpid = DateFormat('dd-MMM-yyyy');
 
     final box = GetStorage();
     final authC = Get.find<AuthController>();
@@ -130,12 +130,12 @@ class HomeView extends GetView<HomeController> {
                             weight: FontWeight.bold,
                             text: "Laporan Hari ini",
                           ),
-                          Obx(() => Text(
+                       Text(
                                 dpid.format(DateTime.now()),
                                 style: TextStyle(
                                     color: Colors.red,
                                     fontWeight: FontWeight.bold),
-                              ))
+                              )
                         ],
                       ),
                       InkWell(

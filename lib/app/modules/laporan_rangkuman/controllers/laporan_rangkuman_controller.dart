@@ -4,32 +4,37 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class LaporanRangkumanController extends GetxController {
+  @override
+  void onInit() {
+    count();
+    super.onInit();
+  }
+
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   var jumlahPenjualan = 0.obs;
   var jumlahPembelian = 0.obs;
   var totalPenjualan = 0.obs;
   var totalPembelian = 0.obs;
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> streamTrans() {
-    return firestore
-        .collection("penjualan")
-        .orderBy("groupTanggal", descending: true)
-        .where("groupTanggal",
-            isGreaterThanOrEqualTo:
-                DateFormat("yMMMd").format(dateRange.value.start).toString())
-        .where("groupTanggal",
-            isLessThanOrEqualTo:
-                DateFormat("yMMMd").format(dateRange.value.end).toString())
-        .snapshots();
-  }
-
-  TextEditingController textFieldTanggal = TextEditingController();
-
   var dateRange = DateTimeRange(
           start: DateTime.now(),
           end: DateTime(DateTime.now().year, DateTime.now().month,
               DateTime.now().day + 6))
       .obs;
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamTrans() {
+    final startAtTimestamp = Timestamp.fromMillisecondsSinceEpoch(
+        dateRange.value.start.millisecondsSinceEpoch);
+    print(startAtTimestamp);
+    return firestore
+        .collection('penjualan')
+        .where(
+            'id_penjualan',
+            isLessThanOrEqualTo: startAtTimestamp)
+        .snapshots();
+  }
+
+  TextEditingController textFieldTanggal = TextEditingController();
 
   dateRangePicker() async {
     DateTimeRange? picked = await showDateRangePicker(
@@ -50,15 +55,24 @@ class LaporanRangkumanController extends GetxController {
   }
 
   count() async {
-    QuerySnapshot penjualanSnap = await firestore.collection('penjualan').get();
+    totalPenjualan.value = 0;
+    totalPembelian.value = 0;
+
+    QuerySnapshot penjualanSnap = await firestore
+        .collection('penjualan')
+        .where("groupTanggal",
+            isGreaterThanOrEqualTo:
+                DateFormat("yMMMd").format(dateRange.value.start).toString())
+        .get();
+
+    QuerySnapshot pembelianSnap = await firestore.collection('pembelian').get();
+
     List<DocumentSnapshot> cekPenjualan = penjualanSnap.docs;
+    List<DocumentSnapshot> cekPembelian = pembelianSnap.docs;
 
     penjualanSnap.docs.forEach((doc) {
       totalPenjualan += doc["total"];
     });
-
-    QuerySnapshot pembelianSnap = await firestore.collection('pembelian').get();
-    List<DocumentSnapshot> cekPembelian = pembelianSnap.docs;
 
     pembelianSnap.docs.forEach((doc) {
       totalPembelian += doc["total_pembelian"];
@@ -66,5 +80,9 @@ class LaporanRangkumanController extends GetxController {
 
     jumlahPenjualan.value = cekPenjualan.length;
     jumlahPembelian.value = cekPembelian.length;
+
+    update();
+
+    print(cekPenjualan);
   }
 }
