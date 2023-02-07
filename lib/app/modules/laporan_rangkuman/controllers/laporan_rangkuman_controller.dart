@@ -28,9 +28,7 @@ class LaporanRangkumanController extends GetxController {
     print(startAtTimestamp);
     return firestore
         .collection('penjualan')
-        .where(
-            'id_penjualan',
-            isLessThanOrEqualTo: startAtTimestamp)
+        .where('tanggal', isLessThanOrEqualTo: startAtTimestamp)
         .snapshots();
   }
 

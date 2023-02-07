@@ -55,7 +55,7 @@ class LoginController extends GetxController {
             } else {
               Get.offAllNamed(Routes.HOME);
               box.write('userEmail', emailC.text);
-      
+              box.write('skipIntro', true);
             }
           } else {
             Get.defaultDialog(

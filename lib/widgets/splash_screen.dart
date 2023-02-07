@@ -11,7 +11,7 @@ class SplashScreen extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Center(
-          child: Container(
+          child: SizedBox(
             width: Get.width * 0.7,
             height: Get.width * 0.7,
             child: Lottie.asset("assets/lottie/loading-pos.json"),

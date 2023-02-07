@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:sikasir/widgets/splash_screen.dart';
 
 import 'app/controllers/auth_controller.dart';
 import 'app/routes/app_pages.dart';
@@ -14,11 +15,11 @@ import 'firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    name: "sikasir",
+    name: "Sikasir",
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await GetStorage.init();
-  accessDataOffline_configureCache();
+  accessDataOfflineConfigureCache();
   runApp(MyApp());
 }
 
@@ -32,39 +33,29 @@ class MyApp extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const MaterialApp(
-              home: Scaffold(body: Center(child: CircularProgressIndicator())));
+          return FutureBuilder(
+            future: authC.firstInitialized(),
+            builder: (context, snapshot) => const SplashScreen(),
+          );
         }
-        //Get data
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: "Sikasir",
-          initialRoute:
-              snapshot.data != null ? Routes.HOME : Routes.LOGIN,
-          getPages: AppPages.routes,
-        );
+        return Obx(() => GetMaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: "Sikasir",
+              initialRoute: authC.isSkipIntro.isTrue
+                  ? snapshot.data != null
+                      ? Routes.HOME
+                      : Routes.LOGIN
+                  : Routes.INTRODUCTION,
+              getPages: AppPages.routes,
+            ));
       },
     );
   }
 }
 
-void accessDataOffline_configureCache() {
-  // [START access_data_offline_configure_cache_size]
+void accessDataOfflineConfigureCache() {
   FirebaseFirestore.instance.settings = const Settings(
     persistenceEnabled: true,
     cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
   );
-  // [END access_data_offline_configure_cache_size]
-}
-
-class HexColor extends Color {
-  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
-
-  static int _getColorFromHex(String hexColor) {
-    hexColor = hexColor.toUpperCase().replaceAll('#', '');
-    if (hexColor.length == 6) {
-      hexColor = 'FF' + hexColor;
-    }
-    return int.parse(hexColor, radix: 16);
-  }
 }
