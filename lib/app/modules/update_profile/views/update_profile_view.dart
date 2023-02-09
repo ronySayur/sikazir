@@ -2,15 +2,18 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sikasir/widgets/widgets.dart';
 import '../controllers/update_profile_controller.dart';
 
 class UpdateProfileView extends GetView<UpdateProfileController> {
   final Map<String, dynamic> user = Get.arguments;
+
+  GetStorage box = GetStorage();
   @override
   Widget build(BuildContext context) {
     controller.nameC.text = user["nama_pegawai"];
-    controller.emailC.text = user["email"];
+    controller.emailC.text = box.read('userEmail');
 
     return Scaffold(
         appBar: AppBar(
@@ -22,13 +25,13 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
           TextField(
             controller: controller.emailC,
             readOnly: true,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
                 labelText: "Email", border: OutlineInputBorder()),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           TextField(
             controller: controller.nameC,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
                 labelText: "Name", border: OutlineInputBorder()),
           ),
           SizedBox(height: wDimension.height20),
@@ -67,11 +70,11 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                           TextButton(
                               onPressed: () =>
                                   controller.deleteProfile(user["uid"]),
-                              child: Text("Delete"))
+                              child: const Text("Delete"))
                         ],
                       );
                     } else {
-                      return Text("No Image choosen");
+                      return const Text("No Image choosen");
                     }
                   }
                 },
@@ -96,7 +99,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                       color: Colors.white,
                       weight: FontWeight.bold,
                     )
-                  : CircularProgressIndicator()))
+                  : const CircularProgressIndicator()))
         ]));
   }
 }

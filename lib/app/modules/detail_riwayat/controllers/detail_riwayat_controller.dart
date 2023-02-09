@@ -9,8 +9,8 @@ import '../../blue_therma_print/controllers/blue_therma_print_controller.dart';
 class DetailRiwayatController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   final box = GetStorage();
-
-  var riwayatC = <Map<String, dynamic>>[].obs;
+  var dataDetail = [];
+  var data = [];
 
   Stream<QuerySnapshot<Map<String, dynamic>>> streamPenjualan(
       String idPenjualan) {
@@ -22,7 +22,6 @@ class DetailRiwayatController extends GetxController {
   }
 
   // Printer
-
   Future<void> penjualanDetail(String idPenjualan) async {
     QuerySnapshot snaphsot = await firestore
         .collection("penjualan")
@@ -30,17 +29,8 @@ class DetailRiwayatController extends GetxController {
         .collection("produk")
         .get();
 
-    for (var message in snaphsot.docs) {
-      final nama_produk = message["nama_produk"];
-      final diskon = message["diskon"];
-      final harga_jual = message["harga_jual"];
-      final harga_modal = message["harga_modal"];
-      final id_produk = message["id_produk"];
-      final jumlah = message["jumlah"];
-      final nama_diskon = message["nama_diskon"];
-      final total_harga = message["total_harga"];
-
-      print(nama_produk);
+    for (var data in snaphsot.docs) {
+      dataDetail.add(data);
     }
   }
 
@@ -50,7 +40,7 @@ class DetailRiwayatController extends GetxController {
     if (savedDevice != null) {
       printer = BluetoothDevice.fromMap(savedDevice);
       BlueThermaPrintController().connect(printer);
-      BlueThermaPrintController().printData();
+      BlueThermaPrintController().printData(dataDetail, data);
     } else {
       Get.toNamed(Routes.BLUE_THERMA_PRINT);
     }

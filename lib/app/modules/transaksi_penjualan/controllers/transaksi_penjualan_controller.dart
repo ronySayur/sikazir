@@ -8,16 +8,15 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class TransaksiPenjualanController extends GetxController
     with GetTickerProviderStateMixin {
   AnimationController? animationController;
-  PanelController SUpanel = PanelController();
+  PanelController suPanel = PanelController();
   final box = GetStorage();
   late TextEditingController searchC;
 
-  String? uid;
+  var emailPegawai = "";
+  var toko = "";
 
   var totalDiskon = 0.obs;
   var totalHarga = 0.obs;
-
-  var emailPegawai = "";
 
   var ontap = false.obs;
   var queryAwal = [].obs;
@@ -26,7 +25,10 @@ class TransaksiPenjualanController extends GetxController
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Stream<QuerySnapshot<Map<String, dynamic>>> streamProduk() {
-    return firestore.collection("produk").snapshots();
+    return firestore
+        .collection("produk")
+        .where("id_toko", isEqualTo: toko)
+        .snapshots();
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> streamAllKeranjang() {
@@ -49,10 +51,8 @@ class TransaksiPenjualanController extends GetxController
           .doc(dataProduk.namaProduk!)
           .get();
 
-
       //Cek keranjang
       if (cekKeranjang.exists) {
-
         //Jika Keranjang ada update jumlah dan total harga
         await firestore
             .collection("keranjang")
@@ -64,7 +64,6 @@ class TransaksiPenjualanController extends GetxController
           "total_harga": (cekKeranjang.get("jumlah") + 1) * hjual
         });
       } else {
-
         //jika tidak
         await firestore.collection("keranjang").doc(emailPegawai).set({
           "email_pegawai": emailPegawai,
@@ -93,7 +92,7 @@ class TransaksiPenjualanController extends GetxController
           .doc(dataProduk.idProduk)
           .update({"stok": FieldValue.increment(-1)});
 
-      SUpanel.open();
+      suPanel.open();
       update();
     } else {
       Get.snackbar("Peringatan", "Produk Habis!",
@@ -144,6 +143,9 @@ class TransaksiPenjualanController extends GetxController
 
   @override
   void onInit() {
+    emailPegawai = box.read("userEmail");
+    toko = box.read("toko");
+    print(toko);
     searchC = TextEditingController();
     animationController = AnimationController(
         duration: const Duration(milliseconds: 50), vsync: this);

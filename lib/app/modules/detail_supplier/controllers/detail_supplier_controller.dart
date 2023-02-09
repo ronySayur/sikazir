@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:sikasir/widgets/widgets.dart';
 
 class DetailSupplierController extends GetxController with StateMixin {
-  String? uid;
+
   RxBool isLoading = false.obs;
 
   final TextEditingController vendorNama = TextEditingController();

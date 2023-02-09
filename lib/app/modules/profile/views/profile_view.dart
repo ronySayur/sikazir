@@ -13,7 +13,7 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-                backgroundColor: Colors.red,
+        backgroundColor: Colors.red,
         title: const Text('Profile'),
         centerTitle: false,
       ),
@@ -22,7 +22,7 @@ class ProfileView extends GetView<ProfileController> {
           stream: controller.streamUser(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              Center(
+              const Center(
                 child: CircularProgressIndicator(),
               );
             }
@@ -75,7 +75,7 @@ class ProfileView extends GetView<ProfileController> {
                   ListTile(
                       onTap: () =>
                           Get.toNamed(Routes.UPDATE_PROFILE, arguments: user),
-                      leading: wAppIcon(
+                      leading: const wAppIcon(
                         icon: Icons.person,
                         iconColor: Colors.grey,
                       ),
@@ -84,7 +84,7 @@ class ProfileView extends GetView<ProfileController> {
                   //Update pass
                   ListTile(
                       onTap: () => Get.toNamed(Routes.UPDATE_PASSWORD),
-                      leading: wAppIcon(
+                      leading: const wAppIcon(
                         icon: Icons.vpn_key,
                         iconColor: Colors.grey,
                       ),
@@ -94,7 +94,7 @@ class ProfileView extends GetView<ProfileController> {
                   if (user['role'] == "admin")
                     ListTile(
                         onTap: () => Get.toNamed(Routes.ADD_PEGAWAI),
-                        leading: wAppIcon(
+                        leading: const wAppIcon(
                           icon: Icons.person_add,
                           iconColor: Colors.grey,
                         ),
@@ -103,7 +103,7 @@ class ProfileView extends GetView<ProfileController> {
                   //Logout
                   ListTile(
                       onTap: () => controller.logout(),
-                      leading: wAppIcon(
+                      leading: const wAppIcon(
                         icon: Icons.logout,
                         iconColor: Colors.grey,
                       ),
@@ -111,7 +111,7 @@ class ProfileView extends GetView<ProfileController> {
                 ],
               );
             } else {
-              return Center(
+              return const Center(
                 child: Text("Tidak dapat memuat data user"),
               );
             }

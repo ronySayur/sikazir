@@ -32,7 +32,7 @@ class HomeView extends GetView<HomeController> {
             Map<String, dynamic> user = snapshot.data!.data()!;
 
             box.write("jabatan", user['jabatan']);
-            box.write("toko", user['toko']);
+            box.write('toko', user['toko']);
 
             String defaultImage =
                 "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";

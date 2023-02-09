@@ -14,9 +14,9 @@ class ProfileController extends GetxController {
 
   //Ambil data pegawai Pegawai
   Stream<DocumentSnapshot<Map<String, dynamic>>> streamUser() async* {
-    String uid = auth.currentUser!.uid;
+    String email = box.read('userEmail');
 
-    yield* firestore.collection("pegawai").doc(uid).snapshots();
+    yield* firestore.collection("pegawai").doc(email).snapshots();
   }
 
   //Controller Logout

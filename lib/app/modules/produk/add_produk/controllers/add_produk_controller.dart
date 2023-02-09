@@ -7,29 +7,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sikasir/widgets/widgets.dart';
 
 class AddProdukController extends GetxController {
-  String? uid;
-  XFile? image;
-  RxBool isLoading = false.obs;
-  final supplierC = "".obs;
-  var dataSupplier = [].obs;
-  @override
-  void onInit() {
-    listSupplier();
-    super.onInit();
-  }
-
-  listSupplier() async {
-    QuerySnapshot querySnapshot = await firestore.collection("supplier").get();
-
-    for (var snapToko in querySnapshot.docs) {
-      final namaSupplier = snapToko["nama_vendor"];
-      dataSupplier.add(namaSupplier);
-    }
-  }
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseStorage storage = FirebaseStorage.instance;
+  GetStorage box = GetStorage();
 
   final TextEditingController hargaJual = TextEditingController();
   final TextEditingController hargaModal = TextEditingController();
@@ -39,10 +25,33 @@ class AddProdukController extends GetxController {
   final TextEditingController stokC = TextEditingController();
   final TextEditingController tambahKategoriC = TextEditingController();
   final TextEditingController tambahmerkC = TextEditingController();
+  final supplierC = "".obs;
+  final tokoC = "".obs;
 
-  FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  FirebaseStorage storage = FirebaseStorage.instance;
+  String? uid;
+  XFile? image;
+  RxBool isLoading = false.obs;
+
+  var dataSupplier = [].obs;
+  var dataToko = [].obs;
+
+  listSupplier() async {
+    QuerySnapshot querySnapshot = await firestore.collection("supplier").get();
+
+    for (var snapSup in querySnapshot.docs) {
+      final namaSupplier = snapSup["nama_vendor"];
+      dataSupplier.add(namaSupplier);
+    }
+  }
+
+  listToko() async {
+    QuerySnapshot querySnapshot = await firestore.collection("toko").get();
+
+    for (var snapToko in querySnapshot.docs) {
+      final namaToko = snapToko["nama_toko"];
+      dataToko.add(namaToko);
+    }
+  }
 
   void pickImage() async {
     image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -55,6 +64,10 @@ class AddProdukController extends GetxController {
 
   void selectedSupplier(String value) {
     supplierC.value = value;
+  }
+
+  void selectedToko(String value) {
+    tokoC.value = value;
   }
 
   Future<void> addProduct(Map<String, dynamic> user) async {
@@ -77,10 +90,10 @@ class AddProdukController extends GetxController {
           "harga_modal": hargaModal.text,
           "kategori": kategoriC.text,
           "merek": merkC.text,
-          "email_pegawai": user["email"],
+          "email_pegawai": box.read('userEmail'),
           "stok": int.tryParse(stokC.text) ?? 0,
           "email_vendor": supplierC.value,
-
+          "id_toko": tokoC.value,
         });
 
         isLoading(false);
@@ -162,7 +175,6 @@ class AddProdukController extends GetxController {
         hargaModal.text = "";
       }
     }
-
     update();
   }
 
@@ -530,5 +542,12 @@ class AddProdukController extends GetxController {
         "message": "Tidak dapat menambah merk.",
       };
     }
+  }
+
+  @override
+  void onInit() {
+    listSupplier();
+    listToko();
+    super.onInit();
   }
 }

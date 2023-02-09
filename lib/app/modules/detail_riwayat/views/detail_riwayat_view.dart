@@ -17,10 +17,11 @@ class DetailRiwayatView extends GetView<DetailRiwayatController> {
   @override
   Widget build(BuildContext context) {
     controller.penjualanDetail(riwayat["id_penjualan"]);
+    controller.data.add(riwayat);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.red,
-          title: Text('${riwayat["id_penjualan"]}'),
+          title: Text('Detail transaksi'),
           centerTitle: false,
         ),
         body: Padding(

@@ -19,7 +19,6 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
   TransaksiPenjualanView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    controller.emailPegawai = box.read("userEmail");
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(wDimension.height30 * 4.25),
@@ -88,7 +87,7 @@ class TransaksiPenjualanView extends GetView<TransaksiPenjualanController> {
               controller.totalDiskon = cekDiskonAwal;
 
               return SlidingUpPanel(
-                  controller: controller.SUpanel,
+                  controller: controller.suPanel,
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20)),

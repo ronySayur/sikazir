@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../../widgets/widgets.dart';
 import '../controllers/settings_controller.dart';
 
 class SettingsView extends GetView<SettingsController> {
@@ -9,16 +10,35 @@ class SettingsView extends GetView<SettingsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('SettingsView'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Text(
-          'SettingsView is working',
-          style: TextStyle(fontSize: 20),
+        appBar: AppBar(
+          backgroundColor: Colors.red,
+          title: const Text('Pengaturan'),
+          centerTitle: false,
         ),
-      ),
-    );
+        body: ListView(
+          children: [
+            ListTile(
+              onTap: () {
+                Get.defaultDialog(
+                    title: "Pilih Toko",
+                    actions: [
+                      TextButton(
+                          onPressed: () => Get.back(),
+                          child: wSmallText(text: "Batal"))
+                    ],
+                    content: controller.kategoriDialog());
+              },
+              leading: const Icon(Icons.storefront),
+              title: wSmallText(
+                text: "Toko",
+                size: 18,
+                color: Colors.black,
+                weight: FontWeight.bold,
+              ),
+              subtitle: Obx(() => Text(controller.tokoC.value)),
+              trailing: const Icon(Icons.expand_more),
+            ),
+          ],
+        ));
   }
 }

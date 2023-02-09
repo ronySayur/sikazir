@@ -9,7 +9,7 @@ class RiwayatTransaksiController extends GetxController {
   Stream<QuerySnapshot<Map<String, dynamic>>> streamTrans() {
     return firestore
         .collection("penjualan")
-        .orderBy("groupTanggal")
+        .orderBy("groupTanggal",descending: true)
         .snapshots();
   }
 }

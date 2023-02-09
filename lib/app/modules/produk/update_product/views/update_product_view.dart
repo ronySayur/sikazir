@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sikasir/app/controllers/auth_controller.dart';
 import 'package:sikasir/app/models/product_model.dart';
 import 'package:sikasir/widgets/widgets.dart';
@@ -18,6 +19,7 @@ class UpdateProductView extends GetView<UpdateProductController> {
 
   final authC = Get.find<AuthController>();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final box = GetStorage();
   final ProdukModel dataProduk = Get.arguments;
 
   @override
@@ -328,7 +330,7 @@ class UpdateProductView extends GetView<UpdateProductController> {
     controller.namaProduk.text = dataProduk.namaProduk!;
     controller.merkC.text = dataProduk.merek!;
     controller.kategoriC.text = dataProduk.kategori!;
-    controller.emailPegawai.text = dataProduk.emailPegawai!;
+    controller.emailPegawai.text = box.read("userEmail");
 
     dataProduk.fotoProduk != "noimage"
         ? controller.fotoNetwork.text = dataProduk.fotoProduk!
