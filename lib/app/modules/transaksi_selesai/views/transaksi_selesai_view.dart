@@ -149,7 +149,7 @@ class TransaksiSelesaiView extends GetView<TransaksiSelesaiController> {
           title: "Koneksikan printer",
           textCancel: "Batal",
           onCancel: () => Get.back(),
-          content: DropdownButton<BluetoothDevice>(
+          content: Obx(() => DropdownButton<BluetoothDevice>(
               items: controller.devices
                   .map((e) => DropdownMenuItem(
                         child: Text(e.name!),
@@ -159,9 +159,8 @@ class TransaksiSelesaiView extends GetView<TransaksiSelesaiController> {
               value: controller.selectedDevice,
               hint: Text("Pilih printer"),
               onChanged: (devices) {
-                controller.selectedDevice =
-                    controller.devices as BluetoothDevice?;
-              }));
+                controller.selectedDevice = devices;
+              })));
     }
   }
 

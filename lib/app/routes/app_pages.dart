@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/blue_therma_print/bindings/blue_therma_print_binding.dart';
+import '../modules/blue_therma_print/views/blue_therma_print_view.dart';
 import '../modules/detail_riwayat/bindings/detail_riwayat_binding.dart';
 import '../modules/detail_riwayat/views/detail_riwayat_view.dart';
 import '../modules/detail_supplier/bindings/detail_supplier_binding.dart';
@@ -257,7 +259,7 @@ class AppPages {
     GetPage(
       transition: Transition.fadeIn,
       name: _Paths.SETTINGS,
-      page: () =>  SettingsView(),
+      page: () => SettingsView(),
       binding: SettingsBinding(),
     ),
     GetPage(
@@ -268,33 +270,38 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LAPORAN_RANGKUMAN,
-      page: () =>  LaporanRangkumanView(),
+      page: () => LaporanRangkumanView(),
       binding: LaporanRangkumanBinding(),
     ),
     GetPage(
       name: _Paths.LAPORAN_RINGKASAN,
-      page: () =>  LaporanRingkasanView(),
+      page: () => LaporanRingkasanView(),
       binding: LaporanRingkasanBinding(),
     ),
     GetPage(
       name: _Paths.LAPORAN_PRODUK,
-      page: () =>  LaporanProdukView(),
+      page: () => LaporanProdukView(),
       binding: LaporanProdukBinding(),
     ),
     GetPage(
       name: _Paths.LAPORAN_PEMBELIAN,
-      page: () =>  LaporanPembelianView(),
+      page: () => LaporanPembelianView(),
       binding: LaporanPembelianBinding(),
     ),
     GetPage(
       name: _Paths.LAPORAN_PENJUALAN,
-      page: () =>  LaporanPenjualanView(),
+      page: () => LaporanPenjualanView(),
       binding: LaporanPenjualanBinding(),
     ),
     GetPage(
       name: _Paths.LAPORAN_PEGAWAI,
-      page: () =>  LaporanPegawaiView(),
+      page: () => LaporanPegawaiView(),
       binding: LaporanPegawaiBinding(),
+    ),
+    GetPage(
+      name: _Paths.BLUE_THERMA_PRINT,
+      page: () => const BlueThermaPrintView(),
+      binding: BlueThermaPrintBinding(),
     ),
   ];
 }

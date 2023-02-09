@@ -49,7 +49,6 @@ class GridViewProduk extends StatelessWidget {
                                 color: DesignAppTheme.grey.withOpacity(0.08),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(16.0)),
-
                               ),
                               child: Column(
                                 children: [
@@ -146,7 +145,7 @@ class GridViewProduk extends StatelessWidget {
                                     ? Image.asset("assets/logo/noproduk.png",
                                         fit: BoxFit.cover)
                                     : Image.network("${dataProduk.fotoProduk}",
-                                        fit: BoxFit.fill)),
+                                        fit: BoxFit.cover)),
                           ),
                         ),
                       ),

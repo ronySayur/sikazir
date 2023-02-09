@@ -65,8 +65,7 @@ class AddProdukView extends GetView<AddProdukController> {
                 ),
                 body: Padding(
                     padding: EdgeInsets.all(wDimension.height20),
-                    child: Expanded(
-                        child: ListView(children: [
+                    child: ListView(children: [
                       Container(
                           padding:
                               EdgeInsets.all(wDimension.screenWidth * 0.01),
@@ -360,7 +359,7 @@ class AddProdukView extends GetView<AddProdukController> {
                                     weight: FontWeight.bold,
                                     color: Colors.white))),
                       )
-                    ]))));
+                    ])));
           } else {
             return Center(child: CircularProgressIndicator());
           }

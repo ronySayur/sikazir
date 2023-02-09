@@ -58,7 +58,6 @@ class AddPegawaiController extends GetxController {
       final namaToko = snapToko["nama_toko"];
       dataToko.add(namaToko);
     }
-
   }
 
   final ImagePicker picker = ImagePicker();

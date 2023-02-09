@@ -45,6 +45,7 @@ abstract class Routes {
   static const LAPORAN_PEMBELIAN = _Paths.LAPORAN_PEMBELIAN;
   static const LAPORAN_PENJUALAN = _Paths.LAPORAN_PENJUALAN;
   static const LAPORAN_PEGAWAI = _Paths.LAPORAN_PEGAWAI;
+  static const BLUE_THERMA_PRINT = _Paths.BLUE_THERMA_PRINT;
 }
 
 abstract class _Paths {
@@ -91,4 +92,5 @@ abstract class _Paths {
   static const LAPORAN_PEMBELIAN = '/laporan-pembelian';
   static const LAPORAN_PENJUALAN = '/laporan-penjualan';
   static const LAPORAN_PEGAWAI = '/laporan-pegawai';
+  static const BLUE_THERMA_PRINT = '/blue-therma-print';
 }

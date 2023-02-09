@@ -25,10 +25,13 @@ class LaporanRangkumanController extends GetxController {
   Stream<QuerySnapshot<Map<String, dynamic>>> streamTrans() {
     final startAtTimestamp = Timestamp.fromMillisecondsSinceEpoch(
         dateRange.value.start.millisecondsSinceEpoch);
-    print(startAtTimestamp);
+    print(dateRange.value.start.toIso8601String());
+
     return firestore
         .collection('penjualan')
-        .where('tanggal', isLessThanOrEqualTo: startAtTimestamp)
+        .orderBy("tanggal", descending: true)
+        .where('tanggal',
+            isLessThanOrEqualTo: dateRange.value.start.toIso8601String())
         .snapshots();
   }
 
@@ -80,7 +83,5 @@ class LaporanRangkumanController extends GetxController {
     jumlahPembelian.value = cekPembelian.length;
 
     update();
-
-    print(cekPenjualan);
   }
 }
