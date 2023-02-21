@@ -51,25 +51,28 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                           File(c.image!.path),
                           fit: BoxFit.cover,
                         ),
-                      ),
+                      )
                     );
                   } else {
-                    if (user["foto"] != null) {
+                    if (user["foto"] != "noimage") {
                       return Column(
                         children: [
                           ClipOval(
                             child: Container(
                               height: wDimension.height20 * 5,
                               width: wDimension.width20 * 5,
-                              child: Image.network(
-                                user["foto"],
-                                fit: BoxFit.cover,
-                              ),
+                              child: c.image != null 
+                                  ? Image.file(
+                                      File(c.image!.path),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.asset("assets/logo/noimage.png",
+                                      fit: BoxFit.cover),
                             ),
                           ),
                           TextButton(
-                              onPressed: () =>
-                                  controller.deleteProfile(user["uid"]),
+                              onPressed: () => controller
+                                  .deleteProfile(controller.emailC.text),
                               child: const Text("Delete"))
                         ],
                       );

@@ -60,11 +60,11 @@ class BlueThermaPrintController extends GetxController {
         case BlueThermalPrinter.CONNECTED:
           _connected.value = true;
           await Future.delayed(const Duration(milliseconds: 500))
+              .then((value) => box.write('printer', device!.toMap()))
+              .then((value) => Get.back())
               .then((value) => Get.snackbar(
                   "Pemberitahuan", "Printer Terkoneksi",
-                  backgroundColor: Colors.white))
-              .then((value) => box.write('printer', device!.toMap()))
-              .then((value) => Get.back());
+                  backgroundColor: Colors.white));
           break;
         case BlueThermalPrinter.DISCONNECTED:
           _connected.value = false;
@@ -109,7 +109,7 @@ class BlueThermaPrintController extends GetxController {
     EasyLoading.dismiss();
   }
 
-  printData(List<dynamic> dataDetail, List<dynamic> data) async {
+  printDataRiwayat(List<dynamic> dataDetail, List<dynamic> data) async {
     dynamic result;
     try {
       result = await bluetooth.printNewLine();
@@ -124,6 +124,7 @@ class BlueThermaPrintController extends GetxController {
       await bluetooth.printImageBytes(list);
       bluetooth.printNewLine();
 
+      bluetooth.printLeftRight("${data[0]["id_toko"]}", "", Size.medium.val);
       bluetooth.printCustom(
           "Jl. Mayjen. Sutoyo No.4 Bantul\nDaerah Istimewa Yogyakarta 55711",
           0,
@@ -145,8 +146,6 @@ class BlueThermaPrintController extends GetxController {
           "Pegawai:",
           "${data[0]["email_pegawai"]}".replaceAll("@gmail.com", ""),
           Size.medium.val);
-      bluetooth.printLeftRight(
-          "Toko:", "${data[0]["id_toko"]}", Size.medium.val);
 
       bluetooth.printCustom(
           "--------------------------------", Size.medium.val, 1);

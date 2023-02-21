@@ -286,7 +286,77 @@ class UpdateProductView extends GetView<UpdateProductController> {
                                     contentPadding: EdgeInsets.symmetric(
                                         horizontal: wDimension.width30,
                                         vertical: wDimension.width15),
-                                  )),
+                                  )),  Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                wSmallText(
+                                    text: "Supplier",
+                                    color: Colors.black,
+                                    size: wDimension.font16),
+                                SizedBox(
+                                  width: wDimension.width10,
+                                ),
+                                Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 8, right: 8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Obx(() => DropdownButton(
+                                        onChanged: (newValue) {
+                                          controller
+                                              .selectedSupplier('${newValue!}');
+                                        },
+                                        hint: const Text("Pilih Supplier"),
+                                        value: controller.supplierC.value == ""
+                                            ? null
+                                            : controller.supplierC.value,
+                                        items: controller.dataSupplier
+                                            .map((selectedType) {
+                                          return DropdownMenuItem(
+                                            value: selectedType,
+                                            child: Text(selectedType),
+                                          );
+                                        }).toList())))
+                              ],
+                            ),
+                            SizedBox(height: wDimension.height10),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                wSmallText(
+                                    text: "Toko",
+                                    color: Colors.black,
+                                    size: wDimension.font16),
+                                SizedBox(
+                                  width: wDimension.width10,
+                                ),
+                                Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 8, right: 8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Obx(() => DropdownButton(
+                                        onChanged: (newValue) {
+                                          controller
+                                              .selectedToko('${newValue!}');
+                                        },
+                                        hint: const Text("Pilih Toko"),
+                                        value: controller.tokoC.value == ""
+                                            ? null
+                                            : controller.tokoC.value,
+                                        items: controller.dataToko
+                                            .map((selectedType) {
+                                          return DropdownMenuItem(
+                                            value: selectedType,
+                                            child: Text(selectedType),
+                                          );
+                                        }).toList())))
+                              ],
+                            ),
+                          
                             ]),
 
                         //Button

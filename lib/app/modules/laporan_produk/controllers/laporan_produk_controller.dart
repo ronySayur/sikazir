@@ -5,31 +5,36 @@ import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 
 class LaporanProdukController extends GetxController {
-  @override
-  void onInit() {
-    count();
-    super.onInit();
-  }
-
   GetStorage box = GetStorage();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   var jumlahPenjualan = 0.obs;
   var jumlahPembelian = 0.obs;
   var totalPenjualan = 0.obs;
   var totalPembelian = 0.obs;
+  var total = 0.obs;
+  var terlaris = "".obs;
 
   count() async {
-    // final email = box.read("userEmail");
-
-    QuerySnapshot snaphsot = await firestore.collection("penjualan").get();
+    QuerySnapshot snaphsot = await firestore.collection('produk').get();
+    QuerySnapshot snapBig = await firestore
+        .collection('produk')
+        .orderBy("terjual", descending: true)
+        .limit(1)
+        .get();
 
     for (var message in snaphsot.docs) {
-      print(message.get("id_penjualan"));
+      total.value += message["terjual"] as int;
+    }
+    for (var message in snapBig.docs) {
+      terlaris.value = message["nama_produk"];
     }
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> streamProduk() {
-    return firestore.collection("produk").snapshots();
+    return firestore
+        .collection("produk")
+        .where("id_toko", isEqualTo: box.read('toko'))
+        .snapshots();
   }
 
   TextEditingController textFieldTanggal = TextEditingController();
@@ -56,5 +61,11 @@ class LaporanProdukController extends GetxController {
       textFieldTanggal.text =
           '${DateFormat("dd MMM").format(dateRange.value.start).toString()} - ${DateFormat("dd MMM yyyy").format(dateRange.value.end).toString()}';
     }
+  }
+
+  @override
+  void onInit() {
+    count();
+    super.onInit();
   }
 }

@@ -36,11 +36,12 @@ class DetailRiwayatController extends GetxController {
 
   printerState() {
     var savedDevice = box.read('printer');
+    
     final BluetoothDevice printer;
     if (savedDevice != null) {
       printer = BluetoothDevice.fromMap(savedDevice);
       BlueThermaPrintController().connect(printer);
-      BlueThermaPrintController().printData(dataDetail, data);
+      BlueThermaPrintController().printDataRiwayat(dataDetail, data);
     } else {
       Get.toNamed(Routes.BLUE_THERMA_PRINT);
     }

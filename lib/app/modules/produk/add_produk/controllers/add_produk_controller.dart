@@ -91,7 +91,8 @@ class AddProdukController extends GetxController {
           "kategori": kategoriC.text,
           "merek": merkC.text,
           "email_pegawai": box.read('userEmail'),
-          "stok": int.tryParse(stokC.text) ?? 0,
+          "stok": 0,
+          "terjual": 0,
           "email_vendor": supplierC.value,
           "id_toko": tokoC.value,
         });

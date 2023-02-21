@@ -87,6 +87,11 @@ class DetailTransaksiController extends GetxController {
       final total_harga = message["total_harga"];
 
       await firestore
+          .collection("produk")
+          .doc(id_produk)
+          .update({"terjual": FieldValue.increment(jumlah)});
+
+      await firestore
           .collection("penjualan")
           .doc(date)
           .collection('produk')
@@ -112,7 +117,7 @@ class DetailTransaksiController extends GetxController {
         .doc(emailPegawai)
         .collection("produk")
         .get();
-        
+
     keranjangDeleteBatch.then((value) {
       value.docs.forEach((element) {
         firestore

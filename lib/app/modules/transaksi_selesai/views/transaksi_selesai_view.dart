@@ -1,13 +1,11 @@
 import 'package:blue_thermal_printer/blue_thermal_printer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sikasir/widgets/widgets.dart';
 
-import '../../../routes/app_pages.dart';
 import '../controllers/transaksi_selesai_controller.dart';
 
 class TransaksiSelesaiView extends GetView<TransaksiSelesaiController> {
@@ -20,6 +18,7 @@ class TransaksiSelesaiView extends GetView<TransaksiSelesaiController> {
   TransaksiSelesaiView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+        controller.penjualanDetail(date);
     return Scaffold(
       body: Container(
           padding: const EdgeInsets.all(defaultPadding),
@@ -108,9 +107,7 @@ class TransaksiSelesaiView extends GetView<TransaksiSelesaiController> {
                     children: [
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () async {
-                            await cetak();
-                          },
+                            onPressed: () => controller.printerState(),
                           child: const Text("Cetak Struk"),
                         ),
                       ),
@@ -131,38 +128,6 @@ class TransaksiSelesaiView extends GetView<TransaksiSelesaiController> {
             }));
   }
 
-  Future<void> cetak() async {
-    if ((await printer.isConnected)!) {
-      printer.printNewLine();
-      Image.asset("assets/logo/logo.png");
-      printer.printNewLine();
-      printer.printCustom("Aida Putra Group", 12, 1);
-      printer.printCustom(
-          " Jl. Mayjen. Sutoyo No.4, Bantul Wr., Bantul, Kec. Bantul, Kabupaten Bantul, Daerah Istimewa Yogyakarta 55711",
-          8,
-          1);
-
-      printer.printNewLine();
-    } else {
-      Get.snackbar("Pemberitahuan", "Printer belum terkoneksi");
-      Get.defaultDialog(
-          title: "Koneksikan printer",
-          textCancel: "Batal",
-          onCancel: () => Get.back(),
-          content: Obx(() => DropdownButton<BluetoothDevice>(
-              items: controller.devices
-                  .map((e) => DropdownMenuItem(
-                        child: Text(e.name!),
-                        value: e,
-                      ))
-                  .toList(),
-              value: controller.selectedDevice,
-              hint: Text("Pilih printer"),
-              onChanged: (devices) {
-                controller.selectedDevice = devices;
-              })));
-    }
-  }
 
   Expanded logoLottie() {
     return Expanded(

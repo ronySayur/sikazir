@@ -2,13 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../../../widgets/widgets.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  const ProfileView({Key? key}) : super(key: key);
+  GetStorage box = GetStorage();
+   ProfileView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +46,7 @@ class ProfileView extends GetView<ProfileController> {
                           height: wDimension.height20 * 10,
                           child: ClipOval(
                             child: Image.network(
-                              user["foto"] != null
+                              user["foto"] != "noimage"
                                   ? user["foto"] != ""
                                       ? user["foto"]
                                       : defaultImage
@@ -65,7 +67,7 @@ class ProfileView extends GetView<ProfileController> {
                   ),
                   SizedBox(height: wDimension.height10),
                   wSmallText(
-                    text: "${user['email']}",
+                    text: "${box.read('userEmail')}",
                     align: TextAlign.center,
                     size: wDimension.font16,
                   ),

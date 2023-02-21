@@ -322,9 +322,8 @@ class AddProdukView extends GetView<AddProdukController> {
                                         items: controller.dataSupplier
                                             .map((selectedType) {
                                           return DropdownMenuItem(
-                                            value: selectedType,
-                                            child: Text(selectedType),
-                                          );
+                                              value: selectedType,
+                                              child: Text(selectedType));
                                         }).toList())))
                               ],
                             ),

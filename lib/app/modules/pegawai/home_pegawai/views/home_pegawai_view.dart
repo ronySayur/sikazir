@@ -2,6 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sikasir/app/controllers/auth_controller.dart';
 import 'package:sikasir/app/models/pegawai_model.dart';
 import 'package:sikasir/app/routes/app_pages.dart';
@@ -11,6 +12,7 @@ import '../controllers/home_pegawai_controller.dart';
 
 class HomePegawaiView extends GetView<HomePegawaiController> {
   final authC = Get.find<AuthController>();
+  GetStorage box = GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +69,7 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
                           width: wDimension.width20 * 4,
                           height: wDimension.height20 * 4,
                           child: Image.network(
-                            user["foto"] != null ? user["foto"] : defaultImage,
+                            user["foto"] != "noimage" ? user["foto"] : defaultImage,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -83,9 +85,7 @@ class HomePegawaiView extends GetView<HomePegawaiController> {
                           Container(
                             width: wDimension.width20 * 10,
                             child: wSmallText(
-                              text: user["position"] != null
-                                  ? "${user['toko']}"
-                                  : "Belum ada toko.",
+                              text: "${box.read('toko')}",
                               align: TextAlign.left,
                             ),
                           ),

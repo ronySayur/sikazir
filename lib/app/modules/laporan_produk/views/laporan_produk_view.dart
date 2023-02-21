@@ -86,14 +86,13 @@ class LaporanProdukView extends GetView<LaporanProdukController> {
             const SizedBox(
               height: 10,
             ),
-            const CircularProgressIndicator()
-            // Obx(() => Text(
-            //       "${controller.jumlahPenjualan.value} Produk",
-            //       style: TextStyle(
-            //           fontWeight: FontWeight.bold,
-            //           fontSize: 22,
-            //           color: Colors.lightBlue),
-            //     )),
+            Obx(() => Text(
+                  "${controller.total.value} Produk (${controller.terlaris.value})",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      color: Colors.lightBlue),
+                )),
           ],
         ),
       ]),
@@ -147,8 +146,8 @@ class LaporanProdukView extends GetView<LaporanProdukController> {
                                 color: Colors.black,
                                 weight: FontWeight.bold,
                               ),
-                              subtitle:
-                                  Text("${alldata[index]["stok"]} Tersisa"),
+                              subtitle: Text(
+                                  "${alldata[index]["stok"]} Tersisa & ${alldata[index]["terjual"]} Terjual "),
                               trailing: const Icon(Icons.navigate_next),
                             )
                           ],

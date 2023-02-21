@@ -55,7 +55,7 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           ClipOval(
                             child: Image.network(
-                              user["foto"] != null
+                              user["foto"] != "noimage"
                                   ? user["foto"] != ""
                                       ? user["foto"]
                                       : defaultImage
@@ -130,12 +130,11 @@ class HomeView extends GetView<HomeController> {
                             weight: FontWeight.bold,
                             text: "Laporan Hari ini",
                           ),
-                       Text(
-                                dpid.format(DateTime.now()),
-                                style: TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold),
-                              )
+                          Text(
+                            dpid.format(DateTime.now()),
+                            style: TextStyle(
+                                color: Colors.red, fontWeight: FontWeight.bold),
+                          )
                         ],
                       ),
                       InkWell(

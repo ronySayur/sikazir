@@ -13,6 +13,21 @@ class UpdateProductController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isLoadingDelete = false.obs;
   String? uid;
+  final supplierC = "".obs;
+  final tokoC = "".obs;
+    var dataSupplier = [].obs;
+  var dataToko = [].obs;
+
+
+  
+  void selectedSupplier(String value) {
+    supplierC.value = value;
+  }
+
+  void selectedToko(String value) {
+    tokoC.value = value;
+  }
+
 
   final TextEditingController idProduk = TextEditingController();
   final TextEditingController emailPegawai = TextEditingController();
