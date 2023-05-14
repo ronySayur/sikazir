@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 class HomeTokoController extends GetxController
     with GetTickerProviderStateMixin {
-  AnimationController? animationController;
+
   late TextEditingController searchC;
 
   var queryAwal = [].obs;
@@ -56,7 +56,7 @@ class HomeTokoController extends GetxController
     tempSearch.refresh();
     update();
   }
-
+  AnimationController? animationController;
   @override
   void onInit() {
     searchC = TextEditingController();

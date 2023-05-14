@@ -1,6 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:sikasir/widgets/widgets.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -12,11 +10,9 @@ class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // ignore: prefer_const_constructors
-      decoration: BoxDecoration(
-          // ignore: prefer_const_constructors
+      decoration: const BoxDecoration(
           image: DecorationImage(
-              image: const AssetImage("assets/background/bglogin.png"),
+              image: AssetImage("assets/background/bglogin.png"),
               fit: BoxFit.cover)),
       child: Scaffold(
         backgroundColor: Colors.transparent,
