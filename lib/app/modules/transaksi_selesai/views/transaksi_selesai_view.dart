@@ -18,7 +18,7 @@ class TransaksiSelesaiView extends GetView<TransaksiSelesaiController> {
   TransaksiSelesaiView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-        controller.penjualanDetail(date);
+    controller.penjualanDetail(date);
     return Scaffold(
       body: Container(
           padding: const EdgeInsets.all(defaultPadding),
@@ -107,7 +107,7 @@ class TransaksiSelesaiView extends GetView<TransaksiSelesaiController> {
                     children: [
                       Expanded(
                         child: OutlinedButton(
-                            onPressed: () => controller.printerState(),
+                          onPressed: () => controller.printerState(),
                           child: const Text("Cetak Struk"),
                         ),
                       ),
@@ -127,7 +127,6 @@ class TransaksiSelesaiView extends GetView<TransaksiSelesaiController> {
               );
             }));
   }
-
 
   Expanded logoLottie() {
     return Expanded(
